@@ -1,0 +1,52 @@
+name: Build app and publish team website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build Android APK
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          gradle assembleDebug --no-daemon --stacktrace
+      - name: Assemble website
+        run: |
+          mkdir -p site
+          cp app/src/main/assets/index.html site/index.html
+          cp register.json site/register.json
+          cp app/build/outputs/apk/debug/app-debug.apk site/LiftingPlan.apk
+          touch site/.nojekyll
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LiftingPlan-APK
+          path: site/LiftingPlan.apk
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
