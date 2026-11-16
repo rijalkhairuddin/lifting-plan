@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lorry Crane Lifting Plan Generator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231b4fd8%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230a1f5c%22/%3E%20%3C/linearGradient%3E%20%3ClinearGradient%20id%3D%22boom%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffd54a%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5a300%22/%3E%20%3C/linearGradient%3E%20%3ClinearGradient%20id%3D%22load%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff9a3d%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e2620f%22/%3E%20%3C/linearGradient%3E%20%3CradialGradient%20id%3D%22glow%22%20cx%3D%220.3%22%20cy%3D%220.2%22%20r%3D%220.9%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffffff%22%20stop-opacity%3D%22.18%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffffff%22%20stop-opacity%3D%220%22/%3E%20%3C/radialGradient%3E%20%3C/defs%3E%20%3Cg%20id%3D%22bgLayer%22%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url%28%23bg%29%22/%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url%28%23glow%29%22/%3E%20%3C/g%3E%20%3Cg%20id%3D%22art%22%3E%20%3Cpath%20d%3D%22M118%20382%20A214%20214%200%200%201%20332%20168%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-opacity%3D%22.28%22%20stroke-width%3D%227%22%20stroke-dasharray%3D%2214%2012%22%20stroke-linecap%3D%22round%22/%3E%20%3Crect%20x%3D%2270%22%20y%3D%22392%22%20width%3D%22372%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23ffffff%22%20fill-opacity%3D%22.35%22/%3E%20%3Crect%20x%3D%22248%22%20y%3D%22330%22%20width%3D%22150%22%20height%3D%2234%22%20rx%3D%228%22%20fill%3D%22%23e8eef9%22/%3E%20%3Cpath%20d%3D%22M372%20286%20h34%20q10%200%2015%209%20l17%2030%20q4%207%204%2015%20v24%20h-70z%22%20fill%3D%22%23ffffff%22/%3E%20%3Cpath%20d%3D%22M384%20298%20h20%20l13%2024%20h-33z%22%20fill%3D%22%237fb3ff%22/%3E%20%3Crect%20x%3D%22236%22%20y%3D%22356%22%20width%3D%22214%22%20height%3D%2216%22%20rx%3D%226%22%20fill%3D%22%23c9d4e8%22/%3E%20%3Ccircle%20cx%3D%22282%22%20cy%3D%22378%22%20r%3D%2221%22%20fill%3D%22%230d1b3d%22/%3E%3Ccircle%20cx%3D%22282%22%20cy%3D%22378%22%20r%3D%228%22%20fill%3D%22%239fb0cc%22/%3E%20%3Ccircle%20cx%3D%22410%22%20cy%3D%22378%22%20r%3D%2221%22%20fill%3D%22%230d1b3d%22/%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22378%22%20r%3D%228%22%20fill%3D%22%239fb0cc%22/%3E%20%3Crect%20x%3D%22226%22%20y%3D%22350%22%20width%3D%2212%22%20height%3D%2238%22%20rx%3D%223%22%20fill%3D%22%23e8eef9%22/%3E%20%3Crect%20x%3D%22212%22%20y%3D%22386%22%20width%3D%2240%22%20height%3D%228%22%20rx%3D%223%22%20fill%3D%22%234fd1ff%22/%3E%20%3Crect%20x%3D%22334%22%20y%3D%22236%22%20width%3D%2230%22%20height%3D%2298%22%20rx%3D%226%22%20fill%3D%22url%28%23boom%29%22/%3E%20%3Cline%20x1%3D%22349%22%20y1%3D%22246%22%20x2%3D%22250%22%20y2%3D%22168%22%20stroke%3D%22%23b77400%22%20stroke-width%3D%2238%22%20stroke-linecap%3D%22round%22/%3E%20%3Cline%20x1%3D%22349%22%20y1%3D%22246%22%20x2%3D%22250%22%20y2%3D%22168%22%20stroke%3D%22url%28%23boom%29%22%20stroke-width%3D%2232%22%20stroke-linecap%3D%22round%22/%3E%20%3Cline%20x1%3D%22254%22%20y1%3D%22171%22%20x2%3D%22168%22%20y2%3D%22104%22%20stroke%3D%22%23b77400%22%20stroke-width%3D%2229%22%20stroke-linecap%3D%22round%22/%3E%20%3Cline%20x1%3D%22254%22%20y1%3D%22171%22%20x2%3D%22168%22%20y2%3D%22104%22%20stroke%3D%22url%28%23boom%29%22%20stroke-width%3D%2223%22%20stroke-linecap%3D%22round%22/%3E%20%3Ccircle%20cx%3D%22349%22%20cy%3D%22246%22%20r%3D%2211%22%20fill%3D%22%237a4d00%22/%3E%20%3Ccircle%20cx%3D%22164%22%20cy%3D%22101%22%20r%3D%229%22%20fill%3D%22%237a4d00%22/%3E%20%3Cline%20x1%3D%22164%22%20y1%3D%22104%22%20x2%3D%22164%22%20y2%3D%22232%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22/%3E%20%3Cpath%20d%3D%22M164%20230%20v10%20q0%2018%20-16%2018%20q-14%200%20-14%20-13%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22round%22/%3E%20%3Cpath%20d%3D%22M150%20262%20L112%20300%20M150%20262%20L188%20300%22%20stroke%3D%22%2358e08a%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22/%3E%20%3Crect%20x%3D%2294%22%20y%3D%22298%22%20width%3D%22112%22%20height%3D%2256%22%20rx%3D%2210%22%20fill%3D%22url%28%23load%29%22/%3E%20%3Crect%20x%3D%2294%22%20y%3D%22298%22%20width%3D%22112%22%20height%3D%2212%22%20rx%3D%226%22%20fill%3D%22%23ffffff%22%20fill-opacity%3D%22.22%22/%3E%20%3Ccircle%20cx%3D%22410%22%20cy%3D%22132%22%20r%3D%2254%22%20fill%3D%22%2322c55e%22/%3E%20%3Ccircle%20cx%3D%22410%22%20cy%3D%22132%22%20r%3D%2254%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%227%22/%3E%20%3Cpath%20d%3D%22M384%20133%20l18%2018%20l34%20-36%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%20%3C/g%3E%20%3C/svg%3E">
+<style>
+:root{--ink:#1d2430;--mut:#667085;--line:#d6dbe3;--bg:#f4f6f9;--card:#fff;--acc:#1f5fbf;--ok:#1e7b45;--okbg:#e6f4ec;--warn:#9a6200;--warnbg:#fff4dc;--bad:#b42318;--badbg:#fde8e6}
+*{box-sizing:border-box}
+body{margin:0;font:13px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header.app{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line)}
+header.app h1{font-size:15px;margin:0 12px 0 0;font-weight:650}
+header.app .sp{flex:1}
+button{font:inherit;padding:6px 11px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;color:var(--ink)}
+button:hover{border-color:#9aa4b2}
+button.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+button.sm{padding:3px 8px;font-size:12px}
+button.del{color:var(--bad)}
+main{display:grid;grid-template-columns:400px 1fr;gap:14px;padding:14px;align-items:start}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+#form{display:flex;flex-direction:column;gap:12px}
+fieldset{margin:0;border:1px solid var(--line);border-radius:8px;background:var(--card);padding:10px 12px 12px}
+legend{font-weight:650;padding:0 4px;font-size:13px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+label{display:flex;flex-direction:column;gap:2px;font-size:11.5px;color:var(--mut)}
+label.full{grid-column:1/-1}
+input,select,textarea{font:inherit;font-size:13px;color:var(--ink);padding:5px 7px;border:1px solid var(--line);border-radius:5px;background:#fff;width:100%}
+textarea{resize:vertical;min-height:44px}
+.info{font-size:12px;color:var(--mut);background:#f7f8fa;border-radius:6px;padding:6px 8px;margin-top:8px}
+.info b{color:var(--ink)}
+.gearrow{border:1px dashed var(--line);border-radius:6px;padding:8px;margin-bottom:8px}
+.gearrow .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:600;font-size:12px}
+#out{display:flex;flex-direction:column;gap:12px;min-width:0}
+#summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+.kpi .l{font-size:11px;color:var(--mut)}
+.kpi .v{font-size:20px;font-weight:650;font-variant-numeric:tabular-nums}
+.kpi.ok .v{color:var(--ok)}.kpi.warn .v{color:var(--warn)}.kpi.bad .v{color:var(--bad)}
+#checks{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 12px}
+#checks h3{margin:2px 0 6px;font-size:13px}
+.chk{display:flex;gap:8px;align-items:flex-start;padding:3px 0;font-size:12.5px}
+.tag{flex:none;font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;min-width:42px;text-align:center}
+.tag.ok{background:var(--okbg);color:var(--ok)}.tag.warn{background:var(--warnbg);color:var(--warn)}.tag.fail{background:var(--badbg);color:var(--bad)}
+#previewWrap{background:#e3e7ee;border-radius:8px;padding:12px;overflow:hidden}
+#scaler{transform-origin:top left}
+.modal{position:fixed;inset:0;background:rgba(15,20,30,.45);display:none;z-index:50;align-items:flex-start;justify-content:center;padding:30px 12px;overflow:auto}
+.modal.on{display:flex}
+.modal .box{background:#fff;border-radius:10px;max-width:980px;width:100%;padding:16px 18px}
+.modal h2{font-size:16px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}
+.card{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:10px}
+.card .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+table.list{width:100%;border-collapse:collapse;font-size:12.5px}
+table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text-align:left}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1d2430;color:#fff;padding:8px 14px;border-radius:6px;font-size:12.5px;display:none;z-index:60}
+.hint{font-size:11.5px;color:var(--mut);margin:6px 0 0}
+
+
+#animCard{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;position:relative}
+#animCard .ahd{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+#animCard .ahd b{font-size:13px}
+#animCard .ahd .sp{flex:1}
+#animSvg{display:grid;grid-template-columns:1fr;gap:8px}
+#animSvg .vp{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+#animSvg .v3{grid-column:1/-1}
+#v3wrap{position:relative}
+#a3d{touch-action:none;position:relative;width:100%;aspect-ratio:16/9;background:linear-gradient(#bfd6ee,#e6eef6 55%,#eef2f6)}
+#a3d canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ov3{pointer-events:none}
+.v3ctl{position:absolute;right:10px;top:10px;display:flex;gap:6px;align-items:center;background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:8px;padding:4px 6px;box-shadow:0 1px 4px rgba(16,24,40,.08)}
+.v3ctl button{min-width:32px;height:30px;padding:0 9px;font-size:16px;line-height:1}
+#z3lvl{min-width:46px;text-align:center;font-variant-numeric:tabular-nums;font-size:12px}
+.chk3{flex-direction:row!important;align-items:center;gap:4px;font-size:12px;color:var(--ink)!important;white-space:nowrap}
+.chk3 input{width:auto}
+#v3wrap:fullscreen{background:#eef3f9;display:flex;align-items:center;justify-content:center}
+#v3wrap:fullscreen #a3d{width:100%;height:100vh;aspect-ratio:auto}
+@media(max-width:700px){.v3ctl{top:auto;bottom:6px;right:6px;padding:2px 4px;gap:3px}.v3ctl button{min-width:26px;height:26px;padding:0 6px;font-size:14px}#z3lvl{min-width:38px;font-size:11px}.chk3{display:none}#a3d{aspect-ratio:4/3}}
+#animSvg svg{width:100%;height:auto;display:block}
+@media(max-width:700px){#animSvg{grid-template-columns:1fr}}
+#aCap{font-weight:600;font-size:13px;margin:8px 0 6px;min-height:18px}
+.ro{display:grid;grid-template-columns:repeat(4,auto) 1fr;gap:6px 18px;align-items:center;font-size:12px;color:var(--mut)}
+.ro b{color:var(--ink);font-variant-numeric:tabular-nums;font-size:14px}
+.ubar{height:10px;background:#eef1f5;border-radius:5px;overflow:hidden;min-width:120px}
+.ubar i{display:block;height:100%;width:0;border-radius:5px;transition:background .2s}
+#scrub{margin-top:8px;padding:0}
+#animCard.locked #animSvg,#animCard.locked .ro,#animCard.locked #aCap{opacity:.35;filter:grayscale(1)}
+#animLock{font-size:12px;color:var(--bad)}
+
+/* ---------- printable sheet (A4 landscape @96dpi) ---------- */
+.sheet{width:1123px;height:794px;background:#fff;padding:16px 18px;font-family:Arial,Helvetica,sans-serif;color:#000;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.sheet table{border-collapse:collapse;width:100%}
+.sheet td{border:1px solid #000;padding:2px 5px;font-size:10px;vertical-align:middle}
+.sh-head td{height:22px}
+.sh-co{font-size:17px!important;font-weight:700;text-align:center;letter-spacing:.5px}
+.sh-title{text-align:center;font-weight:700;font-size:15px!important;height:28px}
+.sh-body{flex:1;display:grid;grid-template-columns:1fr 262px;border:1px solid #000;border-top:0;min-height:0}
+.sh-left{display:flex;flex-direction:column;border-right:1px solid #000;min-height:0}
+.sh-draw{flex:1;min-height:0;position:relative}
+.sh-draw svg{width:100%;height:100%;display:block}
+.sh-foot td{font-size:10px;height:17px}
+.sh-right{display:flex;flex-direction:column}
+.sh-right table td{border-left:0;border-right:0;border-top:0;font-size:9.6px;padding:1.5px 4px;height:16px}
+.sh-right td.k{font-weight:700;text-align:center;border-right:1px solid #000;width:58%}
+.sh-right td.v{text-align:center;font-weight:700}
+.sh-right tr.bar td{background:#000;height:7px;padding:0}
+.sh-right tr.big td{height:24px;font-size:10.5px}
+.sh-right .fill{flex:1;border-bottom:1px solid #000}
+.sh-right td.bad{color:#b42318}
+.wm{position:absolute;left:0;right:0;top:44%;text-align:center;font:700 64px Arial;color:rgba(200,30,30,.16);transform:rotate(-14deg);pointer-events:none;letter-spacing:4px}
+@media print{
+  @page{size:A4 landscape;margin:0}
+  body{background:#fff}
+  header.app,#form,#summary,#checks,#animCard,.modal,#toast{display:none!important}
+  main{display:block;padding:0}
+  #previewWrap{padding:0;background:#fff}
+  #scaler{transform:none!important;width:auto!important;height:auto!important}
+}
+</style>
+</head>
+<body>
+<header class="app">
+  <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231b4fd8%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230a1f5c%22/%3E%20%3C/linearGradient%3E%20%3ClinearGradient%20id%3D%22boom%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffd54a%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5a300%22/%3E%20%3C/linearGradient%3E%20%3ClinearGradient%20id%3D%22load%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ff9a3d%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e2620f%22/%3E%20%3C/linearGradient%3E%20%3CradialGradient%20id%3D%22glow%22%20cx%3D%220.3%22%20cy%3D%220.2%22%20r%3D%220.9%22%3E%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffffff%22%20stop-opacity%3D%22.18%22/%3E%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffffff%22%20stop-opacity%3D%220%22/%3E%20%3C/radialGradient%3E%20%3C/defs%3E%20%3Cg%20id%3D%22bgLayer%22%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url%28%23bg%29%22/%3E%20%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22112%22%20fill%3D%22url%28%23glow%29%22/%3E%20%3C/g%3E%20%3Cg%20id%3D%22art%22%3E%20%3Cpath%20d%3D%22M118%20382%20A214%20214%200%200%201%20332%20168%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-opacity%3D%22.28%22%20stroke-width%3D%227%22%20stroke-dasharray%3D%2214%2012%22%20stroke-linecap%3D%22round%22/%3E%20%3Crect%20x%3D%2270%22%20y%3D%22392%22%20width%3D%22372%22%20height%3D%228%22%20rx%3D%224%22%20fill%3D%22%23ffffff%22%20fill-opacity%3D%22.35%22/%3E%20%3Crect%20x%3D%22248%22%20y%3D%22330%22%20width%3D%22150%22%20height%3D%2234%22%20rx%3D%228%22%20fill%3D%22%23e8eef9%22/%3E%20%3Cpath%20d%3D%22M372%20286%20h34%20q10%200%2015%209%20l17%2030%20q4%207%204%2015%20v24%20h-70z%22%20fill%3D%22%23ffffff%22/%3E%20%3Cpath%20d%3D%22M384%20298%20h20%20l13%2024%20h-33z%22%20fill%3D%22%237fb3ff%22/%3E%20%3Crect%20x%3D%22236%22%20y%3D%22356%22%20width%3D%22214%22%20height%3D%2216%22%20rx%3D%226%22%20fill%3D%22%23c9d4e8%22/%3E%20%3Ccircle%20cx%3D%22282%22%20cy%3D%22378%22%20r%3D%2221%22%20fill%3D%22%230d1b3d%22/%3E%3Ccircle%20cx%3D%22282%22%20cy%3D%22378%22%20r%3D%228%22%20fill%3D%22%239fb0cc%22/%3E%20%3Ccircle%20cx%3D%22410%22%20cy%3D%22378%22%20r%3D%2221%22%20fill%3D%22%230d1b3d%22/%3E%3Ccircle%20cx%3D%22410%22%20cy%3D%22378%22%20r%3D%228%22%20fill%3D%22%239fb0cc%22/%3E%20%3Crect%20x%3D%22226%22%20y%3D%22350%22%20width%3D%2212%22%20height%3D%2238%22%20rx%3D%223%22%20fill%3D%22%23e8eef9%22/%3E%20%3Crect%20x%3D%22212%22%20y%3D%22386%22%20width%3D%2240%22%20height%3D%228%22%20rx%3D%223%22%20fill%3D%22%234fd1ff%22/%3E%20%3Crect%20x%3D%22334%22%20y%3D%22236%22%20width%3D%2230%22%20height%3D%2298%22%20rx%3D%226%22%20fill%3D%22url%28%23boom%29%22/%3E%20%3Cline%20x1%3D%22349%22%20y1%3D%22246%22%20x2%3D%22250%22%20y2%3D%22168%22%20stroke%3D%22%23b77400%22%20stroke-width%3D%2238%22%20stroke-linecap%3D%22round%22/%3E%20%3Cline%20x1%3D%22349%22%20y1%3D%22246%22%20x2%3D%22250%22%20y2%3D%22168%22%20stroke%3D%22url%28%23boom%29%22%20stroke-width%3D%2232%22%20stroke-linecap%3D%22round%22/%3E%20%3Cline%20x1%3D%22254%22%20y1%3D%22171%22%20x2%3D%22168%22%20y2%3D%22104%22%20stroke%3D%22%23b77400%22%20stroke-width%3D%2229%22%20stroke-linecap%3D%22round%22/%3E%20%3Cline%20x1%3D%22254%22%20y1%3D%22171%22%20x2%3D%22168%22%20y2%3D%22104%22%20stroke%3D%22url%28%23boom%29%22%20stroke-width%3D%2223%22%20stroke-linecap%3D%22round%22/%3E%20%3Ccircle%20cx%3D%22349%22%20cy%3D%22246%22%20r%3D%2211%22%20fill%3D%22%237a4d00%22/%3E%20%3Ccircle%20cx%3D%22164%22%20cy%3D%22101%22%20r%3D%229%22%20fill%3D%22%237a4d00%22/%3E%20%3Cline%20x1%3D%22164%22%20y1%3D%22104%22%20x2%3D%22164%22%20y2%3D%22232%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22/%3E%20%3Cpath%20d%3D%22M164%20230%20v10%20q0%2018%20-16%2018%20q-14%200%20-14%20-13%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%229%22%20stroke-linecap%3D%22round%22/%3E%20%3Cpath%20d%3D%22M150%20262%20L112%20300%20M150%20262%20L188%20300%22%20stroke%3D%22%2358e08a%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22/%3E%20%3Crect%20x%3D%2294%22%20y%3D%22298%22%20width%3D%22112%22%20height%3D%2256%22%20rx%3D%2210%22%20fill%3D%22url%28%23load%29%22/%3E%20%3Crect%20x%3D%2294%22%20y%3D%22298%22%20width%3D%22112%22%20height%3D%2212%22%20rx%3D%226%22%20fill%3D%22%23ffffff%22%20fill-opacity%3D%22.22%22/%3E%20%3Ccircle%20cx%3D%22410%22%20cy%3D%22132%22%20r%3D%2254%22%20fill%3D%22%2322c55e%22/%3E%20%3Ccircle%20cx%3D%22410%22%20cy%3D%22132%22%20r%3D%2254%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%227%22/%3E%20%3Cpath%20d%3D%22M384%20133%20l18%2018%20l34%20-36%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%2213%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22/%3E%20%3C/g%3E%20%3C/svg%3E" alt="" width="30" height="30" style="border-radius:7px;flex:none">
+  <h1>Lorry Crane Lifting Plan Generator</h1>
+  <button id="bNew">New plan</button>
+  <button id="bSave">Save plan</button>
+  <button id="bPlans">Saved plans</button>
+  <button id="bReg">Crane &amp; gear register</button>
+  <a id="aApk" href="LiftingPlan.apk" style="display:none;font-size:13px;padding:6px 11px;border:1px solid var(--line);border-radius:6px;color:var(--ink);text-decoration:none">⬇ Android app</a>
+  <span class="sp"></span>
+  <button id="bPrint">Print</button>
+  <button id="bPdf" class="pri">Download PDF</button>
+</header>
+
+<main>
+<section id="form">
+  <fieldset>
+    <legend>1. Plan details</legend>
+    <div class="g2">
+      <label>Plan no.<input data-k="planNo"></label>
+      <label>Date of lift<input type="date" data-k="liftDate"></label>
+      <label class="full">Site / location<input data-k="location" placeholder="e.g. Blk 123 Ang Mo Kio Ave 3, roadside tree"></label>
+      <label>Company (sheet header)<input data-k="company"></label>
+      <label>Doc no. / Rev<span style="display:flex;gap:4px"><input data-k="docNo"><input data-k="rev" style="width:46px"></span></label>
+      <label>Effective date<input type="date" data-k="effDate"></label>
+      <label>Sheet<input data-k="sheet"></label>
+      <label>Lifting supervisor<input data-k="supervisor"></label>
+      <label>Project manager<input data-k="pm"></label>
+      <label>Date prepared<input type="date" data-k="datePrepared"></label>
+      <label>Date approved<input type="date" data-k="dateApproved"></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>2. Crane &amp; set-up</legend>
+    <div class="g2">
+      <label class="full">Crane (from register)<select data-k="craneId" id="selCrane"></select></label>
+      <label>Boom length used (m)<input type="number" step="0.1" data-k="boomUsed"></label>
+      <label>Working radius (m)<input type="number" step="0.1" data-k="radius"></label>
+      <label>SWL at radius<select data-k="swlMode"><option value="chart">From load chart (auto)</option><option value="manual">Enter manually</option></select></label>
+      <label>Manual SWL (kg)<input type="number" step="1" data-k="swlManual" placeholder="only if manual"></label>
+      <label>Hook block weight (kg)<input type="number" step="1" data-k="hookWt"></label>
+      <label>Hook block SWL (kg)<input type="number" step="1" data-k="hookSwl"></label>
+      <label>Steel plate thickness (mm)<input type="number" step="1" data-k="plate"></label>
+      <label>Exclusion / barricade radius (m)<input type="number" step="0.5" data-k="exclusion" placeholder="auto: radius + 2 m"></label>
+      <label class="full">Crane platform / outrigger support<input data-k="platform"></label>
+    </div>
+    <div class="info" id="craneInfo"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>3. Load</legend>
+    <div class="g3">
+      <label class="full">Load name<input data-k="loadName"></label>
+      <label>Length (m)<input type="number" step="0.1" data-k="loadL"></label>
+      <label>Width (m)<input type="number" step="0.1" data-k="loadW"></label>
+      <label>Height (m)<input type="number" step="0.1" data-k="loadH"></label>
+      <label>Weight (kg)<input type="number" step="1" data-k="loadWt"></label>
+      <label>Contingency (%)<input type="number" step="1" data-k="contingency"></label>
+      <label>Rigging method<input data-k="rigging"></label>
+      <label class="full">How was the weight estimated?<input data-k="weightBasis" placeholder="e.g. trunk Ø0.4 m × 4 m, green hardwood ~1000 kg/m³ + crown"></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>4. Lifting gear</legend>
+    <div id="gearRows"></div>
+    <button id="bAddGear" class="sm">+ Add lifting gear</button>
+    <p class="hint">Rigging capacity = tag SWL × hitch factor × legs carrying the load. Choke 0.8, basket/2-leg at 0–45° 1.4, at 45–60° 1.0. Check the factors against the manufacturer's tag.</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>5. Site sketch &amp; notes</legend>
+    <label>Site sketch or photo (optional, shown in the plan view)<input type="file" accept="image/*" id="fImg"></label>
+    <button id="bClrImg" class="sm" style="margin-top:6px">Remove image</button>
+    <label style="margin-top:8px">Hazards / structures / POB near the lift<textarea data-k="siteNotes" placeholder="e.g. 3-storey HDB block 6 m E, overhead lamp post 4 m N, footpath closed and barricaded"></textarea></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>6. Acceptance limits</legend>
+    <div class="g2">
+      <label>Max. working capacity (%)<input type="number" step="1" data-k="maxUtil"></label>
+      <label>Warn when certificate expires within (days)<input type="number" step="1" data-k="warnDays"></label>
+      <label class="full">Certificate rule for this lift<select data-k="certRule">
+        <option value="six">Strict: personnel basket used / client (e.g. LTA) requires 6-monthly</option>
+        <option value="material">Material lift: 12-month certificate governs (MOM, from 12 Sep 2025)</option></select></label>
+    </div>
+    <p class="hint">MOM (from 12 Sep 2025): mobile cranes every 12 months (6 months if used to lift personnel); lifting gear every 12 months (personnel lifting cages 6 months). Check your client's own requirement before choosing "Material lift".</p>
+  </fieldset>
+
+  <fieldset>
+    <legend>7. Outriggers &amp; ground bearing</legend>
+    <div class="g2">
+      <label class="full">Ground under the most-loaded outrigger<select data-k="ground" id="selGround"></select></label>
+      <label>Custom allowable bearing (kPa)<input type="number" step="5" data-k="groundKpa" placeholder="only for Custom"></label>
+      <label>Plate / mat size L × W (m)<span style="display:flex;gap:4px"><input type="number" step="0.1" data-k="plateL"><input type="number" step="0.1" data-k="plateW"></span></label>
+      <label class="full" style="flex-direction:row;align-items:center;gap:8px;color:var(--ink)"><input type="checkbox" data-k="servicesChecked" style="width:auto"> Underground services, drains, culverts &amp; slopes checked under every outrigger</label>
+    </div>
+    <div class="info" id="olInfo"></div>
+    <p class="hint">Estimate only. Rigid-base method using vehicle weight, boom self-weight at half radius and hook load, checked along the whole pick-to-deck path. Bearing values are presumed screening values. Use the manufacturer's outrigger data or a PE assessment where in doubt.</p>
+  </fieldset>
+</section>
+
+<section id="out">
+  <div id="summary"></div>
+  <div id="checks"></div>
+  <div id="animCard">
+   <div class="ahd"><b>Lift sequence</b><span id="animLock"></span><span class="sp"></span><button id="bPlay" class="pri sm">▶ Play</button></div>
+   <div id="animSvg"><div class="vp v3" id="v3wrap"><div id="a3d"><canvas id="gl3"></canvas><canvas id="ov3"></canvas></div>
+    <div class="v3ctl"><button id="z3out" title="Zoom out" aria-label="Zoom out">−</button><span id="z3lvl">100%</span><button id="z3in" title="Zoom in" aria-label="Zoom in">+</button><button id="z3fit" title="Fit whole site">Fit</button><label class="chk3"><input type="checkbox" id="z3follow" checked> Follow load</label><button id="z3full" title="Full screen" aria-label="Full screen">⛶</button></div></div></div>
+   <div id="aCap"></div>
+   <div class="ro"><span>Radius <b id="aR">—</b></span><span>SWL at radius <b id="aSwl">—</b></span><span>Hook load <b id="aLoad">—</b></span><span>Utilisation <b id="aU">—</b></span><div class="ubar"><i id="aBar"></i></div><span>Sling angle <b id="aAng">—</b></span><span>Leg tension <b id="aT">—</b></span><span>Rigging use <b id="aRig">—</b></span></div>
+   <input type="range" id="scrub" min="0" max="26" step="0.05" value="0">
+  </div>
+  <div id="previewWrap"><div id="scaler"><div class="sheet" id="sheet"></div></div></div>
+</section>
+</main>
+
+<div class="modal" id="mReg"><div class="box">
+  <h2>Crane &amp; lifting gear register <span><button id="bRegReset" class="sm">Reset to defaults</button> <button class="sm" data-close="mReg">Close</button></span></h2>
+  <div class="info" id="teamInfo" style="margin:0 0 10px"></div>
+  <p class="hint" style="margin-top:0">Data comes from the MOM certificates and the Palfinger load charts. Update it when a certificate is renewed. Load chart format: <code>radius:SWL kg</code> pairs separated by commas, smallest radius first.</p>
+  <h3 style="font-size:14px">Cranes</h3>
+  <div id="regCranes"></div>
+  <button id="bAddCrane" class="sm">+ Add crane</button>
+  <h3 style="font-size:14px;margin-top:16px">Lifting gear</h3>
+  <div id="regGear"></div>
+  <button id="bAddLg" class="sm">+ Add lifting gear</button>
+  <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+    <button id="bTeamCheck">Check for team update</button>
+    <button id="bTeamExport" class="pri">Export team register (register.json)</button>
+    <button id="bExport">Back up everything (.json)</button>
+    <label style="display:inline-flex;flex-direction:row;align-items:center;gap:6px;color:var(--ink);font-size:13px">Restore backup <input type="file" accept=".json,application/json" id="fImport" style="width:auto"></label>
+  </div>
+</div></div>
+
+<div class="modal" id="mPlans"><div class="box">
+  <h2>Saved plans <button class="sm" data-close="mPlans">Close</button></h2>
+  <div id="planList"></div>
+  <p class="hint">Plans are saved in this browser. Use "Back up everything" in the register to keep a copy or move them to another computer.</p>
+</div></div>
+
+<div id="toast"></div>
+
+<script>
+/* ======================= DEFAULT REGISTERS ======================= */
+// Sources: MOM Certificates of Test & Examination (Oct/Aug/Jul 2026) and Palfinger load charts.
+const PK26002_G  = [[4.6,4700],[6.5,3000],[8.4,2100],[10.5,1540],[12.6,1180],[14.7,940],[16.8,780],[19.0,670],[21.1,590],[23.1,510]];
+const PK33002_GH = [[4.6,6000],[6.5,3900],[8.4,2800],[10.5,2100],[12.6,1620],[14.7,1320],[16.8,1120],[19.0,960],[21.1,860],[23.1,570]];
+const PK42002_G  = [[4.5,7900],[6.2,5500],[8.0,4000],[9.9,3000],[12.0,2350],[14.2,1880],[16.4,1560],[18.6,1340],[20.8,1180],[23.0,900]];
+const DEFAULT_REG = {
+ cranes:[
+  {id:"LM470937L",veh:"YN185E", model:"PALFINGER PK26002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2014",maxSwl:4700,boom:21.10,ext:2.00,lorryWt:"10.3",capacity:"6",hookWt:30,hookSwl:6500,ae:"2026-10-20",exp:"2027-10-19",six:"2027-04-19",chart:PK26002_G, spread:5.8,olSpacing:6.0,boomWt:1.2, notes:"Cert SWL 4700@4.6 m, 590@21.1 m, 510@23.1 m (manual ext). Outrigger spread, spacing & boom weight are typical values, so verify with the manufacturer."},
+  {id:"LM503596L",veh:"YN9535U",model:"PALFINGER PK26002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2015",maxSwl:4700,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6500,ae:"2026-10-22",exp:"2027-10-21",six:"2027-04-21",chart:PK26002_G, spread:5.8,olSpacing:6.0,boomWt:1.2, notes:"Cert SWL 4700@4.6 m, 590@21.1 m, 510@23.1 m (manual ext). Outrigger/boom-weight values typical, so verify. Lorry weight/capacity copied from previous plan, please verify."},
+  {id:"LM494602C",veh:"XE949C", model:"PALFINGER PK33002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2015",maxSwl:6000,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-08-31",exp:"2027-08-30",six:"2027-02-28",chart:PK33002_GH,spread:5.8,olSpacing:6.0,boomWt:1.5,notes:"High-performance chart G. Outrigger/boom-weight values typical, so verify. Cert SWL 6000@4.6 m, 860@21.1 m, 570@23.1 m (manual ext)."},
+  {id:"LM563471X",veh:"XE1750B",model:"PALFINGER PK33002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2016",maxSwl:6000,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-08-03",exp:"2027-08-02",six:"2027-02-02",chart:PK33002_GH,spread:5.8,olSpacing:6.0,boomWt:1.5,notes:"High-performance chart G. Outrigger/boom-weight values typical, so verify. Cert SWL 6000@4.4 m, 860@21.1 m, 570@23.1 m. Personnel basket LGWFPB432 (120 kg, 1 person) valid to 12/04/2027. 6-month date taken from cert file name."},
+  {id:"LM797234X",veh:"XD5015U",model:"PALFINGER PK42002SH-G + V1 (ASCS)",type:"Lorry Crane",year:"2017",maxSwl:7900,boom:20.80,ext:2.20,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-07-14",exp:"2027-07-13",six:"2027-01-13",chart:PK42002_G, spread:6.4,olSpacing:6.0,boomWt:2.0, notes:"Outrigger/boom-weight values typical, so verify. Cert SWL 7900@4.5 m, 1180@20.8 m, 900@23.0 m (manual ext). 6-month date taken from cert file name."}
+ ],
+ gear:[
+  {id:"LG6J2819-1 TO 10",name:"Webbing Sling",desc:"2\" x 8 m 2-ply webbing sling (qty 10)",swl:2000,wt:2,len:8,exp:"2027-05-27",six:"2026-11-27",notes:"Cert examined 28/05/2026."},
+  {id:"LG6J2498-1 TO 10",name:"Webbing Sling",desc:"2 t webbing sling (qty 10)",swl:2000,wt:2,len:8,exp:"2027-05-27",six:"2026-11-27",notes:"Certificate not provided. Length assumed 8 m. Dates from previous plans, please verify."},
+  {id:"LG4T1018",name:"Chain Sling",desc:"10 mm x 2-leg x 12 ft alloy chain sling, masterlink + clevis self-lock hooks",swl:4000,wt:21.5,len:3.66,exp:"2027-09-09",six:"2027-03-09",notes:"Cert examined 10/09/2026."}
+ ]
+};
+const HITCH = {straight:["Straight / vertical",1.0],choke:["Choke hitch",0.8],basket:["Basket, legs vertical",2.0],b45:["2-leg / basket 0–45°",1.4],b60:["2-leg / basket 45–60°",1.0],rated:["As rated on tag",1.0]};
+
+/* ======================= STATE ======================= */
+const LS = {
+ get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+ set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+const today = ()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+function blankPlan(){
+ return {planNo:"",liftDate:today(),location:"",company:"TAN HUAN",docNo:"EHS-14-F08A",rev:"A",sheet:"1 OF 1",effDate:"",
+  supervisor:"SARKAR SHUBAS",pm:"ANDY TAN",datePrepared:today(),dateApproved:"",
+  craneId:"LM470937L",boomUsed:18.0,radius:10.5,swlMode:"chart",swlManual:"",hookWt:30,hookSwl:6500,plate:25,exclusion:"",certRule:"six",ground:"asphalt",groundKpa:"",plateL:1.0,plateW:1.0,servicesChecked:false,
+  platform:"1000mm x 1000mm x 25mm steel plate to be provided",
+  loadName:"Wood Debris / Tree",loadL:7,loadW:3,loadH:3,loadWt:900,contingency:0,rigging:"Choke Hitch",weightBasis:"",
+  gear:[{id:"LG6J2819-1 TO 10",qty:1,legs:1,hitch:"choke"}],siteNotes:"",siteImg:"",maxUtil:75,warnDays:14};
+}
+let REG = LS.get("lp_reg", null) || JSON.parse(JSON.stringify(DEFAULT_REG));
+let P = Object.assign(blankPlan(), LS.get("lp_draft", {}));
+let PLANS = LS.get("lp_plans", []);
+
+/* ======================= HELPERS ======================= */
+const $ = s=>document.querySelector(s);
+const num = v=>{const n=parseFloat(v);return isFinite(n)?n:0};
+const esc = s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const dmy = iso=>{if(!iso)return "";const p=iso.split("-");return p.length===3?`${p[2]}-${p[1]}-${p[0]}`:iso};
+const tons = kg=>(kg/1000).toFixed(3).replace(/0$/,"")+" Ton";
+const tonsS = kg=>{const t=kg/1000;return (Math.round(t*100)/100).toFixed(2)+" Ton"};
+const floor2 = x=>Math.floor(x*100)/100;
+const exclR = ()=>P.exclusion===""||P.exclusion==null?Math.round((num(P.radius)+2)*10)/10:num(P.exclusion);
+const crane = ()=>REG.cranes.find(c=>c.id===P.craneId)||null;
+const gearOf = id=>REG.gear.find(g=>g.id===id)||null;
+const days = (a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",2600)}
+function autoPlanNo(){const c=crane();return "LP-"+(P.liftDate||today()).replace(/-/g,"")+"-"+(c?c.veh:"X")}
+
+/* ======================= CALCULATION ======================= */
+function calc(){
+ const c=crane(), R=num(P.radius), r={c};
+ r.pt=null; r.chartSwl=null;
+ if(c&&c.chart&&c.chart.length&&R>0){
+  // conservative: use the chart point at the next radius equal to or greater than the working radius
+  r.pt=c.chart.find(p=>p[0]>=R-1e-9)||null;
+  if(r.pt) r.chartSwl=Math.min(r.pt[1],num(c.maxSwl)||r.pt[1]);
+ }
+ r.swl = P.swlMode==="manual" ? num(P.swlManual) : (r.chartSwl||0);
+ r.loadKg = num(P.loadWt)*(1+num(P.contingency)/100);
+ r.gear = (P.gear||[]).map(g=>{const d=gearOf(g.id)||{};const f=(HITCH[g.hitch]||HITCH.straight)[1];
+   return {...g,d,wtKg:num(d.wt)*Math.max(1,num(g.qty)),cap:num(d.swl)*f*Math.max(1,num(g.legs)),f}});
+ r.gearKg = r.gear.reduce((a,g)=>a+g.wtKg,0);
+ r.hookKg = num(P.hookWt);
+ r.total = r.loadKg + r.hookKg + r.gearKg;
+ r.util = r.swl>0 ? r.total/r.swl*100 : null;
+ r.sf = r.total>0 && r.swl>0 ? r.swl/r.total : null;
+ const L=num(P.boomUsed);
+ r.angle = (L>0&&R>0&&R<=L)? Math.acos(R/L)*180/Math.PI : null;
+ return r;
+}
+/* ---------- outrigger reactions & ground bearing ---------- */
+const GROUND={verge:["Grass verge / soft soil",50],firm:["Firm compacted soil",100],gravel:["Compacted gravel / hardcore",200],asphalt:["Asphalt road in good condition",250],concrete:["Reinforced concrete slab / pavement",400],custom:["Custom (PE / site assessment)",0]};
+const craneGeo=c=>({Sx:num(c.spread)||5.8, Ls:num(c.olSpacing)||6.0, Wb:num(c.boomWt)||1.5, Wv:num(c.lorryWt)||20});
+const OL_Y0=0.05; // front outriggers at the crane column; rear outriggers Ls behind
+function olReactions(c,rr,phi,Qt){
+ const g=craneGeo(c), yF=OL_Y0, yR=yF-g.Ls, y0=(yF+yR)/2;
+ const pts=[[-g.Sx/2,yF,"front-left"],[g.Sx/2,yF,"front-right"],[-g.Sx/2,yR,"rear-left"],[g.Sx/2,yR,"rear-right"]];
+ const loads=[[g.Wv-g.Wb,0,y0],[g.Wb,rr/2*Math.cos(phi),rr/2*Math.sin(phi)],[Qt,rr*Math.cos(phi),rr*Math.sin(phi)]];
+ const V=loads.reduce((a,l)=>a+l[0],0), Mx=loads.reduce((a,l)=>a+l[0]*l[1],0), My=loads.reduce((a,l)=>a+l[0]*(l[2]-y0),0);
+ const sx=4*(g.Sx/2)**2, sy=4*(g.Ls/2)**2;
+ return pts.map(p=>({name:p[2],x:p[0],y:p[1],t:V/4+Mx*p[0]/sx+My*(p[1]-y0)/sy}));
+}
+function olWorst(r){
+ const c=r.c; if(!c) return null;
+ const R=num(P.radius)||0; if(R<=0) return null;
+ const lW=Math.min(Math.max(num(P.loadL)||1,0.6),8), Rd=Math.max(3.2,Math.min(5.5,lW/2+0.9));
+ const Qt=r.total/1000; let worst=null, minR=null;
+ for(let i=0;i<=12;i++){const u=i/12, phi=Math.PI*(1+u/2), rr=R+(Rd-R)*u;
+  olReactions(c,rr,phi,Qt).forEach(o=>{if(!worst||o.t>worst.t)worst={...o,rr,phi};if(!minR||o.t<minR.t)minR={...o,rr,phi}})}
+ const A=Math.max(0.01,num(P.plateL)*num(P.plateW));
+ const kN=worst.t*9.81, kPa=kN/A;
+ const gk=GROUND[P.ground]?P.ground:"asphalt", allow=gk==="custom"?num(P.groundKpa):GROUND[gk][1];
+ return {worst,minR,kN,kPa,A,allow,gk,needA:allow>0?kN/allow:null,g:craneGeo(c)};
+}
+function checks(r){
+ const out=[], add=(lvl,msg)=>out.push({lvl,msg});
+ const c=r.c, lift=P.liftDate||today(), wd=num(P.warnDays)||0;
+ const dateChk=(label,iso)=>{
+  if(!iso){add("warn",`${label}: no date in the register`);return}
+  const d=days(iso,lift);
+  if(d<0) add("fail",`${label} expired on ${dmy(iso)}, before the lift date ${dmy(lift)}`);
+  else if(d<=wd) add("warn",`${label} expires on ${dmy(iso)}, ${d} day(s) after the lift`);
+  else add("ok",`${label} valid to ${dmy(iso)}`);
+ };
+ if(!c){add("fail","No crane selected");return out}
+ dateChk(`Crane ${c.id} certificate`,c.exp);
+ const strict=P.certRule!=="material";
+ if(strict) dateChk(`Crane ${c.id} 6-month (LTA) validity`,c.six);
+ else add("ok","Material lift: 6-month (LTA/personnel) dates not applied, 12-month certificates govern");
+ const R=num(P.radius), L=num(P.boomUsed), maxReach=num(c.boom)+num(c.ext);
+ if(R<=0) add("fail","Enter the working radius");
+ else if(!r.pt) add("fail",`Radius ${R} m is beyond the load chart (max ${c.chart.length?c.chart[c.chart.length-1][0]:"?"} m)`);
+ else add("ok",`Load chart: ${R} m → chart point ${r.pt[0]} m = ${r.chartSwl.toLocaleString()} kg`);
+ if(R>num(c.boom)&&R<=maxReach) add("warn",`Radius exceeds hydraulic boom (${c.boom} m), so the manual extension is required`);
+ if(L>0&&R>L) add("fail",`Radius (${R} m) is greater than the boom length used (${L} m)`);
+ if(L>maxReach) add("fail",`Boom length used (${L} m) exceeds max boom + extension (${maxReach.toFixed(2)} m)`);
+ if(P.swlMode==="manual"){
+  if(!num(P.swlManual)) add("fail","Manual SWL selected but not entered");
+  else if(r.chartSwl&&num(P.swlManual)>r.chartSwl) add("fail",`Manual SWL ${num(P.swlManual)} kg is higher than the load chart (${r.chartSwl} kg)`);
+  else add("warn","SWL entered manually, so check it against the load chart");
+ }
+ if(r.util!=null){
+  const lim=num(P.maxUtil)||75;
+  if(r.util>100) add("fail",`Overload: ${r.util.toFixed(2)}% of SWL`);
+  else if(r.util>lim) add("fail",`Working capacity ${r.util.toFixed(2)}% exceeds the ${lim}% limit`);
+  else add("ok",`Working capacity ${r.util.toFixed(2)}% (limit ${lim}%), safety factor ${floor2(r.sf).toFixed(2)}`);
+ }
+ if(num(P.hookSwl)&&r.total>num(P.hookSwl)) add("fail",`Total load exceeds hook block SWL (${num(P.hookSwl)} kg)`);
+ if(!r.gear.length) add("fail","No lifting gear selected");
+ r.gear.forEach(g=>{
+  if(!g.d.id){add("fail",`Lifting gear ${g.id||"(blank)"} is not in the register`);return}
+  dateChk(`${g.d.name} ${g.d.id} certificate`,g.d.exp);
+  if(strict) dateChk(`${g.d.name} ${g.d.id} 6-month (LTA) validity`,g.d.six);
+  if(g.cap<r.loadKg) add("fail",`${g.d.name} ${g.d.id}: rigging capacity ${Math.round(g.cap)} kg < load ${Math.round(r.loadKg)} kg`);
+  else add("ok",`${g.d.name} ${g.d.id}: rigging capacity ${Math.round(g.cap)} kg (${HITCH[g.hitch][0]}) ≥ load ${Math.round(r.loadKg)} kg`);
+ });
+ if(typeof rigInfo==="function"){const rg=rigInfo(r);
+  if(rg){
+   if(rg.tooShort) add("fail",`${rg.up.d.name} ${rg.up.d.id}: effective leg length ${rg.Ls.toFixed(2)} m is too short to reach attachment points ${(2*rg.dx).toFixed(1)} m apart`);
+   else if(rg.n>1){
+    if(rg.incl>120) add("fail",`Included sling angle ${Math.round(rg.incl)}° exceeds 120°. Use longer slings or a spreader`);
+    else if(rg.incl>90) add("warn",`Included sling angle ${Math.round(rg.incl)}° is over 90°, so sling capacity is reduced. Consider longer slings`);
+    else add("ok",`Sling angle ${Math.round(rg.incl)}° included, leg tension ${(rg.T/1000).toFixed(2)} t × ${rg.n}`);
+   }
+   if(!rg.tooShort&&rg.util>100) add("fail",`Rigging overloaded at this sling angle: ${rg.util.toFixed(0)}% of rigging capacity`);
+  }}
+ const ol=olWorst(r);
+ if(ol){
+  const gname=GROUND[ol.gk][0];
+  if(ol.gk==="custom"&&!ol.allow) add("warn","Enter the allowable ground bearing for Custom ground");
+  else if(ol.kPa>ol.allow) add("fail",`Ground bearing ${Math.round(ol.kPa)} kPa under ${ol.worst.name} outrigger exceeds ${ol.allow} kPa (${gname}). Use mats ≥ ${ol.needA.toFixed(2)} m² or get a PE assessment`);
+  else if(ol.kPa>0.8*ol.allow) add("warn",`Ground bearing ${Math.round(ol.kPa)} kPa is over 80% of ${ol.allow} kPa (${gname}). Consider bigger mats`);
+  else add("ok",`Max outrigger ${Math.round(ol.kN)} kN (${ol.worst.name}) → ${Math.round(ol.kPa)} kPa on ${ol.A.toFixed(2)} m², allowable ${ol.allow} kPa`);
+  const avg=(ol.g.Wv+r.total/1000)/4;
+  if(ol.minR.t<0) add("fail",`${ol.minR.name} outrigger would lift off (${ol.minR.t.toFixed(2)} t) along the lift path. Check radius, slew path and set-up`);
+  else if(ol.minR.t<0.15*avg) add("warn",`${ol.minR.name} outrigger nearly unloaded (${ol.minR.t.toFixed(2)} t). Little stability margin`);
+  if(!P.servicesChecked) add("warn","Confirm underground services, drains and slopes have been checked under every outrigger");
+ }
+ if(!num(P.loadWt)) add("fail","Enter the load weight");
+ if(!P.weightBasis) add("warn","Say how the load weight was estimated, especially for trees");
+ if(!P.location) add("warn","Site / location is blank");
+ if(!P.siteNotes&&!P.siteImg) add("warn","No hazards/structures/POB noted and no site sketch, which the form asks for");
+ if(exclR()<R) add("warn","Exclusion radius is smaller than the working radius");
+ if(!P.effDate) add("warn","Effective date is blank");
+ if(!P.dateApproved) add("warn","Not yet approved (date approved is blank)");
+ return out;
+}
+
+/* ======================= DRAWING ======================= */
+function wrap(t,n){const w=String(t||"").split(/\s+/);const L=[];let s="";w.forEach(x=>{if((s+" "+x).trim().length>n){if(s)L.push(s);s=x}else s=(s+" "+x).trim()});if(s)L.push(s);return L}
+function box(x,y,w,h,lines,title){
+ let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#fff" stroke="#000" stroke-width="1"/>`;
+ let yy=y+14;
+ if(title){s+=`<text x="${x+6}" y="${yy}" font-size="10.5" font-weight="700" text-decoration="underline">${esc(title)}</text>`;yy+=13}
+ lines.forEach(l=>{if(yy<y+h-2){s+=`<text x="${x+6}" y="${yy}" font-size="10">${esc(l)}</text>`;yy+=12.5}});
+ return s;
+}
+function drawSVG(r){
+ const c=r.c||{}, R=num(P.radius)||1, L=Math.max(num(P.boomUsed),R);
+ const W=840,H=560,G=350, colX=748, colTop=238;
+ const h=Math.sqrt(Math.max(L*L-R*R,0));
+ let s=Math.min((colX-265)/R, h>0?(colTop-28)/h:99, 42);
+ const tx=colX-R*s, ty=colTop-h*s;
+ let o=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial, Helvetica, sans-serif">`;
+ o+=`<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#1f5fbf"/></marker></defs>`;
+ // plan view (top-left or top-right, away from the boom)
+ const pvx=8, pvy=6, pr=62, pcx=pvx+80, pcy=pvy+78;
+ o+=`<g>`;
+ if(P.siteImg){
+  o+=`<rect x="${pvx}" y="${pvy}" width="160" height="150" fill="#fff" stroke="#000"/><image href="${P.siteImg}" x="${pvx+2}" y="${pvy+2}" width="156" height="146" preserveAspectRatio="xMidYMid meet"/>`;
+  o+=`<text x="${pvx+80}" y="${pvy+164}" font-size="10" text-anchor="middle">SITE SKETCH / PHOTO</text>`;
+ }else{
+  const ex=Math.max(exclR(),R), rr=pr*R/ex;
+  o+=`<circle cx="${pcx}" cy="${pcy}" r="${pr}" fill="#fdecec" stroke="#c0392b" stroke-dasharray="4 3"/>`;
+  o+=`<circle cx="${pcx}" cy="${pcy}" r="${rr}" fill="none" stroke="#1f5fbf"/>`;
+  o+=`<rect x="${pcx-7}" y="${pcy-22}" width="14" height="44" fill="#bbb" stroke="#000"/><rect x="${pcx-7}" y="${pcy-22}" width="14" height="10" fill="#777"/>`;
+  o+=`<line x1="${pcx}" y1="${pcy}" x2="${pcx-rr*0.94}" y2="${pcy-rr*0.34}" stroke="#1f5fbf" stroke-width="1.5"/>`;
+  o+=`<rect x="${pcx-rr*0.94-8}" y="${pcy-rr*0.34-5}" width="16" height="10" fill="#e67e22" stroke="#000" stroke-width=".6"/>`;
+  o+=`<text x="${pcx}" y="${pcy+pr+12}" font-size="10" text-anchor="middle">PLAN: R = ${R} m · Exclusion = ${ex} m</text>`;
+ }
+ o+=`</g>`;
+ const nx = pvx+2, ny=pvy+184;
+ ["LOADING/ UNLOADING","OPERATIONS INVOLVING","LORRY CRANE SHALL TAKE","PLACE OVER THE SIDE OF","THE MAIN BODY ONLY"].forEach((t,i)=>o+=`<text x="${nx}" y="${ny+i*11.5}" font-size="9.5" font-weight="700">${t}</text>`);
+ // ground
+ o+=`<line x1="0" y1="${G}" x2="${W}" y2="${G}" stroke="#555" stroke-width="1.2"/>`;
+ // lorry
+ o+=`<rect x="525" y="304" width="240" height="12" fill="#d9d9d9" stroke="#000"/>`;
+ o+=`<rect x="520" y="316" width="300" height="10" fill="#9a9a9a" stroke="#000"/>`;
+ o+=`<path d="M768 316 L768 272 L808 272 L826 296 L826 326 L768 326Z" fill="#e8e8e8" stroke="#000"/>`;
+ o+=`<rect x="776" y="279" width="22" height="16" fill="#cfe3f5" stroke="#000" stroke-width=".7"/>`;
+ [555,600,705,790].forEach(x=>o+=`<circle cx="${x}" cy="${G-13}" r="12" fill="#333"/><circle cx="${x}" cy="${G-13}" r="4" fill="#999"/>`);
+ // outriggers + steel plates
+ o+=`<line x1="490" y1="320" x2="525" y2="320" stroke="#000" stroke-width="3"/><line x1="490" y1="320" x2="490" y2="${G-5}" stroke="#000" stroke-width="3"/>`;
+ o+=`<rect x="472" y="${G-5}" width="36" height="5" fill="#1f5fbf"/>`;
+ o+=`<line x1="820" y1="320" x2="836" y2="320" stroke="#000" stroke-width="3"/><line x1="836" y1="320" x2="836" y2="${G-5}" stroke="#000" stroke-width="3"/>`;
+ o+=`<rect x="818" y="${G-5}" width="22" height="5" fill="#1f5fbf"/>`;
+ // column
+ o+=`<rect x="${colX-10}" y="${colTop}" width="20" height="${304-colTop}" fill="#f2f2f2" stroke="#000"/>`;
+ // boom (telescopic look)
+ const seg=[[0,.4,9],[.4,.7,7],[.7,1,5]];
+ seg.forEach(([a,b,w])=>o+=`<line x1="${colX+(tx-colX)*a}" y1="${colTop+(ty-colTop)*a}" x2="${colX+(tx-colX)*b}" y2="${colTop+(ty-colTop)*b}" stroke="#000" stroke-width="${w+2}" stroke-linecap="round"/><line x1="${colX+(tx-colX)*a}" y1="${colTop+(ty-colTop)*a}" x2="${colX+(tx-colX)*b}" y2="${colTop+(ty-colTop)*b}" stroke="#f4f4f4" stroke-width="${w}" stroke-linecap="round"/>`);
+ // hook & load
+ const hookY=ty+32, lw=150, lh=46;
+ let lt=Math.max(G-lh-40,hookY+30);
+ const bx=y=>colTop-ty>1?tx+(y-ty)*(colX-tx)/(colTop-ty):tx;
+ const place=()=>{let x=tx-lw/2; if(x+lw>bx(lt)-10) x=bx(lt)-10-lw; return Math.max(185,Math.min(x,W-lw-4))};
+ let lx=place(); if(lx+lw>468){lt=Math.max(hookY+30,304-lh-12);lx=place()}
+ o+=`<line x1="${tx}" y1="${ty}" x2="${tx}" y2="${hookY}" stroke="#000" stroke-width="1.2"/>`;
+ o+=`<path d="M${tx} ${hookY} q-7 0 -7 7 q0 8 8 8 q6 0 6 -6" fill="none" stroke="#000" stroke-width="2"/>`;
+ o+=`<line x1="${tx}" y1="${hookY+12}" x2="${lx+30}" y2="${lt}" stroke="#000" stroke-width="2"/><line x1="${tx}" y1="${hookY+12}" x2="${lx+lw-30}" y2="${lt}" stroke="#000" stroke-width="2"/>`;
+ o+=`<rect x="${lx}" y="${lt}" width="${lw}" height="${lh}" fill="#ed7d31" stroke="#000"/>`;
+ o+=`<text x="${lx+lw/2}" y="${lt+lh/2+4}" font-size="11" text-anchor="middle">${esc(wrap(P.loadName,24)[0]||"Load")}</text>`;
+ // centre line
+ o+=`<line x1="${colX}" y1="${colTop-18}" x2="${colX}" y2="${G}" stroke="#777" stroke-dasharray="10 5"/>`;
+ o+=`<line x1="${tx}" y1="${lt+lh}" x2="${tx}" y2="${G+22}" stroke="#777" stroke-dasharray="3 3"/>`;
+ // radius dimension
+ o+=`<line x1="${tx}" y1="${G+16}" x2="${colX}" y2="${G+16}" stroke="#1f5fbf" stroke-width="2" marker-start="url(#ar)" marker-end="url(#ar)"/>`;
+ o+=`<text x="${(tx+colX)/2}" y="${G+12}" font-size="10.5" text-anchor="middle" fill="#1f5fbf" font-weight="700">Working radius = ${R} m</text>`;
+ // boom label
+ const mx=(colX+tx)/2, my=(colTop+ty)/2;
+ const dx=tx-colX,dy=ty-colTop,dl=Math.hypot(dx,dy)||1;let nx2=dy/dl,ny2=-dx/dl;if(nx2<0){nx2=-nx2;ny2=-ny2}
+ o+=`<text x="${mx+nx2*16}" y="${my+ny2*16}" font-size="10" font-weight="700" text-anchor="start">Boom ${num(P.boomUsed)} m${r.angle!=null?` · ≈${Math.round(r.angle)}°`:""}</text>`;
+ o+=`<text x="${W-4}" y="${G+26}" font-size="8.5" text-anchor="end" fill="#666">Schematic, not to scale</text>`;
+ // info boxes (two rows)
+ const by=G+30, bw=205, bh=84, gap=6.6;
+ const X=i=>2+i*(bw+gap);
+ const loadLines=[`Load Name: ${P.loadName}`,`Dimension: ${num(P.loadL)}m x ${num(P.loadW)}m x ${num(P.loadH)}m`,`Weight = ${num(P.loadWt).toLocaleString()} KG${num(P.contingency)?` (+${num(P.contingency)}% = ${Math.round(r.loadKg)} KG)`:""}`,`Rigging Method: ${P.rigging}`];
+ o+=box(X(0),by,bw,bh,loadLines,"LOAD");
+ o+=box(X(1),by,bw,bh,[`Boom length = ${num(P.boomUsed)} m`,`Working Radius = ${R} m`,`SWL at radius = ${r.swl?tonsS(r.swl):"—"}`,r.pt?`(chart point ${r.pt[0]} m${P.swlMode==="manual"?", manual entry":""})`:""],"BOOM / RADIUS");
+ o+=box(X(2),by,bw,bh,[`Vehicle: ${c.veh||""}  LM No: ${c.id||""}`,`SWL of Crane: ${c.maxSwl?tonsS(c.maxSwl):""}`,`Date of AE Inspection: ${dmy(c.ae)}`,`Next AE Inspection: ${dmy(c.exp)}`,`Next AE Inspection (LTA): ${dmy(c.six)}`],"CRANE");
+ {const ol=olWorst(r);o+=box(X(3),by,bw,bh,ol?[`Plates ${num(P.plateL)}m x ${num(P.plateW)}m x ${num(P.plate)}mm`,`Max outrigger load: ${Math.round(ol.kN)} kN`,`Bearing ${Math.round(ol.kPa)} kPa / allow ${ol.allow} kPa`,`Ground: ${({verge:"grass verge / soft",firm:"firm soil",gravel:"compacted gravel",asphalt:"asphalt road",concrete:"RC slab",custom:"custom (PE)"})[ol.gk]}`,`Exclusion zone: ${exclR()} m radius`]:[...wrap(P.platform,36).slice(0,2),`Steel plate: ${num(P.plate)} mm`,`Exclusion zone: ${exclR()} m radius`],"CRANE PLATFORM / GROUND");}
+ const by2=by+bh+6;
+ const gs=r.gear.slice(0,3);
+ gs.forEach((g,i)=>o+=box(X(i),by2,bw,bh,[`LG Name: ${g.d.name||""}`,`LG No: ${g.d.id||g.id}`,`LG SWL: ${g.d.swl?tonsS(g.d.swl):""} · Qty ${num(g.qty)||1}`,`LG Expiry Date: ${dmy(g.d.exp)}`,`LG Expiry Date (LTA): ${dmy(g.d.six)}`],"LIFTING GEAR"));
+ const notes=[...(P.location?wrap("Location: "+P.location,36):[]),...wrap(P.siteNotes,36)];
+ o+=box(X(Math.max(gs.length,3)),by2,bw,bh,notes.length?notes.slice(0,5):["(none recorded)"],"SITE / HAZARDS / POB");
+ o+=`</svg>`;
+ return o;
+}
+
+/* ======================= SHEET ======================= */
+function renderSheet(r,ch){
+ const c=r.c||{}, fail=ch.some(x=>x.lvl==="fail");
+ const row=(k,v,cls="")=>`<tr><td class="k">${k}</td><td class="v ${cls}">${v}</td></tr>`;
+ const bar=`<tr class="bar"><td colspan="2"></td></tr>`;
+ let t=`<table>`;
+ t+=row("Type of Crane",esc(c.type||""))+row("Crane Model",esc((c.model||"").replace(/^PALFINGER /,"PK ").replace(/^PK PK/,"PK").split(" + ")[0]))+row("Vehicle No",esc(c.veh||""));
+ t+=row("Weight of Crane",c.lorryWt?esc(c.lorryWt)+" Ton":"")+row("Capacity of Crane",c.capacity?esc(c.capacity)+" Ton":"")+row("Year of Manufacture",esc(c.year||""));
+ t+=row("LM No",esc(c.id||""))+row("Date of AE Inspection",dmy(c.ae))+row("Date of Next Inspection",dmy(c.exp))+row("Date of Next Inspection (LTA)",dmy(c.six));
+ t+=row("Boom Length",num(P.boomUsed).toFixed(2)+"m")+row("Fly Jib / Ext.",c.ext?num(c.ext).toFixed(2)+"m (manual)":"NA")+row("SWL of Crane",c.maxSwl?tonsS(c.maxSwl):"");
+ t+=row("Working Radius",num(P.radius).toFixed(2)+"m")+row("SWL of Working Radius",r.swl?tonsS(r.swl):"—",r.swl?"":"bad");
+ t+=row("Weight of Hook and Block (Main)",num(P.hookWt)+"KG")+row("SWL of Hook and Block (Main)",num(P.hookSwl)?tonsS(num(P.hookSwl)):"NA")+row("Thickness of Steel Plate",num(P.plate)+"MM");
+ {const ol=olWorst(r);if(ol)t+=row("Max Outrigger Load",Math.round(ol.kN)+" kN")+row("Ground Bearing / Allowable",`${Math.round(ol.kPa)} / ${ol.allow} kPa`,ol.allow&&ol.kPa>ol.allow?"bad":"");}
+ t+=bar+`<tr><td class="k">Lifting Gear(s)</td><td class="v">Weight / SWL</td></tr>`;
+ r.gear.forEach(g=>t+=row(esc((g.d.name||g.id)+(num(g.qty)>1?` ×${num(g.qty)}`:"")),`${g.wtKg}KG / ${g.d.swl?(g.d.swl/1000)+" Ton":"?"}`));
+ t+=bar+`<tr><td class="k">Types of Load(s)</td><td class="v">Weight</td></tr>`;
+ t+=row(esc(P.loadName),(r.loadKg/1000).toFixed(3)+" Ton");
+ t+=`</table><div class="fill"></div><table>`;
+ const lim=num(P.maxUtil)||75;
+ t+=`<tr class="big"><td class="k">Total Weight of Load to be Hoisted</td><td class="v">${tons(r.total)}</td></tr>`;
+ t+=`<tr class="big"><td class="k">Safety Factor</td><td class="v ${r.sf!=null&&r.sf<1?"bad":""}">${r.sf!=null?floor2(r.sf).toFixed(2):"—"}</td></tr>`;
+ t+=`<tr class="big"><td class="k">Working Capacity</td><td class="v ${r.util!=null&&r.util>lim?"bad":""}">${r.util!=null?r.util.toFixed(2)+"%":"—"}</td></tr></table>`;
+
+ const html=`
+ <table class="sh-head">
+  <tr><td rowspan="4" class="sh-co">${esc(P.company)}</td><td style="width:220px">DOC NO. &nbsp;: ${esc(P.docNo)}</td></tr>
+  <tr><td>REV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${esc(P.rev)}</td></tr>
+  <tr><td>SHEET &nbsp;&nbsp;&nbsp;&nbsp;: ${esc(P.sheet)}</td></tr>
+  <tr><td>EFFECTIVE DATE : ${dmy(P.effDate)}</td></tr>
+  <tr><td class="sh-title" colspan="2">TITLE: LIFTING PLAN</td></tr>
+  <tr><td colspan="2" style="font-size:10px">PLAN NO: <b>${esc(P.planNo||autoPlanNo())}</b> &nbsp;&nbsp;|&nbsp;&nbsp; DATE OF LIFT: <b>${dmy(P.liftDate)}</b> &nbsp;&nbsp;|&nbsp;&nbsp; LOCATION: <b>${esc(P.location||"—")}</b></td></tr>
+ </table>
+ <div class="sh-body">
+  <div class="sh-left">
+   <div class="sh-draw">${drawSVG(r)}</div>
+   <table class="sh-foot" style="border-top:1px solid #000">
+    <tr><td colspan="2" style="border-left:0;border-right:0;border-top:0">* Drawing to include location, affected areas (radius), SWL, buildings/structures/POB (Width/Length/Height) etc${P.weightBasis?` · Weight basis: ${esc(P.weightBasis)}`:""}</td></tr>
+    <tr><td style="border-left:0;width:50%"><b>LIFTING SUPERVISOR: ${esc(P.supervisor)}</b> &nbsp; Sign: ____________</td><td style="border-right:0"><b>PROJECT MANAGER: ${esc(P.pm)}</b> &nbsp; Sign: ____________</td></tr>
+    <tr><td style="border-left:0;border-bottom:0">DATE PREPARED: ${dmy(P.datePrepared)}</td><td style="border-right:0;border-bottom:0">DATE APPROVED: ${dmy(P.dateApproved)}</td></tr>
+   </table>
+  </div>
+  <div class="sh-right">${t}</div>
+ </div>
+ ${fail?`<div class="wm">DRAFT · CHECKS FAILED</div>`:""}`;
+ $("#sheet").innerHTML=html;
+}
+
+/* ======================= UI ======================= */
+function renderSummary(r,ch){
+ const lim=num(P.maxUtil)||75, f=ch.filter(x=>x.lvl==="fail").length, w=ch.filter(x=>x.lvl==="warn").length;
+ const u=r.util, ucls=u==null?"":u>100||u>lim?"bad":u>lim-5?"warn":"ok";
+ $("#summary").innerHTML=`
+  <div class="kpi"><div class="l">Total load to hoist</div><div class="v">${tons(r.total)}</div></div>
+  <div class="kpi"><div class="l">SWL at ${num(P.radius)} m</div><div class="v">${r.swl?tonsS(r.swl):"—"}</div></div>
+  <div class="kpi ${ucls}"><div class="l">Working capacity · SF</div><div class="v">${u!=null?u.toFixed(2)+"%":"—"} · ${r.sf!=null?floor2(r.sf).toFixed(2):"—"}</div></div>
+  <div class="kpi ${f?"bad":w?"warn":"ok"}"><div class="l">Checks</div><div class="v">${f?f+" fail":w?w+" warning":"All OK"}</div></div>`;
+ const order={fail:0,warn:1,ok:2};
+ $("#checks").innerHTML=`<h3>Plan checks</h3>`+ch.slice().sort((a,b)=>order[a.lvl]-order[b.lvl]).map(x=>`<div class="chk"><span class="tag ${x.lvl}">${x.lvl.toUpperCase()}</span><span>${esc(x.msg)}</span></div>`).join("");
+}
+function renderOl(r){
+ const ol=olWorst(r), el=$("#olInfo"); if(!el) return;
+ if(!ol){el.textContent="";return}
+ const all=olReactions(r.c,ol.worst.rr,ol.worst.phi,r.total/1000);
+ const cls=ol.allow&&ol.kPa>ol.allow?"var(--bad)":ol.allow&&ol.kPa>0.8*ol.allow?"#b54708":"var(--ok)";
+ el.innerHTML=`<b>Worst position:</b> radius ${ol.worst.rr.toFixed(1)} m, ${Math.round(((ol.worst.phi/Math.PI)-1)*180)}° into the slew<br>`+
+  all.map(o=>`${o.name}: <b>${(o.t*9.81).toFixed(0)} kN</b> (${o.t.toFixed(2)} t)`).join(" · ")+
+  `<br>Bearing: <b style="color:${cls}">${Math.round(ol.kPa)} kPa</b> on ${ol.A.toFixed(2)} m² vs ${ol.allow||"?"} kPa allowable${ol.needA?` · min. mat area ${ol.needA.toFixed(2)} m²`:""}`+
+  `<br><span style="font-size:11px">Vehicle ${ol.g.Wv} t, boom ${ol.g.Wb} t, outriggers ${ol.g.Sx} m × ${ol.g.Ls} m (from register)</span>`;
+}
+function renderCraneInfo(r){
+ const c=r.c; if(!c){$("#craneInfo").textContent="";return}
+ const pts=c.chart.map(p=>`${p[0]}m ${p[1]}`).join(" · ");
+ $("#craneInfo").innerHTML=`<b>${esc(c.veh)} · ${esc(c.model)}</b><br>Max SWL ${c.maxSwl} kg · Boom ${c.boom} m + ${c.ext} m manual ext · Cert to ${dmy(c.exp)} · 6-month ${dmy(c.six)}<br><span style="font-size:11px">Chart (kg): ${pts}</span>${c.notes?`<br><i style="font-size:11px">${esc(c.notes)}</i>`:""}`;
+}
+function renderGearRows(){
+ const opts=id=>REG.gear.map(g=>`<option value="${esc(g.id)}" ${g.id===id?"selected":""}>${esc(g.name)} · ${esc(g.id)} (${g.swl/1000} t)</option>`).join("");
+ const hopts=h=>Object.entries(HITCH).map(([k,v])=>`<option value="${k}" ${k===h?"selected":""}>${v[0]} (×${v[1]})</option>`).join("");
+ $("#gearRows").innerHTML=(P.gear||[]).map((g,i)=>`<div class="gearrow"><div class="hd">Gear ${i+1}<button class="sm del" data-gdel="${i}">Remove</button></div>
+  <div class="g2"><label class="full">Item<select data-g="${i}" data-f="id">${opts(g.id)}</select></label>
+  <label>Hitch<select data-g="${i}" data-f="hitch">${hopts(g.hitch)}</select></label>
+  <label>Qty used / legs carrying load<span style="display:flex;gap:4px"><input type="number" min="1" data-g="${i}" data-f="qty" value="${g.qty}"><input type="number" min="1" max="4" data-g="${i}" data-f="legs" value="${g.legs}"></span></label></div></div>`).join("");
+}
+function fillGround(){const el=$("#selGround");if(el)el.innerHTML=Object.entries(GROUND).map(([k,v])=>`<option value="${k}">${v[0]}${v[1]?` (≈${v[1]} kPa)`:""}</option>`).join("")}
+function fillCraneSelect(){
+ $("#selCrane").innerHTML=REG.cranes.map(c=>`<option value="${esc(c.id)}">${esc(c.veh)} · ${esc(c.id)} · ${esc((c.model||"").split(" + ")[0].replace("PALFINGER ",""))} (${c.maxSwl/1000} t)</option>`).join("");
+}
+function bindForm(){
+ document.querySelectorAll("[data-k]").forEach(el=>{if(el.type==="checkbox")el.checked=!!P[el.dataset.k];else el.value=P[el.dataset.k]??""});
+}
+let scaleT;
+function fitPreview(){
+ const wrap=$("#previewWrap"), sc=$("#scaler"); const w=wrap.clientWidth-24; const k=Math.min(1,w/1123);
+ sc.style.transform=`scale(${k})`; sc.style.width="1123px"; sc.style.height=(794*k)+"px";
+}
+function update(){
+ const r=calc(), ch=checks(r);
+ renderSummary(r,ch); renderCraneInfo(r); renderOl(r); renderSheet(r,ch);
+ LS.set("lp_draft",P); fitPreview();
+ if(typeof syncAnim==="function")syncAnim(ch.filter(x=>x.lvl==="fail").map(x=>x.msg));
+}
+
+document.addEventListener("input",e=>{
+ const k=e.target.dataset.k, g=e.target.dataset.g;
+ if(k){P[k]=e.target.type==="checkbox"?e.target.checked:e.target.value;
+  if(k==="craneId"){const c=crane();if(c){P.hookWt=c.hookWt;P.hookSwl=c.hookSwl;bindForm()}}
+  update()}
+ else if(g!=null){P.gear[+g][e.target.dataset.f]=e.target.value;update()}
+});
+document.addEventListener("click",e=>{
+ const t=e.target;
+ if(t.dataset.gdel!=null){P.gear.splice(+t.dataset.gdel,1);renderGearRows();update()}
+ if(t.dataset.close){$("#"+t.dataset.close).classList.remove("on")}
+ if(t.classList.contains("modal"))t.classList.remove("on");
+});
+$("#bAddGear").onclick=()=>{P.gear.push({id:REG.gear[0]?REG.gear[0].id:"",qty:1,legs:1,hitch:"choke"});renderGearRows();update()};
+$("#bNew").onclick=()=>{const keep={company:P.company,docNo:P.docNo,rev:P.rev,supervisor:P.supervisor,pm:P.pm,maxUtil:P.maxUtil,warnDays:P.warnDays};P=Object.assign(blankPlan(),keep);bindForm();renderGearRows();update();toast("New plan started")};
+$("#bSave").onclick=()=>{if(!P.planNo){P.planNo=autoPlanNo();bindForm()}
+ const i=PLANS.findIndex(x=>x.planNo===P.planNo);const rec={...JSON.parse(JSON.stringify(P)),savedAt:new Date().toISOString()};
+ if(i>=0)PLANS[i]=rec;else PLANS.unshift(rec);LS.set("lp_plans",PLANS);update();toast("Saved "+P.planNo);if(!A.fails.length)playAnim(true)};
+$("#bPlans").onclick=()=>{renderPlans();$("#mPlans").classList.add("on")};
+function renderPlans(){
+ $("#planList").innerHTML=PLANS.length?`<table class="list"><tr><th>Plan no.</th><th>Lift date</th><th>Crane</th><th>Location</th><th></th></tr>`+PLANS.map((p,i)=>`<tr><td>${esc(p.planNo)}</td><td>${dmy(p.liftDate)}</td><td>${esc(p.craneId)}</td><td>${esc(p.location)}</td><td style="text-align:right"><button class="sm" data-open="${i}">Open</button> <button class="sm" data-dup="${i}">Copy as new</button> <button class="sm del" data-pdel="${i}">Delete</button></td></tr>`).join("")+`</table>`:"<p>No saved plans yet.</p>";
+ $("#planList").querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{P=Object.assign(blankPlan(),PLANS[+b.dataset.open]);bindForm();renderGearRows();update();$("#mPlans").classList.remove("on")});
+ $("#planList").querySelectorAll("[data-dup]").forEach(b=>b.onclick=()=>{P=Object.assign(blankPlan(),PLANS[+b.dataset.dup],{planNo:"",liftDate:today(),datePrepared:today(),dateApproved:""});bindForm();renderGearRows();update();$("#mPlans").classList.remove("on");toast("Copied, set the new date and save")});
+ $("#planList").querySelectorAll("[data-pdel]").forEach(b=>b.onclick=()=>{const i=+b.dataset.pdel;if(b.dataset.sure){PLANS.splice(i,1);LS.set("lp_plans",PLANS);renderPlans()}else{b.dataset.sure=1;b.textContent="Confirm delete"}});
+}
+// image
+$("#fImg").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height));const cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);P.siteImg=cv.toDataURL("image/jpeg",0.82);update()};im.src=rd.result};rd.readAsDataURL(f)};
+$("#bClrImg").onclick=()=>{P.siteImg="";$("#fImg").value="";update()};
+
+/* ---------- register editor ---------- */
+const CF=[["id","LM No"],["veh","Vehicle no."],["model","Brand / model"],["type","Type"],["year","Year of mfg"],["maxSwl","Max SWL (kg)"],["boom","Max boom (m)"],["ext","Manual ext. (m)"],["lorryWt","Weight of crane (t)"],["capacity","Capacity of crane (t)"],["hookWt","Hook block wt (kg)"],["hookSwl","Hook block SWL (kg)"],["ae","AE inspection",1],["exp","Cert expiry",1],["six","6-month (LTA) expiry",1],["spread","Outrigger spread, L–R (m)"],["olSpacing","Outrigger spacing, front–rear (m)"],["boomWt","Boom self-weight (t)"]];
+const GF=[["id","LG No"],["name","LG name"],["desc","Description"],["swl","SWL (kg)"],["wt","Weight (kg)"],["len","Length (m)"],["exp","Cert expiry",1],["six","6-month (LTA) expiry",1]];
+function renderReg(){
+ $("#regCranes").innerHTML=REG.cranes.map((c,i)=>`<div class="card"><div class="g4">${CF.map(([k,l,d])=>`<label>${l}<input ${d?'type="date"':""} data-rc="${i}" data-f="${k}" value="${esc(c[k])}"></label>`).join("")}</div>
+  <label style="margin-top:8px">Load chart (radius m : SWL kg)<textarea data-rc="${i}" data-f="chart">${c.chart.map(p=>p[0]+":"+p[1]).join(", ")}</textarea></label>
+  <label style="margin-top:6px">Notes<input data-rc="${i}" data-f="notes" value="${esc(c.notes)}"></label>
+  <div style="text-align:right;margin-top:6px"><button class="sm del" data-rcdel="${i}">Remove crane</button></div></div>`).join("");
+ $("#regGear").innerHTML=REG.gear.map((g,i)=>`<div class="card"><div class="g4">${GF.map(([k,l,d])=>`<label>${l}<input ${d?'type="date"':""} data-rg="${i}" data-f="${k}" value="${esc(g[k])}"></label>`).join("")}<label>Notes<input data-rg="${i}" data-f="notes" value="${esc(g.notes)}"></label></div>
+  <div style="text-align:right;margin-top:6px"><button class="sm del" data-rgdel="${i}">Remove</button></div></div>`).join("");
+ $("#mReg").querySelectorAll("[data-rcdel]").forEach(b=>b.onclick=()=>{if(b.dataset.sure){REG.cranes.splice(+b.dataset.rcdel,1);saveReg();renderReg()}else{b.dataset.sure=1;b.textContent="Confirm remove"}});
+ $("#mReg").querySelectorAll("[data-rgdel]").forEach(b=>b.onclick=()=>{if(b.dataset.sure){REG.gear.splice(+b.dataset.rgdel,1);saveReg();renderReg()}else{b.dataset.sure=1;b.textContent="Confirm remove"}});
+}
+function saveReg(){LS.set("lp_reg",REG);const cur=P.craneId;fillCraneSelect();if(!REG.cranes.find(c=>c.id===cur)&&REG.cranes[0])P.craneId=REG.cranes[0].id;bindForm();renderGearRows();update()}
+$("#mReg").addEventListener("change",e=>{
+ const t=e.target,f=t.dataset.f;
+ if(t.dataset.rc!=null){const c=REG.cranes[+t.dataset.rc];
+  if(f==="chart"){const pts=t.value.split(/[,;\n]+/).map(s=>s.split(":").map(Number)).filter(p=>p.length===2&&isFinite(p[0])&&isFinite(p[1])).sort((a,b)=>a[0]-b[0]);if(pts.length)c.chart=pts;else{toast("Chart not understood. Use 4.6:4700, 6.5:3000, …");return}}
+  else c[f]=["maxSwl","boom","ext","hookWt","hookSwl","spread","olSpacing","boomWt"].includes(f)?num(t.value):t.value;
+  if(f==="id"&&P.craneId&&!REG.cranes.find(x=>x.id===P.craneId))P.craneId=c.id;
+  saveReg()}
+ if(t.dataset.rg!=null){const g=REG.gear[+t.dataset.rg];const old=g.id;g[f]=["swl","wt","len"].includes(f)?num(t.value):t.value;
+  if(f==="id")P.gear.forEach(x=>{if(x.id===old)x.id=g.id});saveReg()}
+});
+$("#bReg").onclick=()=>{renderReg();renderTeamInfo();$("#mReg").classList.add("on")};
+$("#bAddCrane").onclick=()=>{REG.cranes.push({id:"LM-NEW-"+(REG.cranes.length+1),veh:"",model:"",type:"Lorry Crane",year:"",maxSwl:0,boom:0,ext:0,lorryWt:"",capacity:"",hookWt:30,hookSwl:0,ae:"",exp:"",six:"",chart:[[1,0]],notes:""});saveReg();renderReg()};
+$("#bAddLg").onclick=()=>{REG.gear.push({id:"LG-NEW-"+(REG.gear.length+1),name:"Webbing Sling",desc:"",swl:0,wt:0,exp:"",six:"",notes:""});saveReg();renderReg()};
+$("#bRegReset").onclick=e=>{const b=e.target;if(b.dataset.sure){REG=JSON.parse(JSON.stringify(DEFAULT_REG));saveReg();renderReg();b.textContent="Reset to defaults";delete b.dataset.sure}else{b.dataset.sure=1;b.textContent="Confirm reset"}};
+
+/* ---------- files: download / print / pdf ---------- */
+let DL=null; const inArtifact = typeof window.claude!=="undefined" && window.claude && typeof window.claude.use==="function";
+const inApp = typeof window.AndroidBridge!=="undefined";
+if(inApp){$("#bPrint").style.display="none";$("#bPdf").textContent="Save PDF / Print";}
+function toB64(data){return new Promise((res,rej)=>{
+ if(typeof data==="string"){const bytes=new TextEncoder().encode(data);let bin="";for(let i=0;i<bytes.length;i+=8192)bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+8192));res(btoa(bin));return}
+ const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(",")[1]||"");fr.onerror=()=>rej(fr.error);fr.readAsDataURL(data instanceof Blob?data:new Blob([data]));});}
+if(inArtifact){window.claude.use("downloads").then(d=>{DL=d;if(!d)$("#bPdf").style.display="none"}).catch(()=>{$("#bPdf").style.display="none"});$("#bPrint").style.display="none";$("#bExport").style.display=""}
+async function saveFile(name,data){
+ if(inApp){try{const mime=name.endsWith(".json")?"application/json":name.endsWith(".pdf")?"application/pdf":"application/octet-stream";
+  const where=window.AndroidBridge.saveFile(name,await toB64(data),mime);toast(where?("Saved to "+where):"Could not save the file");return !!where}catch(e){toast("Could not save: "+e.message);return false}}
+ if(DL){try{await DL.save({filename:name,data});return true}catch(e){if(e&&e.code!=="declined")toast("Download not available here ("+(e.code||"error")+")");return false}}
+ if(inArtifact){toast("Downloads are not available in this view");return false}
+ const blob=data instanceof Blob?data:new Blob([data]);const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);return true;
+}
+$("#bPrint").onclick=()=>{try{window.print()}catch(e){toast("Printing is blocked here, use Download PDF")}};
+function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`))return res();const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=()=>rej(new Error("load "+src));document.head.appendChild(s)})}
+$("#bPdf").onclick=async()=>{
+ if(inApp){try{window.AndroidBridge.print((P.planNo||autoPlanNo()).replace(/[^\w.-]+/g,"_")+"_Lifting_Plan")}catch(e){toast("Print not available")}return}
+ const b=$("#bPdf");b.disabled=true;b.textContent="Building PDF…";
+ try{
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+  const src=$("#sheet"), clone=src.cloneNode(true);
+  const host=document.createElement("div");host.style.cssText="position:fixed;left:-20000px;top:0;";host.appendChild(clone);document.body.appendChild(host);
+  const cv=await html2canvas(clone,{scale:2.2,backgroundColor:"#fff",useCORS:true,logging:false});
+  host.remove();
+  const pdf=new window.jspdf.jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+  pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,297,210);
+  const name=(P.planNo||autoPlanNo()).replace(/[^\w.-]+/g,"_")+"_Lifting_Plan.pdf";
+  await saveFile(name,pdf.output("blob"));
+ }catch(e){toast("Could not build the PDF: "+e.message)}
+ b.disabled=false;b.textContent="Download PDF";
+};
+$("#bExport").onclick=()=>saveFile("lifting_plan_backup_"+today()+".json",JSON.stringify({version:1,registers:REG,plans:PLANS,draft:P},null,1));
+$("#fImport").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const d=JSON.parse(rd.result);if(d.registers){REG=d.registers;LS.set("lp_reg",REG)}if(Array.isArray(d.plans)){const ids=new Set(PLANS.map(p=>p.planNo));d.plans.forEach(p=>{if(!ids.has(p.planNo))PLANS.push(p)});LS.set("lp_plans",PLANS)}saveReg();renderReg();toast("Backup restored")}catch(err){toast("Not a valid backup file")}};rd.readAsText(f)};
+
+/* ======================= LIFT SEQUENCE · REALISTIC 3D ======================= */
+/* Self-contained WebGL renderer (no libraries, works offline). Everything is driven live by the plan:
+   crane & load chart, working radius, load size/weight, lifting gear rows (legs, hitch, sling length/colour).
+   If any plan check fails the sequence stops at the trial lift (LMI cut-out). */
+const AT=26, T_STOP=14.6;
+const PH=[
+ [0,2,"1 · Set up: extend outrigger beams"],
+ [2,3.3,"2 · Lower jacks onto 1 m × 1 m steel plates, level the lorry"],
+ [3.3,4.5,"3 · Barricade the exclusion zone with cones and tape"],
+ [4.5,9,"4 · Unfold the knuckle boom, extend telescopes over the load"],
+ [9,11,"5 · Pay out the hook; rigger approaches the load"],
+ [11,12.5,"6 · Rig the load"],
+ [12.5,13.5,"7 · Rigger leaves the load path, takes the tagline"],
+ [13.5,15,"8 · Trial lift: raise 300 mm, hold, check rigging & stability"],
+ [15,16.5,"9 · Hoist load clear of obstructions"],
+ [16.5,21.5,"10 · Slew over the side and telescope in towards the deck"],
+ [21.5,23.5,"11 · Lower load slowly onto the lorry deck"],
+ [23.5,26,"12 · Load landed, slings released, lift complete"]];
+const A={t:0,playing:false,raf:0,last:0,lastFail:null,fails:[]};
+const clamp01=u=>u<0?0:u>1?1:u;
+const ease=u=>{u=clamp01(u);return u*u*(3-2*u)};
+const sg=(t,a,b)=>ease((t-a)/(b-a));
+const lerp=(a,b,u)=>a+(b-a)*u;
+const maxT=()=>A.fails.length?T_STOP:AT;
+function swlAt(c,r){if(!c||!c.chart.length)return 0;const p=c.chart.find(q=>q[0]>=r-1e-9);return p?Math.min(p[1],num(c.maxSwl)||p[1]):0}
+
+/* ---------- rigging geometry from the lifting gear rows ---------- */
+const SLING_COL={1:"#7b3fa0",2:"#2e9e44",3:"#e0b000",4:"#8a8f98",5:"#d92d20",6:"#8b5a2b",8:"#1f5fbf",10:"#f08a24"}; // EN 1492 webbing colour code
+function gearLen(d){
+ if(num(d.len)>0) return num(d.len);
+ const s=String(d.desc||"");
+ let m=s.match(/(\d+(?:\.\d+)?)\s*M\b/i); if(m) return +m[1];
+ m=s.match(/(\d+(?:\.\d+)?)\s*FT\b/i); if(m) return +m[1]*0.3048;
+ return 2;
+}
+const isChain=d=>/chain/i.test((d.name||"")+" "+(d.desc||""));
+const slingCol=d=>isChain(d)?"#6b7079":(SLING_COL[Math.round(num(d.swl)/1000)]||"#2e9e44");
+function rigInfo(r){
+ const rows=(r.gear||[]).filter(g=>g.d&&g.d.id);
+ if(!rows.length) return null;
+ const up=rows[0];
+ const lW=Math.min(Math.max(num(P.loadL)||1,0.6),8);
+ let n=Math.max(1,...rows.map(g=>Math.max(1,num(g.legs)||1)));
+ if(rows.some(g=>["b45","b60","basket"].includes(g.hitch))) n=Math.max(n,2);
+ if(/2\s*-?\s*LEG/i.test(up.d.desc||"")) n=Math.max(n,2);
+ n=Math.min(n,4);
+ const ef=(up.hitch==="choke"||up.hitch==="basket")?0.5:1;
+ const Ls=gearLen(up.d)*ef;
+ const dx=n>1?lW*0.3:0;
+ const tooShort=Ls<=dx+0.05;
+ const dyRaw=tooShort?0.3:Math.sqrt(Ls*Ls-dx*dx);
+ const th=n>1&&!tooShort?Math.atan2(dx,dyRaw):(n>1?Math.PI/2*0.98:0);
+ const W=r.loadKg, cs=Math.max(Math.cos(th),0.05);
+ const T=W/(n*cs);
+ const util=Math.max(...rows.map(g=>g.cap>0?(W/cs)/g.cap*100:999));
+ return {rows,up,n,Ls,dx,dy:Math.min(Math.max(dyRaw,0.4),8),th,thDeg:th*180/Math.PI,incl:2*th*180/Math.PI,T,util,tooShort,W};
+}
+
+/* ---------- kinematics & timeline ---------- */
+const KB={piv:2.85, Lm:4.2, Lo0:3.6, a1Work:62*Math.PI/180, a1Stow:82*Math.PI/180, a2Stow:-96*Math.PI/180, hb:0.55, deck:1.25};
+function kbSolve(r,h,a1){const rK=KB.Lm*Math.cos(a1), zK=KB.piv+KB.Lm*Math.sin(a1);const dx=r-rK, dz=h-zK;return {a2:Math.atan2(dz,dx), e:Math.max(0,Math.hypot(dx,dz)-KB.Lo0)}}
+function kbTip(phi,a1,a2,e){const rK=KB.Lm*Math.cos(a1), zK=KB.piv+KB.Lm*Math.sin(a1), L=KB.Lo0+e;
+ const rr=rK+L*Math.cos(a2);return [rr*Math.cos(phi), rr*Math.sin(phi), zK+L*Math.sin(a2), rr]}
+function sceneConst(){
+ const r=calc(), rg=rigInfo(r);
+ const R=Math.max(num(P.radius),2);
+ const lH=Math.min(Math.max(num(P.loadH)||1,0.25),3), lW=Math.min(Math.max(num(P.loadL)||1,0.6),8), lWd=Math.min(Math.max(num(P.loadW)||1,0.25),3);
+ const sh=rg?rg.dy:1.5;
+ const Rd=Math.max(3.2, Math.min(5.5, lW/2+0.9));
+ const liftH=KB.deck+0.9;
+ const H=Math.max(6.4, liftH+lH+sh+KB.hb+1.2);
+ const isLog=/tree|trunk|log|timber|wood|debris/i.test(P.loadName||"");
+ let LH=lH, LWd=lWd;
+ if(isLog){const dW=Math.sqrt(4*Math.max(r.loadKg,10)/(Math.PI*1000*lW));const d=Math.max(0.15,Math.min(lH,lWd,dW));LH=d;LWd=d;}
+ return {r,rg,R,lH:LH,lW,lWd:LWd,sh,Rd,liftH,H,isLog};
+}
+function boomAt(t,K){ // returns phi,a1,a2,e,tip
+ const halted=A.fails.length>0;
+ let phi=Math.PI, a1, a2, e;
+ const pick=kbSolve(K.R,K.H,KB.a1Work);
+ if(t<9){const u=sg(t,4.5,9);a1=lerp(KB.a1Stow,KB.a1Work,u);a2=lerp(KB.a2Stow,pick.a2,u);e=lerp(0,pick.e,sg(t,6,9));}
+ else{
+  const u=halted?0:sg(t,16.5,21.5);
+  phi=lerp(Math.PI,1.5*Math.PI,u);
+  const rr=lerp(K.R,K.Rd,u);
+  a1=KB.a1Work; const s=kbSolve(rr,K.H,a1); a2=s.a2; e=s.e;
+ }
+ const tip=kbTip(phi,a1,a2,e);
+ return {phi,a1,a2,e,tip};
+}
+function loadBottom(t,K){
+ const halted=A.fails.length>0;
+ if(halted||t<13.5) return 0;
+ if(t<15) return 0.3*sg(t,13.5,14.0);
+ if(t<16.5) return lerp(0.3,K.liftH,sg(t,15,16.5));
+ if(t<21.5) return K.liftH;
+ return lerp(K.liftH,KB.deck,sg(t,21.5,23.5));
+}
+function ropeLen(t,K,tipZ){
+ const yb=loadBottom(t,K);
+ const ropeRig=tipZ-(yb+K.lH+K.sh+KB.hb);
+ if(t<9) return 0.6;
+ if(t<11) return lerp(0.6,ropeRig,sg(t,9,10.8));
+ if(t<23.5||A.fails.length) return ropeRig;
+ return lerp(ropeRig,Math.max(0.6,ropeRig-1.6),sg(t,23.6,24.8));
+}
+// pendulum sway of the load under the tip: x'' = -(g/l)x - c x' - a_tip   (integrated from the start of the hoist)
+function swayAt(t,K){
+ if(A.fails.length||t<15) return [0,0];
+ const dt=1/90, t0=15, tEnd=Math.min(t,AT);
+ let x=0,y=0,vx=0,vy=0;
+ let pPrev=boomAt(t0-dt,K).tip, pCur=boomAt(t0,K).tip;
+ for(let tau=t0; tau<tEnd; tau+=dt){
+  const pNext=boomAt(tau+dt,K).tip;
+  const ax=(pNext[0]-2*pCur[0]+pPrev[0])/(dt*dt), ay=(pNext[1]-2*pCur[1]+pPrev[1])/(dt*dt);
+  const l=Math.max(1,ropeLen(tau,K,pCur[2])+KB.hb+K.sh*0.6);
+  const w2=9.81/l, c=0.55;
+  vx+=(-w2*x-c*vx-ax)*dt; vy+=(-w2*y-c*vy-ay)*dt; x+=vx*dt; y+=vy*dt;
+  pPrev=pCur; pCur=pNext;
+ }
+ const lim=1.2; return [Math.max(-lim,Math.min(lim,x)),Math.max(-lim,Math.min(lim,y))];
+}
+function animState(t){
+ const K=sceneConst(), c=crane(), B=boomAt(t,K), halted=A.fails.length>0;
+ const rope=ropeLen(t,K,B.tip[2]);
+ const yb=loadBottom(t,K);
+ const lifted=!halted&&t>=13.5;
+ const sw=swayAt(t,K);
+ let lx=-K.R, ly=0, lyaw=Math.PI;
+ if(lifted){lx=B.tip[0]+sw[0]; ly=B.tip[1]+sw[1]; lyaw=B.phi;}
+ const att=t>=12.2;
+ const slingA=t<11.2?0:t<12.4?sg(t,11.2,12.4):(!halted&&t>=23.5?1-sg(t,23.5,24.3):1);
+ const cur=PH.find(p=>t>=p[0]&&t<p[1])||PH[PH.length-1];
+ return {...K,c,B,rope,yb,lx,ly,lyaw,lifted,att,slingA,halted,cur,t,
+  r_:B.tip[3], outr:sg(t,0,2), jack:sg(t,2,3.3), excl:sg(t,3.3,4.5)};
+}
+
+/* ---------- tiny WebGL engine ---------- */
+const M4={
+ mul(a,b){const o=new Float32Array(16);for(let c=0;c<4;c++)for(let r=0;r<4;r++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s}return o},
+ T(x,y,z){return new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1])},
+ S(x,y,z){return new Float32Array([x,0,0,0,0,y,0,0,0,0,z,0,0,0,0,1])},
+ Rz(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,s,0,0,-s,c,0,0,0,0,1,0,0,0,0,1])},
+ Ry(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1])},
+ Rx(a){const c=Math.cos(a),s=Math.sin(a);return new Float32Array([1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1])},
+ persp(fy,as,n,f){const t=1/Math.tan(fy/2);return new Float32Array([t/as,0,0,0,0,t,0,0,0,0,(f+n)/(n-f),-1,0,0,2*f*n/(n-f),0])},
+ look(e,c,u){const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],cr=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],nm=a=>{const l=Math.hypot(...a)||1;return a.map(v=>v/l)},dt=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const z=nm(sub(e,c)),x=nm(cr(u,z)),y=cr(z,x);return new Float32Array([x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-dt(x,e),-dt(y,e),-dt(z,e),1])}
+};
+const chain=(...m)=>m.reduce((a,b)=>M4.mul(a,b));
+function nmat(m){const a=m[0],b=m[4],c=m[8],d=m[1],e=m[5],f=m[9],g=m[2],h=m[6],i=m[10];
+ const A_=e*i-f*h,B_=-(d*i-f*g),C_=d*h-e*g,det=a*A_+b*B_+c*C_||1e-9;
+ // inverse-transpose of the 3x3 (column-major result)
+ return new Float32Array([A_/det,B_/det,C_/det,-(b*i-c*h)/det,(a*i-c*g)/det,-(a*h-b*g)/det,(b*f-c*e)/det,-(a*f-c*d)/det,(a*e-b*d)/det])}
+const G3={gl:null,ok:false};
+function hexRgb(h){h=h.replace("#","");return [parseInt(h.slice(0,2),16)/255,parseInt(h.slice(2,4),16)/255,parseInt(h.slice(4,6),16)/255]}
+function glInit(){
+ if(G3.gl||G3.failed) return !!G3.gl;
+ const cv=$("#gl3"); let gl=null;
+ try{gl=cv.getContext("webgl",{antialias:true,stencil:true,alpha:true,premultipliedAlpha:false,preserveDrawingBuffer:true})}catch(e){}
+ if(!gl){G3.failed=true;return false}
+ const vs=`attribute vec3 p;attribute vec3 n;uniform mat4 uMVP,uM;uniform mat3 uN;varying vec3 vN,vW;
+ void main(){vec4 w=uM*vec4(p,1.);vW=w.xyz;vN=uN*n;gl_Position=uMVP*vec4(p,1.);}`;
+ const fs=`precision mediump float;uniform vec3 uC,uL,uEye,uEmis,uFog;uniform float uA,uSpec,uFlat;varying vec3 vN,vW;
+ void main(){vec3 N=normalize(vN);if(!gl_FrontFacing)N=-N;
+  float d=max(dot(N,uL),0.);float hemi=.5+.5*N.z;
+  vec3 amb=mix(vec3(.30,.29,.26),vec3(.62,.68,.78),hemi);
+  vec3 V=normalize(uEye-vW);vec3 H=normalize(uL+V);float sp=pow(max(dot(N,H),0.),48.)*uSpec;
+  vec3 col=mix(uC*(amb*.72+d*vec3(1.,.95,.86)*.82)+sp,uC,uFlat)+uEmis;
+  float dist=length(uEye-vW);float fog=clamp((dist-45.)/170.,0.,.85);
+  gl_FragColor=vec4(mix(col,uFog,fog),uA);}`;
+ const sh=(t,s)=>{const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o};
+ const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);
+ if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){G3.failed=true;return false}
+ gl.useProgram(pr);
+ const U={};["uMVP","uM","uN","uC","uL","uEye","uEmis","uFog","uA","uSpec","uFlat"].forEach(k=>U[k]=gl.getUniformLocation(pr,k));
+ const aP=gl.getAttribLocation(pr,"p"), aN=gl.getAttribLocation(pr,"n");
+ function mk(pos,nor,idx){const b1=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b1);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pos),gl.STATIC_DRAW);
+  const b2=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b2);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(nor),gl.STATIC_DRAW);
+  const b3=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,b3);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(idx),gl.STATIC_DRAW);
+  return {b1,b2,b3,n:idx.length}}
+ // unit box (-.5..+.5)
+ const bp=[],bn=[],bi=[];
+ [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].forEach(nv=>{
+  const u=nv[0]!==0?[0,1,0]:[1,0,0], v=[nv[1]*u[2]-nv[2]*u[1],nv[2]*u[0]-nv[0]*u[2],nv[0]*u[1]-nv[1]*u[0]];const o=bp.length/3;
+  [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([a,b])=>{bp.push(.5*(nv[0]+a*u[0]+b*v[0]),.5*(nv[1]+a*u[1]+b*v[1]),.5*(nv[2]+a*u[2]+b*v[2]));bn.push(...nv)});
+  bi.push(o,o+1,o+2,o,o+2,o+3)});
+ // cylinder along z 0..1, radius 1, with caps
+ const cyl=(N)=>{const p=[],n=[],ix=[];for(let i=0;i<=N;i++){const a=i/N*2*Math.PI,c=Math.cos(a),s=Math.sin(a);p.push(c,s,0,c,s,1);n.push(c,s,0,c,s,0)}
+  for(let i=0;i<N;i++){const k=i*2;ix.push(k,k+2,k+1,k+1,k+2,k+3)}
+  [0,1].forEach(z=>{const o=p.length/3;p.push(0,0,z);n.push(0,0,z?1:-1);for(let i=0;i<=N;i++){const a=i/N*2*Math.PI;p.push(Math.cos(a),Math.sin(a),z);n.push(0,0,z?1:-1)}
+   for(let i=0;i<N;i++)ix.push(o,o+1+i,o+2+i)});return mk(p,n,ix)};
+ const cone=(N)=>{const p=[],n=[],ix=[];const k=1/Math.sqrt(2);for(let i=0;i<=N;i++){const a=i/N*2*Math.PI,c=Math.cos(a),s=Math.sin(a);p.push(c,s,0,0,0,1);n.push(c*k,s*k,k,c*k,s*k,k)}
+  for(let i=0;i<N;i++){const q=i*2;ix.push(q,q+2,q+1)}return mk(p,n,ix)};
+ const sph=(N)=>{const p=[],n=[],ix=[];for(let i=0;i<=N;i++){const th=i/N*Math.PI;for(let j=0;j<=N*2;j++){const ph=j/(N*2)*2*Math.PI;const x=Math.sin(th)*Math.cos(ph),y=Math.sin(th)*Math.sin(ph),z=Math.cos(th);p.push(x,y,z);n.push(x,y,z)}}
+  const W=N*2+1;for(let i=0;i<N;i++)for(let j=0;j<N*2;j++){const a=i*W+j;ix.push(a,a+W,a+1,a+1,a+W,a+W+1)}return mk(p,n,ix)};
+ const prism=(N)=>{const p=[],n=[],ix=[];const off=-Math.PI/N;
+  for(let i=0;i<N;i++){const a0=off+i/N*2*Math.PI,a1=off+(i+1)/N*2*Math.PI,am=(a0+a1)/2,nx=Math.cos(am),ny=Math.sin(am),o=p.length/3;
+   p.push(Math.cos(a0),Math.sin(a0),0,Math.cos(a1),Math.sin(a1),0,Math.cos(a1),Math.sin(a1),1,Math.cos(a0),Math.sin(a0),1);for(let k=0;k<4;k++)n.push(nx,ny,0);ix.push(o,o+1,o+2,o,o+2,o+3)}
+  [0,1].forEach(z=>{const o=p.length/3;p.push(0,0,z);n.push(0,0,z?1:-1);for(let i=0;i<=N;i++){const a=off+i/N*2*Math.PI;p.push(Math.cos(a),Math.sin(a),z);n.push(0,0,z?1:-1)}for(let i=0;i<N;i++)ix.push(o,o+1+i,o+2+i)});
+  return mk(p,n,ix)};
+ G3.mesh={box:mk(bp,bn,bi),cyl:cyl(22),cone:cone(18),sph:sph(10),oct:prism(8)};
+ Object.assign(G3,{gl,U,aP,aN,ok:true});
+ gl.enable(gl.DEPTH_TEST);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+ return true;
+}
+
+/* ---------- scene builder ---------- */
+function buildScene(S){
+ const L=[]; // {m:mesh,M,col,a,spec,emis,flat,shadow,ground}
+ const add=(m,M,col,o={})=>L.push({m,M,col:typeof col==="string"?hexRgb(col):col,a:o.a??1,spec:o.spec??0.15,emis:o.emis||[0,0,0],flat:o.flat||0,shadow:o.shadow??true,ground:!!o.ground});
+ const box=(c,s,col,o={},yaw=0)=>add("box",chain(M4.T(...c),M4.Rz(yaw),M4.S(...s)),col,o);
+ const boxBetween=(a,b,w,h,col,o={},roll=0)=>{const d=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],len=Math.hypot(...d);if(len<1e-4)return;
+  const ph=Math.atan2(d[1],d[0]),al=Math.atan2(d[2],Math.hypot(d[0],d[1]));add("box",chain(M4.T(...a),M4.Rz(ph),M4.Ry(-al),M4.Rx(roll),M4.T(len/2,0,0),M4.S(len,w,h)),col,o)};
+ const cylBetween=(a,b,r,col,o={})=>{const d=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],len=Math.hypot(...d);if(len<1e-4)return;
+  const ph=Math.atan2(d[1],d[0]),al=Math.atan2(d[2],Math.hypot(d[0],d[1]));add("cyl",chain(M4.T(...a),M4.Rz(ph),M4.Ry(Math.PI/2-al),M4.S(r,r,len)),col,o)};
+ const sphere=(c,r,col,o={},sz=1)=>add("sph",chain(M4.T(...c),M4.S(r,r,r*sz)),col,o);
+ const t=S.t, ex=exclR(), B=S.B;
+ // ---- ground: verge (grass), kerb, road, markings
+ box([0,0,-0.05],[600,600,0.1],"#6f8a4c",{ground:true,shadow:false,spec:0});
+ box([7.5,0,0.005],[19,600,0.02],"#45474b",{ground:true,shadow:false,spec:0.05});            // asphalt, x -2..17
+ box([-2.05,0,0.06],[0.2,600,0.14],"#b9b6ad",{ground:true,shadow:false});                    // kerb
+ for(let y=-140;y<140;y+=6) box([5.2,y,0.017],[0.13,3,0.004],"#f2f2f2",{ground:true,shadow:false,flat:0.4}); // lane dashes
+ box([-1.6,0,0.017],[0.12,600,0.004],"#e6c229",{ground:true,shadow:false,flat:0.4}); box([-1.38,0,0.017],[0.12,600,0.004],"#e6c229",{ground:true,shadow:false,flat:0.4});
+ // working radius painted ring & radius line
+ for(let i=0;i<64;i+=2){const a0=i/64*2*Math.PI,a1=(i+1)/64*2*Math.PI;boxBetween([S.R*Math.cos(a0),S.R*Math.sin(a0),0.022],[S.R*Math.cos(a1),S.R*Math.sin(a1),0.022],0.09,0.004,"#3b82f6",{ground:true,shadow:false,flat:0.5})}
+ boxBetween([0,0,0.024],[B.tip[0],B.tip[1],0.024],0.08,0.004,"#1f5fbf",{ground:true,shadow:false,flat:0.5});
+ // ---- background: trees & HDB block
+ [[-26,14,1.1],[-22,-16,1.0],[-34,-4,1.3],[-18,26,0.9],[-40,20,1.2],[-30,-28,1.0],[22,30,1.0],[24,-26,1.1]].forEach(([x,y,k],i)=>{
+  cylBetween([x,y,0],[x,y,3.2*k],0.28*k,"#6b4a2e");
+  sphere([x,y,4.6*k],2.3*k,i%2?"#3f6b2e":"#4b7a34",{spec:0.02},0.8);sphere([x+0.9*k,y-0.6*k,5.4*k],1.5*k,"#557f3a",{spec:0.02});});
+ box([-48,34,12],[34,12,24],"#e9e2d3",{spec:0.05}); for(let z=2;z<24;z+=2.8) box([-48,27.95,z],[32,0.1,1.0],"#a9b6c4",{spec:0.6});
+ // stump where the tree was cut
+ cylBetween([-S.R+0.4,2.4,0],[-S.R+0.4,2.4,0.45],0.32,"#7a5230"); cylBetween([-S.R+0.4,2.4,0.45],[-S.R+0.4,2.4,0.46],0.29,"#d9b07a");
+ // ---- barricade: cones + tape on the exclusion circle
+ if(S.excl>0){const N=Math.max(14,Math.round(ex*1.3));const pts=[];
+  for(let i=0;i<N;i++){const a=i/N*2*Math.PI;if(i/N>S.excl)break;const x=ex*Math.cos(a),y=ex*Math.sin(a);pts.push([x,y]);
+   box([x,y,0.02],[0.4,0.4,0.04],"#1d1f22");add("cone",chain(M4.T(x,y,0.04),M4.S(0.17,0.17,0.72)),"#f26a1b",{spec:0.3});
+   cylBetween([x,y,0.38],[x,y,0.46],0.105,"#f4f4f4",{spec:0.4});}
+  for(let i=0;i<pts.length-(S.excl<1?1:0);i++){const a=pts[i],b=pts[(i+1)%pts.length];boxBetween([a[0],a[1],0.62],[b[0],b[1],0.62],0.02,0.07,i%2?"#ffffff":"#e3262d",{spec:0.1})}}
+ // ---- lorry: cab-over rigid lorry (cab north +y, deck south -y; crane column at origin)
+ const rise=0.05*S.jack, Z=z=>z+rise;
+ const W_="#f4f6f8", DK="#22252a", GL="#1d3550";
+ const prismBetween=(a,b,rh,rw,col,o={})=>{const d=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],len=Math.hypot(...d);if(len<1e-4)return;
+  const ph=Math.atan2(d[1],d[0]),al=Math.atan2(d[2],Math.hypot(d[0],d[1]));add("oct",chain(M4.T(...a),M4.Rz(ph),M4.Ry(Math.PI/2-al),M4.S(rh,rw,len)),col,o)};
+ // chassis rails, cross members, crane sub-frame
+ [-0.42,0.42].forEach(x=>box([x,-2.25,Z(0.86)],[0.1,9.5,0.28],DK,{spec:0.3}));
+ for(let y=-6.8;y<2.4;y+=1.6) box([0,y,Z(0.86)],[0.84,0.08,0.18],DK);
+ box([0,0,Z(1.12)],[1.0,1.5,0.24],"#2b2f36",{spec:0.3});
+ // cab body (cab-over), roof cap, sun visor
+ box([0,1.62,Z(1.98)],[2.36,2.06,1.92],W_,{spec:0.5});
+ box([0,1.58,Z(3.0)],[2.2,1.9,0.14],"#e9edf1",{spec:0.5});
+ box([0,2.62,Z(2.98)],[2.1,0.22,0.06],"#cfd5dc",{spec:0.4});
+ // windscreen (slightly raked), side windows, door shut-lines, stripe
+ add("box",chain(M4.T(0,2.66,Z(2.42)),M4.Rx(-0.12),M4.S(2.08,0.03,0.95)),GL,{spec:1.4});
+ [-1,1].forEach(s=>{box([s*1.185,1.95,Z(2.45)],[0.02,1.15,0.72],GL,{spec:1.2});
+  box([s*1.19,1.32,Z(1.95)],[0.012,0.03,1.65],"#9aa3ad");box([s*1.19,2.55,Z(1.95)],[0.012,0.03,1.65],"#9aa3ad");
+  box([s*1.19,1.62,Z(1.6)],[0.012,2.0,0.12],"#1f4fa8",{spec:0.3});
+  box([s*1.0,2.7,Z(0.78)],[0.42,0.25,0.06],"#3a3f47");box([s*1.0,2.6,Z(0.5)],[0.42,0.2,0.05],"#3a3f47");      // steps
+  boxBetween([s*1.18,2.55,Z(2.55)],[s*1.42,2.62,Z(2.55)],0.04,0.04,DK);box([s*1.45,2.62,Z(2.35)],[0.06,0.2,0.42],DK,{spec:0.6});}); // mirrors
+ // front face: grille, headlamps, indicators, bumper
+ box([0,2.665,Z(1.55)],[1.3,0.03,0.42],"#2d3238",{spec:0.6});
+ for(let z=1.4;z<1.75;z+=0.09) box([0,2.685,Z(z)],[1.24,0.02,0.025],"#8d949c",{spec:1});
+ [-1,1].forEach(s=>{box([s*0.92,2.67,Z(1.42)],[0.38,0.04,0.2],"#fffbe6",{emis:[0.35,0.33,0.2],spec:1.2});box([s*1.12,2.67,Z(1.42)],[0.1,0.04,0.2],"#ffae2b",{emis:[0.2,0.1,0]})});
+ box([0,2.72,Z(1.08)],[2.4,0.16,0.3],"#5b616a",{spec:0.6});
+ // beacon bar on roof
+ const beaconOn=Math.floor(t*3)%2===0, stopFlash=S.halted&&t>=13.5;
+ box([0,1.3,Z(3.12)],[1.2,0.22,0.1],DK);
+ [-0.45,0.45].forEach((x,i)=>sphere([x,1.3,Z(3.2)],0.09,stopFlash?"#ff3b30":"#ffb000",{emis:(beaconOn^(i===1))?(stopFlash?[0.9,0.1,0.05]:[0.9,0.55,0]):[0,0,0],shadow:false}));
+ // wheels: single front, twin-tyre rear tandem; mudguards; hubs
+ const wheel=(x0,x1,y,col="#18191c")=>{cylBetween([x0,y,0.5],[x1,y,0.5],0.5,col,{spec:0.05});};
+ [-1,1].forEach(s=>{
+  wheel(s*0.92,s*1.2,1.95);cylBetween([s*1.2,1.95,0.5],[s*1.215,1.95,0.5],0.28,"#c3c9d1",{spec:1});cylBetween([s*1.215,1.95,0.5],[s*1.24,1.95,0.5],0.09,"#8b929b",{spec:1});
+  [-4.25,-5.55].forEach(y=>{wheel(s*0.62,s*0.9,y);wheel(s*0.93,s*1.21,y);cylBetween([s*1.21,y,0.5],[s*1.225,y,0.5],0.28,"#c3c9d1",{spec:1});cylBetween([s*1.225,y,0.5],[s*1.25,y,0.5],0.1,"#8b929b",{spec:1});});
+  box([s*1.0,-4.9,Z(1.12)],[0.66,2.75,0.06],DK);                                   // rear mudguard
+  box([s*1.15,-1.4,Z(0.62)],[0.05,4.1,0.08],"#c7ccd3",{spec:0.6});box([s*1.15,-1.4,Z(0.4)],[0.05,4.1,0.08],"#c7ccd3",{spec:0.6}); // side guards
+ });
+ cylBetween([0.78,-1.6,Z(0.72)],[0.78,-0.6,Z(0.72)],0.27,"#c9ced5",{spec:1.2}); // fuel tank
+ box([-0.8,-1.2,Z(0.7)],[0.45,0.7,0.4],DK);                                       // battery box
+ // deck: steel floor, aluminium drop-sides, headboard, tail lights
+ box([0,-3.9,Z(1.2)],[2.45,6.3,0.14],"#7f878f",{spec:0.3});
+ [-1,1].forEach(s=>{box([s*1.2,-3.9,Z(1.5)],[0.05,6.3,0.48],"#d3d8de",{spec:0.9});for(let y=-6.9;y<-0.8;y+=1.2)box([s*1.23,y,Z(1.5)],[0.04,0.06,0.5],"#aab2bb")});
+ box([0,-7.05,Z(1.5)],[2.45,0.05,0.48],"#d3d8de",{spec:0.9});
+ box([0,-0.78,Z(1.85)],[2.4,0.08,1.2],"#3a3f47",{spec:0.3});for(let x=-1.0;x<=1.0;x+=0.25)box([x,-0.78,Z(1.85)],[0.03,0.1,1.2],"#9aa3ad");
+ [-1,1].forEach(s=>box([s*1.0,-7.1,Z(1.05)],[0.3,0.04,0.14],"#d81e1e",{emis:[0.35,0,0]}));
+ // outriggers: beams slide out of the crane base, jacks lower onto steel plates
+ const geo=S.c?craneGeo(S.c):{Sx:5.8,Ls:6.0};
+ [OL_Y0,OL_Y0-geo.Ls].forEach((y,j)=>{const ext=lerp(1.2,geo.Sx/2,S.outr);
+  box([0,y,Z(1.0)],[2.3,0.36,0.3],"#f2b51b",{spec:0.35});
+  [-1,1].forEach(s=>{box([s*(1.15+(ext-1.15)/2),y,Z(1.0)],[ext-1.15,0.26,0.22],"#f6c84a",{spec:0.4});
+   const foot=lerp(0.85,0.07,S.jack);
+   cylBetween([s*ext,y,Z(1.25)],[s*ext,y,Z(0.7)],0.15,"#f2b51b",{spec:0.4});
+   cylBetween([s*ext,y,Z(0.75)],[s*ext,y,foot],0.09,"#e9edf2",{spec:1.6});
+   cylBetween([s*ext,y,foot-0.05],[s*ext,y,foot],0.22,"#2b2f36");
+   if(S.outr>0.6) box([s*ext,y,0.03],[Math.max(0.3,num(P.plateW)||1),Math.max(0.3,num(P.plateL)||1),0.025],"#5f7fa6",{spec:0.6,a:clamp01((S.outr-0.6)*3)});
+   box([s*(ext-0.05),y+0.19,Z(1.0)],[0.25,0.02,0.18],"#e3262d",{emis:[0.15,0,0]});});});   // red/white warning plate
+ // ---- crane: base & slewing gear, column, control stand
+ const phi=B.phi, dirH=[Math.cos(phi),Math.sin(phi)], perp=[-dirH[1],dirH[0]];
+ box([0,0,Z(1.36)],[1.1,1.1,0.22],"#f2b51b",{spec:0.35});
+ [-0.32,0.32].forEach(y=>{cylBetween([-0.95,y,Z(1.38)],[0.95,y,Z(1.38)],0.11,"#f2b51b",{spec:0.4});cylBetween([-1.05,y,Z(1.38)],[1.05,y,Z(1.38)],0.05,"#e9edf2",{spec:1.6})}); // slewing rack cylinders
+ add("oct",chain(M4.T(0,0,Z(1.48)),M4.Rz(phi),M4.S(0.42,0.42,0.75)),"#f2b51b",{spec:0.35});
+ add("oct",chain(M4.T(0,0,Z(2.2)),M4.Rz(phi),M4.S(0.33,0.36,KB.piv-2.2+0.12)),"#f2b51b",{spec:0.35});
+ box([-1.32,-0.35,Z(1.35)],[0.2,0.6,0.5],"#2b2f36",{spec:0.3});
+ for(let i=0;i<5;i++) cylBetween([-1.42,-0.58+i*0.11,Z(1.55)],[-1.5,-0.58+i*0.11,Z(1.82)],0.012,"#d33",{spec:0.6});
+ // main boom (octagonal), knuckle housing, pins
+ const P1=[0,0,Z(KB.piv)];
+ const Kp=[P1[0]+KB.Lm*Math.cos(B.a1)*dirH[0],P1[1]+KB.Lm*Math.cos(B.a1)*dirH[1],P1[2]+KB.Lm*Math.sin(B.a1)];
+ const flash=stopFlash&&Math.floor(t*4)%2===0, bcol=flash?"#e5484d":"#f2b51b", bcol2=flash?"#ee6b6f":"#f6c84a", bemis=flash?[0.35,0,0]:[0,0,0];
+ const mid=(a,b,k)=>[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k,a[2]+(b[2]-a[2])*k];
+ prismBetween(mid(Kp,P1,1.06),Kp,0.27,0.24,bcol,{spec:0.4,emis:bemis});
+ const pin=(p,r=0.1,w=0.62)=>cylBetween([p[0]-perp[0]*w/2,p[1]-perp[1]*w/2,p[2]],[p[0]+perp[0]*w/2,p[1]+perp[1]*w/2,p[2]],r,"#4a4f57",{spec:0.9});
+ pin(P1,0.12,0.7);pin(Kp,0.11,0.62);
+ add("box",chain(M4.T(...Kp),M4.Rz(phi),M4.S(0.5,0.58,0.5)),bcol,{spec:0.35,emis:bemis});
+ // main lift ram (yellow barrel, chrome rod)
+ const ramA=[-0.42*dirH[0],-0.42*dirH[1],Z(1.85)], ramB=[P1[0]+1.75*Math.cos(B.a1)*dirH[0],P1[1]+1.75*Math.cos(B.a1)*dirH[1],P1[2]+1.75*Math.sin(B.a1)-0.32];
+ cylBetween(ramA,mid(ramA,ramB,0.58),0.15,"#f2b51b",{spec:0.45});cylBetween(mid(ramA,ramB,0.55),ramB,0.075,"#eef2f6",{spec:2.0});pin(ramA,0.07,0.4);pin(ramB,0.07,0.4);
+ // outer boom: base section + 4 telescopes with wear collars
+ const dO=[Math.cos(B.a2)*dirH[0],Math.cos(B.a2)*dirH[1],Math.sin(B.a2)];
+ const along=k=>[Kp[0]+dO[0]*k,Kp[1]+dO[1]*k,Kp[2]+dO[2]*k];
+ prismBetween(along(-0.3),along(KB.Lo0),0.23,0.21,bcol,{spec:0.4,emis:bemis});
+ const nT=4, segE=B.e/nT;
+ for(let i=0;i<nT;i++){const s1=KB.Lo0+segE*(i+1)+0.05, rr=0.195-i*0.026;
+  if(segE*(i+1)<0.02) break;
+  prismBetween(along(Math.max(0.3,s1-KB.Lo0)),along(s1),rr,rr*0.92,i%2?bcol2:bcol,{spec:0.45,emis:bemis});
+  const mouth=KB.Lo0+segE*i+0.02; prismBetween(along(mouth-0.1),along(mouth+0.02),rr+0.035,rr*0.92+0.035,"#3a3f47",{spec:0.5});}
+ // knuckle (outer) ram
+ const oA=[Kp[0]-1.35*Math.cos(B.a1)*dirH[0],Kp[1]-1.35*Math.cos(B.a1)*dirH[1],Kp[2]-1.35*Math.sin(B.a1)+0.34], oB0=along(0.95), oB=[oB0[0],oB0[1],oB0[2]+0.3];
+ cylBetween(oA,mid(oA,oB,0.58),0.12,"#f2b51b",{spec:0.45});cylBetween(mid(oA,oB,0.55),oB,0.06,"#eef2f6",{spec:2.0});
+ // hydraulic hoses along the booms
+ const up=0.3, hos=(a,b)=>cylBetween([a[0],a[1],a[2]+up],[b[0],b[1],b[2]+up],0.022,"#141517",{spec:0.6});
+ hos(mid(P1,Kp,0.1),mid(P1,Kp,0.95)); hos(along(0.1),along(KB.Lo0+B.e*0.98));
+ // winch on the outer boom, rope to the tip sheave
+ const wc=along(0.75); const wcU=[wc[0],wc[1],wc[2]+0.38];
+ cylBetween([wcU[0]-perp[0]*0.28,wcU[1]-perp[1]*0.28,wcU[2]],[wcU[0]+perp[0]*0.28,wcU[1]+perp[1]*0.28,wcU[2]],0.16,"#2b2f36",{spec:0.6});
+ const tip=[B.tip[0],B.tip[1],B.tip[2]+rise];
+ cylBetween(wcU,[tip[0],tip[1],tip[2]+0.12],0.012,"#2a2d31",{spec:0.8});
+ add("box",chain(M4.T(tip[0]-dO[0]*0.12,tip[1]-dO[1]*0.12,tip[2]+0.02),M4.Rz(phi),M4.S(0.36,0.26,0.32)),"#3a3f47",{spec:0.5});
+ cylBetween([tip[0]-perp[0]*0.1,tip[1]-perp[1]*0.1,tip[2]],[tip[0]+perp[0]*0.1,tip[1]+perp[1]*0.1,tip[2]],0.17,"#5b616a",{spec:0.9});
+ // ---- rope, hook block, load, slings
+ const sw=S.lifted?[S.lx-B.tip[0],S.ly-B.tip[1]]:[0,0];
+ const fr=S.rope/(S.rope+S.sh+KB.hb);
+ const hookTop=[tip[0]+sw[0]*fr,tip[1]+sw[1]*fr,tip[2]-S.rope];
+ if(!S.lifted&&S.att){hookTop[0]=S.lx;hookTop[1]=S.ly}   // hook plumbed over load when rigging
+ else if(!S.lifted){hookTop[0]=tip[0];hookTop[1]=tip[1]}
+ cylBetween(tip,hookTop,0.018,"#2a2d31",{spec:0.8});
+ cylBetween([hookTop[0],hookTop[1],hookTop[2]-0.32],hookTop,0.17,"#f2b51b",{spec:0.5});
+ const hookBot=[hookTop[0],hookTop[1],hookTop[2]-KB.hb];
+ cylBetween([hookTop[0],hookTop[1],hookTop[2]-0.32],hookBot,0.04,"#1d1f22",{spec:0.8});
+ // load
+ const ld=[Math.cos(S.lyaw),Math.sin(S.lyaw)];
+ const lc=[S.lx,S.ly,S.yb+S.lH/2];
+ if(S.isLog){
+  const r0=Math.min(S.lH,S.lWd)/2;
+  cylBetween([lc[0]-ld[0]*S.lW/2,lc[1]-ld[1]*S.lW/2,S.yb+r0],[lc[0]+ld[0]*S.lW/2,lc[1]+ld[1]*S.lW/2,S.yb+r0],r0,"#7d5131",{spec:0.05});
+  cylBetween([lc[0]+ld[0]*(S.lW/2-0.005),lc[1]+ld[1]*(S.lW/2-0.005),S.yb+r0],[lc[0]+ld[0]*(S.lW/2+0.01),lc[1]+ld[1]*(S.lW/2+0.01),S.yb+r0],r0*0.94,"#d9a86c",{spec:0});
+  cylBetween([lc[0]-ld[0]*(S.lW/2+0.01),lc[1]-ld[1]*(S.lW/2+0.01),S.yb+r0],[lc[0]-ld[0]*(S.lW/2-0.005),lc[1]-ld[1]*(S.lW/2-0.005),S.yb+r0],r0*0.94,"#d9a86c",{spec:0});
+  // stub branches
+  cylBetween([lc[0]+ld[0]*S.lW*0.2,lc[1]+ld[1]*S.lW*0.2,S.yb+r0*1.6],[lc[0]+ld[0]*S.lW*0.32,lc[1]+ld[1]*S.lW*0.32+0.2,S.yb+r0*2.6],r0*0.25,"#7d5131");
+ }else{
+  add("box",chain(M4.T(...lc),M4.Rz(S.lyaw),M4.S(S.lW,S.lWd,S.lH)),"#e8792b",{spec:0.2});
+ }
+ const rg=S.rg;
+ if(rg&&S.slingA>0.02){
+  const col=slingCol(rg.up.d), low=rg.rows[1]||rg.up, wcol=slingCol(low.d), isCh=isChain(rg.up.d);
+  const offs=rg.n===1?[0]:Array.from({length:rg.n},(_,i)=>-rg.dx+2*rg.dx*i/(rg.n-1));
+  const topZ=S.yb+S.lH;
+  offs.forEach(o=>{
+   const ap=[lc[0]+ld[0]*o,lc[1]+ld[1]*o,topZ];
+   const from=[hookBot[0]+(ap[0]-hookBot[0])*(1-S.slingA),hookBot[1]+(ap[1]-hookBot[1])*(1-S.slingA),hookBot[2]+(ap[2]-hookBot[2])*(1-S.slingA)];
+   if(isCh){cylBetween(from,ap,0.03,col,{spec:1.2})}else{boxBetween(from,ap,0.055,0.012,col,{spec:0.15})}
+   if(["choke","basket","b45","b60"].includes(low.hitch)){
+    const k=S.isLog?Math.min(S.lH,S.lWd)/2+0.02:0;
+    if(S.isLog) add("cyl",chain(M4.T(ap[0]-ld[0]*0.03,ap[1]-ld[1]*0.03,S.yb+k-0.02),M4.Rz(S.lyaw),M4.Ry(Math.PI/2),M4.S(k,k,0.06)),wcol,{spec:0.1,a:S.slingA});
+    else add("box",chain(M4.T(ap[0],ap[1],S.yb+S.lH/2),M4.Rz(S.lyaw),M4.S(0.07,S.lWd+0.04,S.lH+0.04)),wcol,{a:S.slingA});
+   }
+  });
+ }
+ // ---- people: rigger (tagline) & signalman
+ const person=(p,yaw,vest,phase,armUp)=>{
+  const sw=Math.sin(phase)*0.45;
+  const base=(x)=>chain(M4.T(p[0],p[1],0),M4.Rz(yaw),x);
+  [[-1,sw],[1,-sw]].forEach(([s,a])=>add("box",chain(base(M4.T(0,s*0.11,0.9)),M4.Ry(a),M4.T(0,0,-0.44),M4.S(0.15,0.15,0.88)),"#26324a",{spec:0.05}));
+  add("box",base(chain(M4.T(0,0,1.22),M4.S(0.26,0.44,0.62))),vest,{spec:0.2,emis:[0.08,0.06,0]});
+  add("box",base(chain(M4.T(0,0,1.16),M4.S(0.27,0.45,0.05))),"#d9dde3",{spec:1.2,emis:[0.12,0.12,0.12]});
+  [[-1,-sw],[1,sw]].forEach(([s,a])=>{const up=armUp&&s>0;add("box",chain(base(M4.T(0,s*0.29,1.48)),M4.Ry(up?-2.6:a*0.8),M4.T(0,0,-0.3),M4.S(0.1,0.1,0.6)),vest,{spec:0.2})});
+  sphere([p[0],p[1],1.68],0.115,"#c58c62",{spec:0.1});
+  add("sph",chain(M4.T(p[0],p[1],1.74),M4.S(0.15,0.15,0.09)),"#ffffff",{spec:0.8});
+ };
+ const R=S.R, tagStand=[-R-S.lW/2-2.4,-1.4];
+ const P0=[-2.9,-2.6], Pload=[-R+0.9,1.1], Pend=[-2.8,-S.Rd-3.4];
+ let rp=P0, moving=false;
+ const seg=(a,b,u)=>[lerp(a[0],b[0],u),lerp(a[1],b[1],u)];
+ if(t<9) rp=P0;
+ else if(t<11){rp=seg(P0,Pload,sg(t,9,11));moving=t<10.9}
+ else if(t<12.5) rp=Pload;
+ else if(t<13.5){rp=seg(Pload,tagStand,sg(t,12.5,13.5));moving=true}
+ else if(t<16.5||S.halted) rp=tagStand;
+ else if(t<22.5){const u=sg(t,16.5,22.5);const a0=Math.atan2(tagStand[1],tagStand[0]),a1=Math.atan2(Pend[1],Pend[0]);const r0=Math.hypot(...tagStand),r1=Math.hypot(...Pend);
+  const aa=lerp(a0,a1<a0?a1+2*Math.PI:a1,u), rr=lerp(r0,r1,u);rp=[rr*Math.cos(aa),rr*Math.sin(aa)];moving=u<0.98}
+ else rp=Pend;
+ const faceLoad=Math.atan2(S.ly-rp[1],S.lx-rp[0]);
+ person(rp,faceLoad,"#ff8a00",moving?t*7:0,false);
+ // tagline from the free end of the load to the rigger's hand
+ if(S.lifted||(S.halted&&t>=13.5)){const endP=[lc[0]-ld[0]*S.lW/2,lc[1]-ld[1]*S.lW/2,S.yb+S.lH*0.5];
+  cylBetween(endP,[rp[0]+Math.cos(faceLoad)*0.35,rp[1]+Math.sin(faceLoad)*0.35,1.15],0.012,"#2fb34a",{spec:0.2,shadow:false});}
+ const opP=[-1.75,-0.55];person(opP,Math.atan2(S.ly-opP[1],S.lx-opP[0]),"#c6ff00",0,false);
+ const sig=[-R*0.45,Math.min(ex-1.2,R*0.75)];
+ person(sig,Math.atan2(B.tip[1]-sig[1],B.tip[0]-sig[0]),"#c6ff00",0,t>=9&&t<23.5);
+ return {L,lc,hookBot,tip};
+}
+
+/* ---------- renderer ---------- */
+function render3D(S){
+ const cv=$("#gl3"), ov=$("#ov3"), box3=$("#a3d");
+ const dpr=Math.min(2,window.devicePixelRatio||1), w=Math.max(10,box3.clientWidth), h=Math.max(10,box3.clientHeight);
+ if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);ov.width=cv.width;ov.height=cv.height}
+ const ctx=ov.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+ if(!glInit()){ctx.fillStyle="#344054";ctx.font="14px system-ui";ctx.fillText("3D view needs WebGL, which this browser has turned off.",16,30);return}
+ const gl=G3.gl,U=G3.U;
+ const sc=buildScene(S);
+ // camera
+ const ex=exclR(), fov=38*Math.PI/180;
+ let tgt=[-S.R*0.45,-1.2,2.2];
+ const k=V3.follow?clamp01((V3.zoom-1)/1.0):0;
+ const focus=[S.lx,S.ly,S.yb+S.lH+0.6];
+ tgt=[lerp(tgt[0],focus[0],k),lerp(tgt[1],focus[1],k),lerp(tgt[2],focus[2],k)];
+ const dist=Math.max(ex*0.9,S.R+5)*1.6/V3.zoom;
+ const cp=Math.cos(V3.pitch), sp=Math.sin(V3.pitch);
+ const fwd=[-cp*Math.cos(V3.yaw),-cp*Math.sin(V3.yaw),-sp];
+ const right=[Math.sin(V3.yaw),-Math.cos(V3.yaw),0], upv=[right[1]*fwd[2]-right[2]*fwd[1],right[2]*fwd[0]-right[0]*fwd[2],right[0]*fwd[1]-right[1]*fwd[0]];
+ const kp=2*dist*Math.tan(fov/2)/h;
+ tgt=[tgt[0]-right[0]*V3.panX*kp+upv[0]*V3.panY*kp, tgt[1]-right[1]*V3.panX*kp+upv[1]*V3.panY*kp, tgt[2]-right[2]*V3.panX*kp+upv[2]*V3.panY*kp];
+ const eye=[tgt[0]-fwd[0]*dist,tgt[1]-fwd[1]*dist,Math.max(0.6,tgt[2]-fwd[2]*dist)];
+ const Pm=M4.persp(fov,w/h,0.2,900), Vm=M4.look(eye,tgt,[0,0,1]), VP=M4.mul(Pm,Vm);
+ gl.viewport(0,0,cv.width,cv.height);
+ gl.clearColor(0,0,0,0);gl.clearStencil(0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT|gl.STENCIL_BUFFER_BIT);
+ const Ldir=(()=>{const v=[-0.42,-0.55,0.72];const n=Math.hypot(...v);return v.map(a=>a/n)})();
+ gl.uniform3fv(U.uL,Ldir);gl.uniform3fv(U.uEye,eye);gl.uniform3fv(U.uFog,[0.83,0.88,0.94]);
+ const draw=(it,M,col,a,spec,emis,flat)=>{const ms=G3.mesh[it.m];
+  gl.bindBuffer(gl.ARRAY_BUFFER,ms.b1);gl.enableVertexAttribArray(G3.aP);gl.vertexAttribPointer(G3.aP,3,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ARRAY_BUFFER,ms.b2);gl.enableVertexAttribArray(G3.aN);gl.vertexAttribPointer(G3.aN,3,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ms.b3);
+  gl.uniformMatrix4fv(U.uMVP,false,M4.mul(VP,M));gl.uniformMatrix4fv(U.uM,false,M);gl.uniformMatrix3fv(U.uN,false,nmat(M));
+  gl.uniform3fv(U.uC,col);gl.uniform1f(U.uA,a);gl.uniform1f(U.uSpec,spec);gl.uniform3fv(U.uEmis,emis);gl.uniform1f(U.uFlat,flat);
+  gl.drawElements(gl.TRIANGLES,ms.n,gl.UNSIGNED_SHORT,0)};
+ // 1) ground layers
+ gl.disable(gl.STENCIL_TEST);gl.depthMask(true);
+ sc.L.filter(i=>i.ground).forEach(i=>draw(i,i.M,i.col,i.a,i.spec,i.emis,i.flat));
+ // 2) planar shadows (stencil: darken each pixel once)
+ const Sh=new Float32Array([1,0,0,0, 0,1,0,0, -Ldir[0]/Ldir[2],-Ldir[1]/Ldir[2],0,0, 0,0,0.03,1]);
+ gl.enable(gl.STENCIL_TEST);gl.stencilFunc(gl.EQUAL,0,0xff);gl.stencilOp(gl.KEEP,gl.KEEP,gl.INCR);gl.depthMask(false);
+ sc.L.filter(i=>!i.ground&&i.shadow&&i.a>0.5).forEach(i=>draw(i,M4.mul(Sh,i.M),[0.05,0.06,0.08],0.32,0,[0,0,0],1));
+ gl.disable(gl.STENCIL_TEST);gl.depthMask(true);
+ // 3) objects (opaque first, then translucent)
+ sc.L.filter(i=>!i.ground&&i.a>=0.999).forEach(i=>draw(i,i.M,i.col,i.a,i.spec,i.emis,i.flat));
+ gl.depthMask(false);sc.L.filter(i=>!i.ground&&i.a<0.999).forEach(i=>draw(i,i.M,i.col,i.a,i.spec,i.emis,i.flat));gl.depthMask(true);
+ // ---- overlay labels
+ const proj=p=>{const x=VP[0]*p[0]+VP[4]*p[1]+VP[8]*p[2]+VP[12],y=VP[1]*p[0]+VP[5]*p[1]+VP[9]*p[2]+VP[13],ww=VP[3]*p[0]+VP[7]*p[1]+VP[11]*p[2]+VP[15];
+  if(ww<=0.01)return null;return [(x/ww+1)/2*w,(1-y/ww)/2*h]};
+ const pill=(p,txt,fg="#0b2a6b",bg="rgba(255,255,255,.9)",bd="#9db4e0")=>{if(!p)return;ctx.font="600 10.5px system-ui,Segoe UI,Arial";const tw=ctx.measureText(txt).width;
+  const x=p[0]-tw/2-5,y=p[1]-8;ctx.fillStyle=bg;ctx.strokeStyle=bd;ctx.lineWidth=1;ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,tw+10,16,8):ctx.rect(x,y,tw+10,16);ctx.fill();ctx.stroke();ctx.fillStyle=fg;ctx.fillText(txt,x+5,y+11.5)};
+ if(S.t>=4.5) pill(proj([S.B.tip[0]/2,S.B.tip[1]/2,0.05]),`r = ${S.r_.toFixed(1)} m`);
+ pill(proj([sc.lc[0],sc.lc[1],S.yb+S.lH+0.2]),`${Math.round(S.r.loadKg)} kg`,"#3b1a04","rgba(255,248,240,.92)","#e3b48a");
+ const rg=S.rg; const lim=num(P.maxUtil)||75;
+ if(rg&&S.slingA>0.9&&S.t<23.5){const col=rg.util>100?"#b42318":rg.util>lim?"#b54708":"#1e7b45";
+  pill(proj([sc.hookBot[0],sc.hookBot[1],sc.hookBot[2]-0.35]),`${(rg.T/1000).toFixed(2)} t × ${rg.n}${rg.n>1?` · ∠${Math.round(rg.incl)}°`:""}`,col,"rgba(255,255,255,.95)",col);}
+ if(S.c&&S.t>=3.3){const onHook=S.lifted||(S.halted&&S.t>=13.5);
+  const rs=olReactions(S.c,S.r_,S.B.phi,onHook?S.r.total/1000:0);const mx=rs.reduce((a,b)=>b.t>a.t?b:a);
+  const Ar=Math.max(0.01,num(P.plateL)*num(P.plateW)), gk=GROUND[P.ground]?P.ground:"asphalt", allow=gk==="custom"?num(P.groundKpa):GROUND[gk][1];
+  const kPa=mx.t*9.81/Ar, col=allow&&kPa>allow?"#b42318":allow&&kPa>0.8*allow?"#b54708":"#1e7b45";
+  pill(proj([mx.x,mx.y,0.35]),`${Math.round(mx.t*9.81)} kN · ${Math.round(kPa)} kPa`,col,"rgba(255,255,255,.95)",col);}
+ if(S.t>=4.5){const ePt=proj([ex*Math.cos(-2.2),ex*Math.sin(-2.2),0.8]);pill(ePt,`Exclusion ${ex} m`,"#b42318","rgba(255,255,255,.92)","#f1a7a1")}
+ ctx.font="700 15px system-ui,Segoe UI,Arial";ctx.fillStyle="#1d2939";ctx.fillText("3D LIFT SIMULATION",14,24);
+ if(w>520){ctx.font="12px system-ui,Segoe UI,Arial";ctx.fillStyle="#475467";ctx.fillText("drag rotate · scroll / pinch zoom · double-click fit",14,42);}
+ if(S.halted&&S.t>=13.5){ctx.fillStyle="#b42318";const bw=Math.min(w-28,560);ctx.beginPath();ctx.roundRect?ctx.roundRect(14,54,bw,46,8):ctx.rect(14,54,bw,46);ctx.fill();
+  ctx.fillStyle="#fff";ctx.font="700 14px system-ui,Segoe UI,Arial";ctx.fillText("✖ LIFT STOPPED: plan check failed (LMI cut-out)",26,74);
+  ctx.font="12px system-ui,Segoe UI,Arial";const m=String(A.fails[0]||"");ctx.fillText(m.length>80?m.slice(0,78)+"…":m,26,92);}
+}
+
+function stepCaption(S,t){
+ if(S.halted&&t>=13.5) return "✖ STOP at trial lift: "+A.fails[0];
+ const rg=S.rg;
+ if(t>=11&&t<12.5&&rg){
+  const g=rg.up, h=(HITCH[g.hitch]||HITCH.straight)[0].toLowerCase();
+  const low=rg.rows[1]?` + ${rg.rows[1].d.name} ${rg.rows[1].d.id}`:"";
+  return `6 · Rig the load: ${rg.n}-leg ${g.d.name} ${g.d.id} (${h})${low}, tagline attached`;
+ }
+ if(t>=13.5&&t<15) return `8 · Trial lift: raise 300 mm and hold. Hook load ${(S.r.total/1000).toFixed(3)} t, check rigging & stability`;
+ return S.cur[2];
+}
+function drawAnim(){
+ const S=animState(A.t);
+ try{render3D(S)}catch(e){console.error(e)}
+ $("#scrub").value=A.t;
+ $("#aCap").textContent=stepCaption(S,A.t);
+ $("#aCap").style.color=S.halted&&A.t>=13.5?"var(--bad)":"";
+ const total=S.r.total, swl=swlAt(S.c,S.r_), lim=num(P.maxUtil)||75;
+ const onHook=(S.lifted||(S.halted&&A.t>=13.5))&&A.t<23.6;
+ const u = onHook&&swl ? total/swl*100 : null;
+ $("#aR").textContent=S.r_.toFixed(1)+" m";
+ $("#aSwl").textContent=swl?(swl/1000).toFixed(2)+" t":"—";
+ $("#aLoad").textContent=onHook?(total/1000).toFixed(3)+" t":"0.000 t";
+ const bar=$("#aBar"), ut=$("#aU");
+ if(u!=null){ut.textContent=u.toFixed(1)+"%";bar.style.width=Math.min(100,u)+"%";bar.style.background=u>lim?"var(--bad)":u>lim-5?"#d99a00":"var(--ok)"}
+ else{ut.textContent="—";bar.style.width="0%"}
+ const rg=S.rg;
+ $("#aAng").textContent=rg?(rg.n>1?Math.round(rg.incl)+"° incl.":"vertical"):"—";
+ $("#aT").textContent=rg?(rg.T/1000).toFixed(2)+" t × "+rg.n:"—";
+ const ru=$("#aRig"); ru.textContent=rg?rg.util.toFixed(0)+"%":"—";
+ ru.style.color=rg&&rg.util>100?"var(--bad)":rg&&rg.util>lim?"#b54708":"";
+ $("#bPlay").textContent=A.playing?"❚❚ Pause":(A.t>=maxT()?"↻ Replay":"▶ Play");
+}
+function tick(ts){
+ if(!A.playing)return;
+ if(A.last){const dt=Math.min(0.1,(ts-A.last)/1000);A.t=Math.min(maxT(),A.t+dt);if(!V3.user&&!V3.drag)V3.yaw+=dt*0.07}
+ A.last=ts; drawAnim();
+ if(A.t>=maxT()){A.playing=false;drawAnim();return}
+ A.raf=requestAnimationFrame(tick);
+}
+function playAnim(fromStart){
+ if(fromStart||A.t>=maxT())A.t=0;
+ A.playing=true;A.last=0;cancelAnimationFrame(A.raf);A.raf=requestAnimationFrame(tick);
+ const card=$("#animCard"),top=card.getBoundingClientRect().top; if(top<0||top>innerHeight-120) card.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function syncAnim(fails){
+ A.fails=fails;
+ $("#animLock").textContent=fails.length?`${fails.length} check(s) failing: the lift will stop at the trial lift`:"Updates live with the crane, load and lifting gear";
+ $("#animLock").style.color=fails.length?"var(--bad)":"var(--mut)";
+ if(A.t>maxT())A.t=maxT();
+ const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ const was=A.lastFail; A.lastFail=fails.length;
+ if(was!=null&&was>0&&fails.length===0&&!reduce){drawAnim();playAnim(true);return}
+ if(!A.playing)drawAnim();
+}
+$("#bPlay").onclick=()=>{if(A.playing){A.playing=false;cancelAnimationFrame(A.raf);drawAnim()}else playAnim(false)};
+$("#scrub").oninput=e=>{A.playing=false;cancelAnimationFrame(A.raf);A.t=Math.min(maxT(),+e.target.value);drawAnim()};
+const V3={yaw:-2.2,pitch:0.42,drag:null,user:false,zoom:1,panX:0,panY:0,follow:true};
+window.addEventListener("resize",()=>{if(!A.playing)drawAnim()});
+
+/* 3D view: drag rotate · wheel/pinch zoom · shift-drag / two-finger pan · double-click fit */
+(()=>{const el=$("#a3d"), pts=new Map(); let pinch=null;
+ const redraw=()=>{$("#z3lvl").textContent=Math.round(V3.zoom*100)+"%"; if(!A.playing)drawAnim()};
+ const setZoom=z=>{V3.zoom=Math.max(0.5,Math.min(8,z));redraw()};
+ const fit=()=>{V3.yaw=-2.2;V3.pitch=0.42;V3.zoom=1;V3.panX=0;V3.panY=0;V3.user=false;redraw()};
+ el.addEventListener("pointerdown",e=>{pts.set(e.pointerId,{x:e.clientX,y:e.clientY});try{el.setPointerCapture(e.pointerId)}catch(_){}
+  if(pts.size===2){const [a,b]=[...pts.values()];pinch={d:Math.max(10,Math.hypot(a.x-b.x,a.y-b.y)),z:V3.zoom,mx:(a.x+b.x)/2,my:(a.y+b.y)/2,px:V3.panX,py:V3.panY};V3.drag=null}
+  else{V3.drag={x:e.clientX,y:e.clientY,yaw:V3.yaw,pitch:V3.pitch,px:V3.panX,py:V3.panY,pan:e.shiftKey||e.button===2};V3.user=true}});
+ el.addEventListener("pointermove",e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  const sc=1;
+  if(pinch&&pts.size>=2){const [a,b]=[...pts.values()];const d=Math.hypot(a.x-b.x,a.y-b.y);
+   V3.zoom=Math.max(0.5,Math.min(8,pinch.z*d/pinch.d));V3.panX=pinch.px+((a.x+b.x)/2-pinch.mx)*sc;V3.panY=pinch.py+((a.y+b.y)/2-pinch.my)*sc;redraw();return}
+  if(!V3.drag)return;
+  if(V3.drag.pan){V3.panX=V3.drag.px+(e.clientX-V3.drag.x)*sc;V3.panY=V3.drag.py+(e.clientY-V3.drag.y)*sc}
+  else{const k=Math.PI/Math.max(300,el.clientWidth*0.6);V3.yaw=V3.drag.yaw-(e.clientX-V3.drag.x)*k;V3.pitch=Math.max(0.12,Math.min(1.35,V3.drag.pitch+(e.clientY-V3.drag.y)*k))}
+  redraw()});
+ const end=e=>{pts.delete(e.pointerId);if(pts.size<2)pinch=null;if(!pts.size)V3.drag=null};
+ el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);
+ el.addEventListener("contextmenu",e=>e.preventDefault());
+ el.addEventListener("wheel",e=>{e.preventDefault();setZoom(V3.zoom*Math.exp(-e.deltaY*0.0015))},{passive:false});
+ el.addEventListener("dblclick",fit);
+ $("#z3in").onclick=()=>setZoom(V3.zoom*1.25); $("#z3out").onclick=()=>setZoom(V3.zoom/1.25); $("#z3fit").onclick=fit;
+ $("#z3follow").onchange=e=>{V3.follow=e.target.checked;redraw()};
+ const fs=$("#z3full"), wrapEl=$("#v3wrap");
+ if(!document.fullscreenEnabled||!wrapEl.requestFullscreen) fs.style.display="none";
+ fs.onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await wrapEl.requestFullscreen()}catch(_){toast("Full screen is not available here")}};
+})();
+/* ---------- init ---------- */
+/* ---------- shared team register (register.json on the team website) ---------- */
+const TEAM_URL = /github\.io$/.test(location.hostname) ? "register.json" : "https://rijalkhairuddin.github.io/lifting-plan/register.json";
+let TEAM = LS.get("lp_team", null);   // {version, updatedAt, updatedBy}
+function renderTeamInfo(msg){
+ const el=$("#teamInfo"); if(!el) return;
+ el.innerHTML = (TEAM?`<b>Team register:</b> version ${esc(TEAM.version)}, updated ${dmy(TEAM.updatedAt)}${TEAM.updatedBy?` by ${esc(TEAM.updatedBy)}`:""}. This phone uses it automatically.`
+  :`<b>Team register:</b> not loaded yet (offline, or not published).`) + (msg?`<br><span style="color:var(--bad)">${esc(msg)}</span>`:"")+
+  `<br><span style="font-size:11px">Edits made here stay on this device until the register admin exports register.json and uploads it to the team website. Then everyone gets them.</span>`;
+}
+async function syncTeam(manual){
+ try{
+  const r=await fetch(TEAM_URL+(TEAM_URL.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"});
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  const d=await r.json();
+  if(!d||!Array.isArray(d.cranes)||!Array.isArray(d.gear)) throw new Error("register.json is not valid");
+  const ver=String(d.version)+"|"+(d.updatedAt||"");
+  const cur=TEAM?String(TEAM.version)+"|"+(TEAM.updatedAt||""):"";
+  if(ver!==cur){
+   REG={cranes:d.cranes,gear:d.gear}; TEAM={version:d.version,updatedAt:d.updatedAt,updatedBy:d.updatedBy||""};
+   LS.set("lp_team",TEAM); saveReg(); if($("#mReg").classList.contains("on")) renderReg();
+   toast(`Team register updated (version ${d.version}, ${dmy(d.updatedAt)})`);
+  } else if(manual) toast("Team register is up to date");
+  renderTeamInfo();
+ }catch(e){ renderTeamInfo(manual?("Could not reach the team register: "+e.message):""); if(manual) toast("Could not reach the team register"); }
+}
+$("#bTeamCheck").onclick=()=>syncTeam(true);
+$("#bTeamExport").onclick=()=>{
+ const v=(parseInt(TEAM&&TEAM.version)||0)+1;
+ const by=(P.supervisor||"").trim();
+ const data={version:v,updatedAt:today(),updatedBy:by,cranes:REG.cranes,gear:REG.gear};
+ saveFile("register.json",JSON.stringify(data,null,1)).then(ok=>{if(ok)toast("Saved register.json (version "+v+"). Upload it to the team website to share.")});
+};
+if(/github\.io$/.test(location.hostname)) $("#aApk").style.display="";
+
+fillGround(); fillCraneSelect(); bindForm(); renderGearRows(); update(); renderTeamInfo(); syncTeam(false);
+window.addEventListener("resize",()=>{clearTimeout(scaleT);scaleT=setTimeout(fitPreview,80)});
+</script>
+</body>
+</html>
