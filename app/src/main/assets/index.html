@@ -159,6 +159,9 @@ table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text
       <label>Working radius (m)<input type="number" step="0.1" data-k="radius"></label>
       <label>SWL at radius<select data-k="swlMode"><option value="chart">From load chart (auto)</option><option value="manual">Enter manually</option></select></label>
       <label>Manual SWL (kg)<input type="number" step="1" data-k="swlManual" placeholder="only if manual"></label>
+      <label>ASCS zone at pick-up<select data-k="zonePick"><option value="rear">Rear</option><option value="left">Left (kerb)</option><option value="right">Right (driver)</option><option value="front">Front (cab)</option></select></label>
+      <label>ASCS zone at set-down<select data-k="zoneSet"><option value="rear">Rear</option><option value="left">Left (kerb)</option><option value="right">Right (driver)</option><option value="front">Front (cab)</option></select></label>
+      <label>Outrigger extension (both sides)<select data-k="olExt"><option value="100">100% (fully extended)</option><option value="66">66%</option><option value="33">33%</option><option value="0">0% (retracted, legs down)</option></select></label>
       <label>Hook block weight (kg)<input type="number" step="1" data-k="hookWt"></label>
       <label>Hook block SWL (kg)<input type="number" step="1" data-k="hookSwl"></label>
       <label>Steel plate thickness (mm)<input type="number" step="1" data-k="plate"></label>
@@ -213,6 +216,7 @@ table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text
     <div class="g2">
       <label class="full">Ground under the most-loaded outrigger<select data-k="ground" id="selGround"></select></label>
       <label>Custom allowable bearing (kPa)<input type="number" step="5" data-k="groundKpa" placeholder="only for Custom"></label>
+      <label>Outrigger load used for bearing<select data-k="olBasis"><option value="calc">Calculated for this lift</option><option value="fmax">Manufacturer F max (most conservative)</option></select></label>
       <label>Plate / mat size L × W (m)<span style="display:flex;gap:4px"><input type="number" step="0.1" data-k="plateL"><input type="number" step="0.1" data-k="plateW"></span></label>
       <label class="full" style="flex-direction:row;align-items:center;gap:8px;color:var(--ink)"><input type="checkbox" data-k="servicesChecked" style="width:auto"> Underground services, drains, culverts &amp; slopes checked under every outrigger</label>
     </div>
@@ -270,11 +274,11 @@ const PK33002_GH = [[4.6,6000],[6.5,3900],[8.4,2800],[10.5,2100],[12.6,1620],[14
 const PK42002_G  = [[4.5,7900],[6.2,5500],[8.0,4000],[9.9,3000],[12.0,2350],[14.2,1880],[16.4,1560],[18.6,1340],[20.8,1180],[23.0,900]];
 const DEFAULT_REG = {
  cranes:[
-  {id:"LM470937L",veh:"YN185E", model:"PALFINGER PK26002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2014",maxSwl:4700,boom:21.10,ext:2.00,lorryWt:"10.3",capacity:"6",hookWt:30,hookSwl:6500,ae:"2026-10-20",exp:"2027-10-19",six:"2027-04-19",chart:PK26002_G, spread:5.8,olSpacing:6.0,boomWt:1.2, notes:"Cert SWL 4700@4.6 m, 590@21.1 m, 510@23.1 m (manual ext). Outrigger spread, spacing & boom weight are typical values, so verify with the manufacturer."},
-  {id:"LM503596L",veh:"YN9535U",model:"PALFINGER PK26002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2015",maxSwl:4700,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6500,ae:"2026-10-22",exp:"2027-10-21",six:"2027-04-21",chart:PK26002_G, spread:5.8,olSpacing:6.0,boomWt:1.2, notes:"Cert SWL 4700@4.6 m, 590@21.1 m, 510@23.1 m (manual ext). Outrigger/boom-weight values typical, so verify. Lorry weight/capacity copied from previous plan, please verify."},
-  {id:"LM494602C",veh:"XE949C", model:"PALFINGER PK33002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2015",maxSwl:6000,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-08-31",exp:"2027-08-30",six:"2027-02-28",chart:PK33002_GH,spread:5.8,olSpacing:6.0,boomWt:1.5,notes:"High-performance chart G. Outrigger/boom-weight values typical, so verify. Cert SWL 6000@4.6 m, 860@21.1 m, 570@23.1 m (manual ext)."},
-  {id:"LM563471X",veh:"XE1750B",model:"PALFINGER PK33002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2016",maxSwl:6000,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-08-03",exp:"2027-08-02",six:"2027-02-02",chart:PK33002_GH,spread:5.8,olSpacing:6.0,boomWt:1.5,notes:"High-performance chart G. Outrigger/boom-weight values typical, so verify. Cert SWL 6000@4.4 m, 860@21.1 m, 570@23.1 m. Personnel basket LGWFPB432 (120 kg, 1 person) valid to 12/04/2027. 6-month date taken from cert file name."},
-  {id:"LM797234X",veh:"XD5015U",model:"PALFINGER PK42002SH-G + V1 (ASCS)",type:"Lorry Crane",year:"2017",maxSwl:7900,boom:20.80,ext:2.20,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-07-14",exp:"2027-07-13",six:"2027-01-13",chart:PK42002_G, spread:6.4,olSpacing:6.0,boomWt:2.0, notes:"Outrigger/boom-weight values typical, so verify. Cert SWL 7900@4.5 m, 1180@20.8 m, 900@23.0 m (manual ext). 6-month date taken from cert file name."}
+  {id:"LM470937L",veh:"YN185E", model:"PALFINGER PK26002EH-G + V1 (ASCS)",type:"Lorry Crane",year:"2014",maxSwl:4700,boom:21.10,ext:2.00,lorryWt:"10.3",capacity:"6",hookWt:30,hookSwl:6500,ae:"2026-10-20",exp:"2027-10-19",six:"2027-04-19",chart:PK26002_G, spread:5.8,olSpacing:6.0,boomWt:1.2,gvw:16000,chassis:"JALFVR347E7000766 (Isuzu FVR34SUQDC)",serial:"100182196",sirlock:"2402357A",peDoc:"DES-SCS326-PE-01",fmax:127,zones:"100:100/98/100/60, 66:100/82/85/60, 33:100/57/60/60, 0:100/28/28/60",notes:"Cert SWL 4700@4.6 m, 590@21.1 m, 510@23.1 m (manual ext). Outrigger spread, spacing & boom weight are typical values, so verify with the manufacturer."},
+  {id:"LM503596L",veh:"YN9535U",model:"PALFINGER PK26002EH-GV1 (ASCS)",type:"Lorry Crane",year:"2015",maxSwl:4700,boom:21.10,ext:2.00,lorryWt:"10.3",capacity:"8",hookWt:30,hookSwl:6500,ae:"2026-10-22",exp:"2027-10-21",six:"2027-04-21",chart:PK26002_G, spread:5.8,olSpacing:6.0,boomWt:1.2,gvw:16000,chassis:"JALFVR347F000674 (Isuzu FVR34SUQDC)",serial:"100282580",sirlock:"2210891",peDoc:"DES-SCS201-PE-01",fmax:127,zones:"100:100/100/100/60, 66:100/80/82/60, 33:100/55/57/60, 0:100/29/29/60",notes:"Cert SWL 4700@4.6 m, 590@21.1 m, 510@23.1 m (manual ext). Outrigger/boom-weight values typical, so verify. Weight of crane corrected from 20 t to 10.3 t (GVW 16 t per PE DES-SCS201-PE-01; same chassis as YN185E), please verify by weighbridge."},
+  {id:"LM494602C",veh:"XE949C", model:"PALFINGER PK33002EH-GV1 (ASCS)",type:"Lorry Crane",year:"2015",maxSwl:6000,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-08-31",exp:"2027-08-30",six:"2027-02-28",chart:PK33002_GH,spread:5.8,olSpacing:6.0,boomWt:1.5,gvw:28000,chassis:"JALCYZ52RF7000060 (Isuzu CYZ52R)",serial:"100274142",sirlock:"S2209786",peDoc:"DES-SCS156-PE-01",fmax:137,zones:"100:100/100/100/60, 66:100/82/82/60, 33:100/60/60/60, 0:100/30/30/60",notes:"High-performance chart G. Outrigger/boom-weight values typical, so verify. Cert SWL 6000@4.6 m, 860@21.1 m, 570@23.1 m (manual ext)."},
+  {id:"LM563471X",veh:"XE1750B",model:"PALFINGER PK33002EH-GV1 (ASCS)",type:"Lorry Crane",year:"2016",maxSwl:6000,boom:21.10,ext:2.00,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-08-03",exp:"2027-08-02",six:"2027-02-02",chart:PK33002_GH,spread:5.8,olSpacing:6.0,boomWt:1.5,gvw:28000,chassis:"JALCYZ52RG7000034 (Isuzu CYZ52R)",serial:"100326825",sirlock:"S2209786",peDoc:"DES-SCS165-PE-01",fmax:137,zones:"100:100/100/100/60, 66:100/82/82/60, 33:100/60/60/60, 0:100/30/30/60",notes:"High-performance chart G. Outrigger/boom-weight values typical, so verify. Cert SWL 6000@4.4 m, 860@21.1 m, 570@23.1 m. Personnel basket LGWFPB432 (120 kg, 1 person) valid to 12/04/2027. 6-month date taken from cert file name."},
+  {id:"LM797234X",veh:"XD5015U",model:"PALFINGER PK42002-SHG + V1 (ASCS)",type:"Lorry Crane",year:"2017",maxSwl:7900,boom:20.80,ext:2.20,lorryWt:"20",capacity:"8",hookWt:30,hookSwl:6350,ae:"2026-07-14",exp:"2027-07-13",six:"2027-01-13",chart:PK42002_G, spread:7.4,olSpacing:5.55,boomWt:2.0,gvw:28000,chassis:"JALCYZ52RB7000054 (Isuzu CYZ52R)",serial:"100415151",sirlock:"2305336",peDoc:"DES-SCS236-PE-01",fmax:134,zones:"100:100/98/92/60, 66:100/84/78/60, 33:100/60/56/60, 0:100/27/28/60",notes:"Outrigger spread 7.4 m (Palfinger R3X STZS3) and spacing 5.55 m from PE drawing; boom weight typical, so verify. Cert SWL 7900@4.5 m, 1180@20.8 m, 900@23.0 m (manual ext). 6-month date taken from cert file name."}
  ],
  gear:[
   {id:"LG6J2819-1 TO 10",name:"Webbing Sling",desc:"2\" x 8 m 2-ply webbing sling (qty 10)",swl:2000,wt:2,len:8,exp:"2027-05-27",six:"2026-11-27",notes:"Cert examined 28/05/2026."},
@@ -293,12 +297,14 @@ const today = ()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMon
 function blankPlan(){
  return {planNo:"",liftDate:today(),location:"",company:"TAN HUAN",docNo:"EHS-14-F08A",rev:"A",sheet:"1 OF 1",effDate:"",
   supervisor:"SARKAR SHUBAS",pm:"ANDY TAN",datePrepared:today(),dateApproved:"",
-  craneId:"LM470937L",boomUsed:18.0,radius:10.5,swlMode:"chart",swlManual:"",hookWt:30,hookSwl:6500,plate:25,exclusion:"",certRule:"six",ground:"asphalt",groundKpa:"",plateL:1.0,plateW:1.0,servicesChecked:false,
+  craneId:"LM470937L",boomUsed:18.0,radius:10.5,swlMode:"chart",swlManual:"",hookWt:30,hookSwl:6500,plate:25,exclusion:"",certRule:"six",ground:"asphalt",groundKpa:"",plateL:1.0,plateW:1.0,servicesChecked:false,zonePick:"left",zoneSet:"rear",olExt:"100",olBasis:"calc",
   platform:"1000mm x 1000mm x 25mm steel plate to be provided",
   loadName:"Wood Debris / Tree",loadL:7,loadW:3,loadH:3,loadWt:900,contingency:0,rigging:"Choke Hitch",weightBasis:"",
   gear:[{id:"LG6J2819-1 TO 10",qty:1,legs:1,hitch:"choke"}],siteNotes:"",siteImg:"",maxUtil:75,warnDays:14};
 }
 let REG = LS.get("lp_reg", null) || JSON.parse(JSON.stringify(DEFAULT_REG));
+// migrate older saved registers: add PE / ASCS data the user has not entered yet
+REG.cranes.forEach(c=>{const d=DEFAULT_REG.cranes.find(x=>x.veh===c.veh);if(!d)return;["zones","fmax","gvw","chassis","serial","sirlock","peDoc"].forEach(k=>{if(c[k]==null||c[k]==="")c[k]=d[k]})});
 let P = Object.assign(blankPlan(), LS.get("lp_draft", {}));
 let PLANS = LS.get("lp_plans", []);
 
@@ -326,7 +332,10 @@ function calc(){
   r.pt=c.chart.find(p=>p[0]>=R-1e-9)||null;
   if(r.pt) r.chartSwl=Math.min(r.pt[1],num(c.maxSwl)||r.pt[1]);
  }
- r.swl = P.swlMode==="manual" ? num(P.swlManual) : (r.chartSwl||0);
+ r.zp=zoneFactor(c,P.zonePick||"left",P.olExt??100); r.zs=zoneFactor(c,P.zoneSet||"rear",P.olExt??100);
+ r.zf = (r.zp!=null&&r.zs!=null) ? Math.min(r.zp,r.zs) : 100;
+ r.swlZone = r.chartSwl!=null ? Math.floor(r.chartSwl*r.zf/100/10)*10 : null;
+ r.swl = P.swlMode==="manual" ? num(P.swlManual) : (r.swlZone||0);
  r.loadKg = num(P.loadWt)*(1+num(P.contingency)/100);
  r.gear = (P.gear||[]).map(g=>{const d=gearOf(g.id)||{};const f=(HITCH[g.hitch]||HITCH.straight)[1];
    return {...g,d,wtKg:num(d.wt)*Math.max(1,num(g.qty)),cap:num(d.swl)*f*Math.max(1,num(g.legs)),f}});
@@ -351,6 +360,10 @@ function olReactions(c,rr,phi,Qt){
  const sx=4*(g.Sx/2)**2, sy=4*(g.Ls/2)**2;
  return pts.map(p=>({name:p[2],x:p[0],y:p[1],t:V/4+Mx*p[0]/sx+My*(p[1]-y0)/sy}));
 }
+/* ---------- ASCS working zones (PE stability tables) ---------- */
+const ZONES=["rear","left","right","front"], ZNAME={rear:"Rear",left:"Left",right:"Right",front:"Front"};
+function zoneTable(c){const t={};String(c&&c.zones||"").split(/[,;\n]+/).forEach(s=>{const m=s.split(":");if(m.length!==2)return;const v=m[1].split("/").map(Number);if(v.length===4&&v.every(isFinite))t[String(Number(m[0]))]=v});return Object.keys(t).length?t:null}
+function zoneFactor(c,zone,ext){const t=zoneTable(c);if(!t)return null;const k=Object.keys(t).map(Number).sort((a,b)=>b-a).find(e=>e<=num(ext));const row=t[String(k!=null?k:Math.min(...Object.keys(t).map(Number)))];return row[ZONES.indexOf(zone)]}
 function olWorst(r){
  const c=r.c; if(!c) return null;
  const R=num(P.radius)||0; if(R<=0) return null;
@@ -359,9 +372,9 @@ function olWorst(r){
  for(let i=0;i<=12;i++){const u=i/12, phi=Math.PI*(1+u/2), rr=R+(Rd-R)*u;
   olReactions(c,rr,phi,Qt).forEach(o=>{if(!worst||o.t>worst.t)worst={...o,rr,phi};if(!minR||o.t<minR.t)minR={...o,rr,phi}})}
  const A=Math.max(0.01,num(P.plateL)*num(P.plateW));
- const kN=worst.t*9.81, kPa=kN/A;
+ const kNc=worst.t*9.81, fmax=num(c.fmax), useF=P.olBasis==="fmax"&&fmax>0, kN=useF?fmax:kNc, kPa=kN/A;
  const gk=GROUND[P.ground]?P.ground:"asphalt", allow=gk==="custom"?num(P.groundKpa):GROUND[gk][1];
- return {worst,minR,kN,kPa,A,allow,gk,needA:allow>0?kN/allow:null,g:craneGeo(c)};
+ return {worst,minR,kN,kNc,fmax,useF,kPa,A,allow,gk,needA:allow>0?kN/allow:null,g:craneGeo(c)};
 }
 function checks(r){
  const out=[], add=(lvl,msg)=>out.push({lvl,msg});
@@ -382,12 +395,20 @@ function checks(r){
  if(R<=0) add("fail","Enter the working radius");
  else if(!r.pt) add("fail",`Radius ${R} m is beyond the load chart (max ${c.chart.length?c.chart[c.chart.length-1][0]:"?"} m)`);
  else add("ok",`Load chart: ${R} m → chart point ${r.pt[0]} m = ${r.chartSwl.toLocaleString()} kg`);
+ {const zt=zoneTable(c), ext=num(P.olExt??100);
+  if(!zt) add("warn",`No ASCS zone table in the register for ${c.id}, so the full load chart is used in every direction. Add it from the PE stability document`);
+  else{
+   if(P.zoneSet==="front") add("fail","Set-down in the Front (cab) zone: the stability control system will not let a loaded crane slew into the Front zone. Re-position the lorry");
+   if(P.zonePick==="front") add("warn","Pick-up in the Front (cab) zone: PE says lifting is not recommended there (minimum operating capacity only). Re-position the lorry if you can");
+   if(ext<100) add("warn",`Outriggers only ${ext}% extended: side-zone capacity is reduced, so confirm the extension on site matches the plan`);
+   if(r.chartSwl!=null) add("ok",`ASCS zones ${ZNAME[P.zonePick||"left"]} ${r.zp}% / ${ZNAME[P.zoneSet||"rear"]} ${r.zs}% at ${ext}% outrigger extension → SWL ${r.chartSwl.toLocaleString()} × ${r.zf}% = ${r.swlZone.toLocaleString()} kg${c.peDoc?` (${c.peDoc})`:""}`);
+  }}
  if(R>num(c.boom)&&R<=maxReach) add("warn",`Radius exceeds hydraulic boom (${c.boom} m), so the manual extension is required`);
  if(L>0&&R>L) add("fail",`Radius (${R} m) is greater than the boom length used (${L} m)`);
  if(L>maxReach) add("fail",`Boom length used (${L} m) exceeds max boom + extension (${maxReach.toFixed(2)} m)`);
  if(P.swlMode==="manual"){
   if(!num(P.swlManual)) add("fail","Manual SWL selected but not entered");
-  else if(r.chartSwl&&num(P.swlManual)>r.chartSwl) add("fail",`Manual SWL ${num(P.swlManual)} kg is higher than the load chart (${r.chartSwl} kg)`);
+  else if(r.swlZone&&num(P.swlManual)>r.swlZone) add("fail",`Manual SWL ${num(P.swlManual)} kg is higher than the load chart after the ASCS zone factor (${r.swlZone} kg)`);
   else add("warn","SWL entered manually, so check it against the load chart");
  }
  if(r.util!=null){
@@ -422,6 +443,8 @@ function checks(r){
   else if(ol.kPa>ol.allow) add("fail",`Ground bearing ${Math.round(ol.kPa)} kPa under ${ol.worst.name} outrigger exceeds ${ol.allow} kPa (${gname}). Use mats ≥ ${ol.needA.toFixed(2)} m² or get a PE assessment`);
   else if(ol.kPa>0.8*ol.allow) add("warn",`Ground bearing ${Math.round(ol.kPa)} kPa is over 80% of ${ol.allow} kPa (${gname}). Consider bigger mats`);
   else add("ok",`Max outrigger ${Math.round(ol.kN)} kN (${ol.worst.name}) → ${Math.round(ol.kPa)} kPa on ${ol.A.toFixed(2)} m², allowable ${ol.allow} kPa`);
+  if(ol.fmax&&ol.kNc>ol.fmax) add("warn",`Calculated outrigger load ${Math.round(ol.kNc)} kN is above the manufacturer F max ${ol.fmax} kN, so check the register data (vehicle weight, spread)`);
+  if(ol.useF) add("ok",`Ground bearing based on manufacturer F max ${ol.fmax} kN (most conservative)`);
   const avg=(ol.g.Wv+r.total/1000)/4;
   if(ol.minR.t<0) add("fail",`${ol.minR.name} outrigger would lift off (${ol.minR.t.toFixed(2)} t) along the lift path. Check radius, slew path and set-up`);
   else if(ol.minR.t<0.15*avg) add("warn",`${ol.minR.name} outrigger nearly unloaded (${ol.minR.t.toFixed(2)} t). Little stability margin`);
@@ -539,9 +562,11 @@ function renderSheet(r,ch){
  t+=row("Weight of Crane",c.lorryWt?esc(c.lorryWt)+" Ton":"")+row("Capacity of Crane",c.capacity?esc(c.capacity)+" Ton":"")+row("Year of Manufacture",esc(c.year||""));
  t+=row("LM No",esc(c.id||""))+row("Date of AE Inspection",dmy(c.ae))+row("Date of Next Inspection",dmy(c.exp))+row("Date of Next Inspection (LTA)",dmy(c.six));
  t+=row("Boom Length",num(P.boomUsed).toFixed(2)+"m")+row("Fly Jib / Ext.",c.ext?num(c.ext).toFixed(2)+"m (manual)":"NA")+row("SWL of Crane",c.maxSwl?tonsS(c.maxSwl):"");
- t+=row("Working Radius",num(P.radius).toFixed(2)+"m")+row("SWL of Working Radius",r.swl?tonsS(r.swl):"—",r.swl?"":"bad");
+ t+=row("Working Radius",num(P.radius).toFixed(2)+"m");
+ if(zoneTable(c)) t+=row("ASCS Zone (Pick-up / Set-down)",`${ZNAME[P.zonePick||"left"]} ${r.zp}% / ${ZNAME[P.zoneSet||"rear"]} ${r.zs}%`,P.zoneSet==="front"?"bad":"")+row("Outrigger Extension",num(P.olExt??100)+"%");
+ t+=row("SWL of Working Radius",r.swl?tonsS(r.swl):"—",r.swl?"":"bad");
  t+=row("Weight of Hook and Block (Main)",num(P.hookWt)+"KG")+row("SWL of Hook and Block (Main)",num(P.hookSwl)?tonsS(num(P.hookSwl)):"NA")+row("Thickness of Steel Plate",num(P.plate)+"MM");
- {const ol=olWorst(r);if(ol)t+=row("Max Outrigger Load",Math.round(ol.kN)+" kN")+row("Ground Bearing / Allowable",`${Math.round(ol.kPa)} / ${ol.allow} kPa`,ol.allow&&ol.kPa>ol.allow?"bad":"");}
+ {const ol=olWorst(r);if(ol)t+=row("Max Outrigger Load",Math.round(ol.kN)+" kN"+(ol.useF?" (F max)":""))+row("Ground Bearing / Allowable",`${Math.round(ol.kPa)} / ${ol.allow} kPa`,ol.allow&&ol.kPa>ol.allow?"bad":"");}
  t+=bar+`<tr><td class="k">Lifting Gear(s)</td><td class="v">Weight / SWL</td></tr>`;
  r.gear.forEach(g=>t+=row(esc((g.d.name||g.id)+(num(g.qty)>1?` ×${num(g.qty)}`:"")),`${g.wtKg}KG / ${g.d.swl?(g.d.swl/1000)+" Ton":"?"}`));
  t+=bar+`<tr><td class="k">Types of Load(s)</td><td class="v">Weight</td></tr>`;
@@ -596,6 +621,7 @@ function renderOl(r){
  el.innerHTML=`<b>Worst position:</b> radius ${ol.worst.rr.toFixed(1)} m, ${Math.round(((ol.worst.phi/Math.PI)-1)*180)}° into the slew<br>`+
   all.map(o=>`${o.name}: <b>${(o.t*9.81).toFixed(0)} kN</b> (${o.t.toFixed(2)} t)`).join(" · ")+
   `<br>Bearing: <b style="color:${cls}">${Math.round(ol.kPa)} kPa</b> on ${ol.A.toFixed(2)} m² vs ${ol.allow||"?"} kPa allowable${ol.needA?` · min. mat area ${ol.needA.toFixed(2)} m²`:""}`+
+  (ol.fmax?`<br>Manufacturer F max ${ol.fmax} kN${ol.useF?" (used for bearing)":""}`:"")+
   `<br><span style="font-size:11px">Vehicle ${ol.g.Wv} t, boom ${ol.g.Wb} t, outriggers ${ol.g.Sx} m × ${ol.g.Ls} m (from register)</span>`;
 }
 function renderCraneInfo(r){
@@ -660,11 +686,12 @@ $("#fImg").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new File
 $("#bClrImg").onclick=()=>{P.siteImg="";$("#fImg").value="";update()};
 
 /* ---------- register editor ---------- */
-const CF=[["id","LM No"],["veh","Vehicle no."],["model","Brand / model"],["type","Type"],["year","Year of mfg"],["maxSwl","Max SWL (kg)"],["boom","Max boom (m)"],["ext","Manual ext. (m)"],["lorryWt","Weight of crane (t)"],["capacity","Capacity of crane (t)"],["hookWt","Hook block wt (kg)"],["hookSwl","Hook block SWL (kg)"],["ae","AE inspection",1],["exp","Cert expiry",1],["six","6-month (LTA) expiry",1],["spread","Outrigger spread, L–R (m)"],["olSpacing","Outrigger spacing, front–rear (m)"],["boomWt","Boom self-weight (t)"]];
+const CF=[["id","LM No"],["veh","Vehicle no."],["model","Brand / model"],["type","Type"],["year","Year of mfg"],["maxSwl","Max SWL (kg)"],["boom","Max boom (m)"],["ext","Manual ext. (m)"],["lorryWt","Weight of crane (t)"],["capacity","Capacity of crane (t)"],["hookWt","Hook block wt (kg)"],["hookSwl","Hook block SWL (kg)"],["ae","AE inspection",1],["exp","Cert expiry",1],["six","6-month (LTA) expiry",1],["spread","Outrigger spread, L–R (m)"],["olSpacing","Outrigger spacing, front–rear (m)"],["boomWt","Boom self-weight (t)"],["fmax","Outrigger F max (kN)"],["gvw","GVW (kg)"],["chassis","Chassis no."],["serial","Crane serial no."],["sirlock","SCS / Sirlock no."],["peDoc","PE stability doc no."]];
 const GF=[["id","LG No"],["name","LG name"],["desc","Description"],["swl","SWL (kg)"],["wt","Weight (kg)"],["len","Length (m)"],["exp","Cert expiry",1],["six","6-month (LTA) expiry",1]];
 function renderReg(){
  $("#regCranes").innerHTML=REG.cranes.map((c,i)=>`<div class="card"><div class="g4">${CF.map(([k,l,d])=>`<label>${l}<input ${d?'type="date"':""} data-rc="${i}" data-f="${k}" value="${esc(c[k])}"></label>`).join("")}</div>
   <label style="margin-top:8px">Load chart (radius m : SWL kg)<textarea data-rc="${i}" data-f="chart">${c.chart.map(p=>p[0]+":"+p[1]).join(", ")}</textarea></label>
+  <label style="margin-top:6px">ASCS zone capacity % by outrigger extension (ext:Rear/Left/Right/Front)<input data-rc="${i}" data-f="zones" placeholder="100:100/98/92/60, 66:100/84/78/60, 33:100/60/56/60, 0:100/27/28/60" value="${esc(c.zones||"")}"></label>
   <label style="margin-top:6px">Notes<input data-rc="${i}" data-f="notes" value="${esc(c.notes)}"></label>
   <div style="text-align:right;margin-top:6px"><button class="sm del" data-rcdel="${i}">Remove crane</button></div></div>`).join("");
  $("#regGear").innerHTML=REG.gear.map((g,i)=>`<div class="card"><div class="g4">${GF.map(([k,l,d])=>`<label>${l}<input ${d?'type="date"':""} data-rg="${i}" data-f="${k}" value="${esc(g[k])}"></label>`).join("")}<label>Notes<input data-rg="${i}" data-f="notes" value="${esc(g.notes)}"></label></div>
@@ -677,7 +704,8 @@ $("#mReg").addEventListener("change",e=>{
  const t=e.target,f=t.dataset.f;
  if(t.dataset.rc!=null){const c=REG.cranes[+t.dataset.rc];
   if(f==="chart"){const pts=t.value.split(/[,;\n]+/).map(s=>s.split(":").map(Number)).filter(p=>p.length===2&&isFinite(p[0])&&isFinite(p[1])).sort((a,b)=>a[0]-b[0]);if(pts.length)c.chart=pts;else{toast("Chart not understood. Use 4.6:4700, 6.5:3000, …");return}}
-  else c[f]=["maxSwl","boom","ext","hookWt","hookSwl","spread","olSpacing","boomWt"].includes(f)?num(t.value):t.value;
+  else if(f==="zones"){c.zones=t.value.trim();if(c.zones&&!zoneTable(c)){toast("Zone table not understood. Use 100:100/98/92/60, 66:…");return}}
+  else c[f]=["maxSwl","boom","ext","hookWt","hookSwl","spread","olSpacing","boomWt","fmax","gvw"].includes(f)?num(t.value):t.value;
   if(f==="id"&&P.craneId&&!REG.cranes.find(x=>x.id===P.craneId))P.craneId=c.id;
   saveReg()}
  if(t.dataset.rg!=null){const g=REG.gear[+t.dataset.rg];const old=g.id;g[f]=["swl","wt","len"].includes(f)?num(t.value):t.value;
