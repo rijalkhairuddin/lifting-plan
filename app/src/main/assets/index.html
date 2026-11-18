@@ -44,6 +44,38 @@ textarea{resize:vertical;min-height:44px}
 .tag{flex:none;font-size:10.5px;font-weight:700;border-radius:4px;padding:1px 6px;min-width:42px;text-align:center}
 .tag.ok{background:var(--okbg);color:var(--ok)}.tag.warn{background:var(--warnbg);color:var(--warn)}.tag.fail{background:var(--badbg);color:var(--bad)}
 #previewWrap{background:#e3e7ee;border-radius:8px;padding:12px;overflow:hidden}
+#scaler .sheet+.sheet{margin-top:16px}
+.photos{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.photos figure{margin:0;position:relative;width:132px}
+.photos img{width:132px;height:96px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.photos button{position:absolute;top:4px;right:4px;padding:1px 7px;font-size:12px;min-height:0}
+.sitegrid{display:grid;grid-template-columns:1fr 128px;gap:5px 8px;align-items:center;margin-top:8px;font-size:12.5px}
+.sitegrid select{padding:4px 6px;font-size:12.5px}
+.sitegrid .ai{display:block;font-size:11px;color:#6941c6;margin-top:1px}
+.sitegrid select.yes{border-color:#b54708;background:#fff7ed}
+.sitegrid select.no{border-color:#12b76a;background:#f0fdf4}
+.aibox{margin-top:8px;padding:8px 10px;border:1px solid #d9d6fe;background:#f9f8ff;border-radius:8px;font-size:12.5px}
+.aibox p{margin:4px 0}
+#olPlan .pv2{display:grid;grid-template-columns:1fr;gap:8px;margin-top:8px}
+#olPlan svg{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:6px;background:#fff}
+#olPlan svg+svg{max-width:400px;margin:0 auto}
+.sh2-body{flex:1;display:grid;grid-template-columns:1fr 330px;border:1px solid #000;border-top:0;min-height:0}
+.sh2-left{display:flex;flex-direction:column;border-right:1px solid #000;min-height:0}
+.sh2-left .pv{flex:1;min-height:0}
+.sh2-left .pv{display:grid;grid-template-columns:470fr 310fr}
+.sh2-left .pv svg{width:100%;height:100%;display:block}
+.sh2-left .pv svg+svg{border-left:1px solid #000}
+.sh2-right{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.sh2-ph{display:flex;gap:4px;padding:4px;border-bottom:1px solid #000}
+.sh2-ph div{flex:1;text-align:center;font-size:8.5px;font-weight:700}
+.sh2-ph img{width:100%;height:118px;object-fit:cover;display:block;border:1px solid #000;margin-bottom:2px}
+.sheet .sct td{font-size:8.6px;padding:1.5px 4px;height:auto;border-left:0;border-right:0}
+.sheet .sct td.st{width:34px;text-align:center;font-weight:700}
+.sheet .sct td.st.y{color:#b42318}
+.sheet .sct th{font-size:9px;background:#000;color:#fff;padding:2px 4px;text-align:left}
+.sheet .ftab td{font-size:9.2px;text-align:center;padding:2px 3px;height:15px}
+.sheet .ftab td.bad{color:#b42318;font-weight:700}
+.sh2-ai{font-size:8.4px;padding:3px 5px;border-top:1px solid #000;line-height:1.3}
 #scaler{transform-origin:top left}
 .modal{position:fixed;inset:0;background:rgba(15,20,30,.45);display:none;z-index:50;align-items:flex-start;justify-content:center;padding:30px 12px;overflow:auto}
 .modal.on{display:flex}
@@ -115,6 +147,9 @@ table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text
   main{display:block;padding:0}
   #previewWrap{padding:0;background:#fff}
   #scaler{transform:none!important;width:auto!important;height:auto!important}
+  #scaler .sheet+.sheet{margin-top:0}
+  .sheet{break-after:page;page-break-after:always}
+  .sheet:last-child{break-after:auto;page-break-after:auto}
 }
 </style>
 </head>
@@ -193,9 +228,12 @@ table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text
   </fieldset>
 
   <fieldset>
-    <legend>5. Site sketch &amp; notes</legend>
-    <label>Site sketch or photo (optional, shown in the plan view)<input type="file" accept="image/*" id="fImg"></label>
-    <button id="bClrImg" class="sm" style="margin-top:6px">Remove image</button>
+    <legend>5. Site photos, conditions &amp; notes</legend>
+    <label>Site photos (up to 2: the set-up position and the lift area)<input type="file" accept="image/*" multiple id="fImg"></label>
+    <div class="photos" id="photoList"></div>
+    <div id="siteAiBox"></div>
+    <div class="sitegrid" id="siteList"></div>
+    <label style="flex-direction:row;align-items:center;gap:8px;color:var(--ink);margin-top:8px"><input type="checkbox" data-k="siteConfirmed" style="width:auto"> Site conditions confirmed on site by the lifting supervisor</label>
     <label style="margin-top:8px">Hazards / structures / POB near the lift<textarea data-k="siteNotes" placeholder="e.g. 3-storey HDB block 6 m E, overhead lamp post 4 m N, footpath closed and barricaded"></textarea></label>
   </fieldset>
 
@@ -221,6 +259,7 @@ table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text
       <label class="full" style="flex-direction:row;align-items:center;gap:8px;color:var(--ink)"><input type="checkbox" data-k="servicesChecked" style="width:auto"> Underground services, drains, culverts &amp; slopes checked under every outrigger</label>
     </div>
     <div class="info" id="olInfo"></div>
+    <div id="olPlan"></div>
     <p class="hint">Estimate only. Rigid-base method using vehicle weight, boom self-weight at half radius and hook load, checked along the whole pick-to-deck path. Bearing values are presumed screening values. Use the manufacturer's outrigger data or a PE assessment where in doubt.</p>
   </fieldset>
 </section>
@@ -236,7 +275,7 @@ table.list td,table.list th{border-bottom:1px solid var(--line);padding:6px;text
    <div class="ro"><span>Radius <b id="aR">—</b></span><span>SWL at radius <b id="aSwl">—</b></span><span>Hook load <b id="aLoad">—</b></span><span>Utilisation <b id="aU">—</b></span><div class="ubar"><i id="aBar"></i></div><span>Sling angle <b id="aAng">—</b></span><span>Leg tension <b id="aT">—</b></span><span>Rigging use <b id="aRig">—</b></span></div>
    <input type="range" id="scrub" min="0" max="26" step="0.05" value="0">
   </div>
-  <div id="previewWrap"><div id="scaler"><div class="sheet" id="sheet"></div></div></div>
+  <div id="previewWrap"><div id="scaler"><div class="sheet" id="sheet"></div><div class="sheet" id="sheet2"></div></div></div>
 </section>
 </main>
 
@@ -295,12 +334,12 @@ const LS = {
 };
 const today = ()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 function blankPlan(){
- return {planNo:"",liftDate:today(),location:"",company:"TAN HUAN",docNo:"EHS-14-F08A",rev:"A",sheet:"1 OF 1",effDate:"",
+ return {planNo:"",liftDate:today(),location:"",company:"TAN HUAN",docNo:"EHS-14-F08A",rev:"A",sheet:"1 OF 2",effDate:"",
   supervisor:"SARKAR SHUBAS",pm:"ANDY TAN",datePrepared:today(),dateApproved:"",
   craneId:"LM470937L",boomUsed:18.0,radius:10.5,swlMode:"chart",swlManual:"",hookWt:30,hookSwl:6500,plate:25,exclusion:"",certRule:"six",ground:"asphalt",groundKpa:"",plateL:1.0,plateW:1.0,servicesChecked:false,zonePick:"left",zoneSet:"rear",olExt:"100",olBasis:"calc",
   platform:"1000mm x 1000mm x 25mm steel plate to be provided",
   loadName:"Wood Debris / Tree",loadL:7,loadW:3,loadH:3,loadWt:900,contingency:0,rigging:"Choke Hitch",weightBasis:"",
-  gear:[{id:"LG6J2819-1 TO 10",qty:1,legs:1,hitch:"choke"}],siteNotes:"",siteImg:"",maxUtil:75,warnDays:14};
+  gear:[{id:"LG6J2819-1 TO 10",qty:1,legs:1,hitch:"choke"}],siteNotes:"",siteImg:"",photos:[],site:{},siteAi:null,siteConfirmed:false,maxUtil:75,warnDays:14};
 }
 let REG = LS.get("lp_reg", null) || JSON.parse(JSON.stringify(DEFAULT_REG));
 // migrate older saved registers: add PE / ASCS data the user has not entered yet
@@ -350,7 +389,17 @@ function calc(){
 }
 /* ---------- outrigger reactions & ground bearing ---------- */
 const GROUND={verge:["Grass verge / soft soil",50],firm:["Firm compacted soil",100],gravel:["Compacted gravel / hardcore",200],asphalt:["Asphalt road in good condition",250],concrete:["Reinforced concrete slab / pavement",400],custom:["Custom (PE / site assessment)",0]};
-const craneGeo=c=>({Sx:num(c.spread)||5.8, Ls:num(c.olSpacing)||6.0, Wb:num(c.boomWt)||1.5, Wv:num(c.lorryWt)||20});
+const BODY_W=2.5, SX0=2.4; // lorry body width; support width with beams retracted, legs down
+const craneGeo=c=>{const full=num(c.spread)||5.8, e=Math.max(0,Math.min(100,num(P.olExt??100)))/100;
+ return {Sx:Math.round((SX0+(full-SX0)*e)*100)/100, Sfull:full, ext:e*100, Ls:num(c.olSpacing)||6.0, Wb:num(c.boomWt)||1.5, Wv:num(c.lorryWt)||20}};
+const ZANG={right:0,front:Math.PI/2,left:Math.PI,rear:1.5*Math.PI};
+function slewPath(){ // angles from pick zone to set-down zone, never through the Front zone unless an end is in it
+ const a=ZANG[P.zonePick||"left"]??Math.PI, b=ZANG[P.zoneSet||"rear"]??1.5*Math.PI, T=2*Math.PI, F=Math.PI/2;
+ const ccw=((b-a)%T+T)%T, cw=ccw-T; if(Math.abs(ccw)<1e-6) return {a,d:0};
+ const hitsF=d=>{for(let i=1;i<20;i++){const t=((a+d*i/20)%T+T)%T;if(Math.abs(t-F)<0.02)return true}return false};
+ const fc=hitsF(ccw), fw=hitsF(cw);
+ return {a, d: fc&&!fw?cw : fw&&!fc?ccw : (Math.abs(ccw)<=Math.abs(cw)?ccw:cw)};
+}
 const OL_Y0=0.05; // front outriggers at the crane column; rear outriggers Ls behind
 function olReactions(c,rr,phi,Qt){
  const g=craneGeo(c), yF=OL_Y0, yR=yF-g.Ls, y0=(yF+yR)/2;
@@ -364,18 +413,33 @@ function olReactions(c,rr,phi,Qt){
 const ZONES=["rear","left","right","front"], ZNAME={rear:"Rear",left:"Left",right:"Right",front:"Front"};
 function zoneTable(c){const t={};String(c&&c.zones||"").split(/[,;\n]+/).forEach(s=>{const m=s.split(":");if(m.length!==2)return;const v=m[1].split("/").map(Number);if(v.length===4&&v.every(isFinite))t[String(Number(m[0]))]=v});return Object.keys(t).length?t:null}
 function zoneFactor(c,zone,ext){const t=zoneTable(c);if(!t)return null;const k=Object.keys(t).map(Number).sort((a,b)=>b-a).find(e=>e<=num(ext));const row=t[String(k!=null?k:Math.min(...Object.keys(t).map(Number)))];return row[ZONES.indexOf(zone)]}
+function setRadius(){const R=num(P.radius)||0, lW=Math.min(Math.max(num(P.loadL)||1,0.6),8), Rd=Math.max(3.2,Math.min(5.5,lW/2+0.9));return (P.zoneSet||"rear")==="rear"?Math.min(R,Rd):R}
 function olWorst(r){
  const c=r.c; if(!c) return null;
  const R=num(P.radius)||0; if(R<=0) return null;
- const lW=Math.min(Math.max(num(P.loadL)||1,0.6),8), Rd=Math.max(3.2,Math.min(5.5,lW/2+0.9));
- const Qt=r.total/1000; let worst=null, minR=null;
- for(let i=0;i<=12;i++){const u=i/12, phi=Math.PI*(1+u/2), rr=R+(Rd-R)*u;
-  olReactions(c,rr,phi,Qt).forEach(o=>{if(!worst||o.t>worst.t)worst={...o,rr,phi};if(!minR||o.t<minR.t)minR={...o,rr,phi}})}
+ const Rd=setRadius(), sp=slewPath();
+ const Qt=r.total/1000; let worst=null, minR=null; const per={};
+ for(let i=0;i<=12;i++){const u=i/12, phi=sp.a+sp.d*u, rr=R+(Rd-R)*u;
+  olReactions(c,rr,phi,Qt).forEach(o=>{if(!worst||o.t>worst.t)worst={...o,rr,phi};if(!minR||o.t<minR.t)minR={...o,rr,phi};if(!per[o.name]||o.t>per[o.name].t)per[o.name]={...o}})}
  const A=Math.max(0.01,num(P.plateL)*num(P.plateW));
  const kNc=worst.t*9.81, fmax=num(c.fmax), useF=P.olBasis==="fmax"&&fmax>0, kN=useF?fmax:kNc, kPa=kN/A;
  const gk=GROUND[P.ground]?P.ground:"asphalt", allow=gk==="custom"?num(P.groundKpa):GROUND[gk][1];
- return {worst,minR,kN,kNc,fmax,useF,kPa,A,allow,gk,needA:allow>0?kN/allow:null,g:craneGeo(c)};
+ return {worst,minR,kN,kNc,fmax,useF,kPa,A,allow,gk,needA:allow>0?kN/allow:null,g:craneGeo(c),per:Object.values(per),Rd,sp};
 }
+/* ---------- site conditions ---------- */
+const SITE=[
+ ["ohl","Overhead power lines or cables near the boom or load path","Keep boom, rope and load clear of the lines by the clearance required by the line owner (SP PowerGrid); dedicated spotter; arrange shutdown or diversion if the clearance cannot be kept."],
+ ["tree","Trees or branches obstructing the boom, rope or load path","Plan the slew path clear of branches; prune obstructing branches first; use tag lines to control the load."],
+ ["struct","Buildings, lamp posts, signs or parked vehicles within the slew radius","Mark them on the plan; keep the boom and load clear; signalman with a full view of the slew."],
+ ["traffic","Live traffic lane next to the set-up","Traffic management: cones, signs and flagman; obtain the LTA / road owner permit where required."],
+ ["ped","Pedestrians or public access inside the exclusion zone","Barricade the exclusion zone, divert pedestrians and post a banksman during the lift."],
+ ["slope","Sloping or uneven ground under the outriggers","Level the crane within the manufacturer's limit using packing under the pads; no pad on a kerb edge."],
+ ["soft","Soft ground, grass verge or recently backfilled area","Use larger mats (see the footing check); avoid backfilled trenches; get PE advice if in doubt."],
+ ["drain","Drains, culverts, manholes or gratings near the footings","Keep footings clear of drain and culvert walls (at least the drain depth from the edge) and off covers and gratings, or bridge with mats."],
+ ["under","Underground services marked or suspected","Check service drawings or scan before setting up; do not place footings over services."],
+ ["space","Not enough space to extend the outriggers fully","Set the outrigger extension in section 2 to what is achievable; the ASCS zone capacity reduces the SWL."],
+ ["wet","Wet or waterlogged ground after rain","Re-check the ground before lifting; stop if any pad settles; use mats."]];
+function siteMigrate(){if(!Array.isArray(P.photos))P.photos=[];if(P.siteImg&&!P.photos.length){P.photos=[P.siteImg];P.siteImg=""}if(!P.site||typeof P.site!=="object")P.site={}}
 function checks(r){
  const out=[], add=(lvl,msg)=>out.push({lvl,msg});
  const c=r.c, lift=P.liftDate||today(), wd=num(P.warnDays)||0;
@@ -453,7 +517,14 @@ function checks(r){
  if(!num(P.loadWt)) add("fail","Enter the load weight");
  if(!P.weightBasis) add("warn","Say how the load weight was estimated, especially for trees");
  if(!P.location) add("warn","Site / location is blank");
- if(!P.siteNotes&&!P.siteImg) add("warn","No hazards/structures/POB noted and no site sketch, which the form asks for");
+ if(!P.siteNotes&&!(P.photos||[]).length) add("warn","No hazards/structures/POB noted and no site photo, which the form asks for");
+ {const st=P.site||{}, todo=SITE.filter(([k])=>!st[k]);
+  SITE.forEach(([k,l,ctl])=>{if(st[k]==="yes")add("warn",`Site: ${l.toLowerCase()}. Control: ${ctl}`)});
+  if(todo.length) add("warn",`Site conditions: ${todo.length} of ${SITE.length} item(s) not yet checked`+(todo.some(([k])=>k==="ohl")?" (including overhead lines)":""));
+  if(st.space==="yes"&&num(P.olExt??100)>=100) add("fail","Site: the outriggers cannot be fully extended, but the plan assumes 100%. Set the achievable extension in section 2");
+  if(st.soft==="yes"&&["asphalt","concrete","gravel"].includes(P.ground)) add("warn","Site: soft ground is ticked but the ground type in section 7 is a hard surface. Check the bearing value");
+  if(P.siteAi&&!P.siteConfirmed) add("warn","Site conditions were suggested from the photos by Claude. The lifting supervisor must confirm them on site");
+  else if(!todo.length&&!P.siteConfirmed) add("warn","Tick that the site conditions were confirmed on site by the lifting supervisor");}
  if(exclR()<R) add("warn","Exclusion radius is smaller than the working radius");
  if(!P.effDate) add("warn","Effective date is blank");
  if(!P.dateApproved) add("warn","Not yet approved (date approved is blank)");
@@ -480,10 +551,7 @@ function drawSVG(r){
  // plan view (top-left or top-right, away from the boom)
  const pvx=8, pvy=6, pr=62, pcx=pvx+80, pcy=pvy+78;
  o+=`<g>`;
- if(P.siteImg){
-  o+=`<rect x="${pvx}" y="${pvy}" width="160" height="150" fill="#fff" stroke="#000"/><image href="${P.siteImg}" x="${pvx+2}" y="${pvy+2}" width="156" height="146" preserveAspectRatio="xMidYMid meet"/>`;
-  o+=`<text x="${pvx+80}" y="${pvy+164}" font-size="10" text-anchor="middle">SITE SKETCH / PHOTO</text>`;
- }else{
+ {
   const ex=Math.max(exclR(),R), rr=pr*R/ex;
   o+=`<circle cx="${pcx}" cy="${pcy}" r="${pr}" fill="#fdecec" stroke="#c0392b" stroke-dasharray="4 3"/>`;
   o+=`<circle cx="${pcx}" cy="${pcy}" r="${rr}" fill="none" stroke="#1f5fbf"/>`;
@@ -491,6 +559,7 @@ function drawSVG(r){
   o+=`<line x1="${pcx}" y1="${pcy}" x2="${pcx-rr*0.94}" y2="${pcy-rr*0.34}" stroke="#1f5fbf" stroke-width="1.5"/>`;
   o+=`<rect x="${pcx-rr*0.94-8}" y="${pcy-rr*0.34-5}" width="16" height="10" fill="#e67e22" stroke="#000" stroke-width=".6"/>`;
   o+=`<text x="${pcx}" y="${pcy+pr+12}" font-size="10" text-anchor="middle">PLAN: R = ${R} m · Exclusion = ${ex} m</text>`;
+  o+=`<text x="${pcx}" y="${pcy+pr+24}" font-size="9" text-anchor="middle" font-style="italic">Outrigger plan &amp; site photos: sheet 2</text>`;
  }
  o+=`</g>`;
  const nx = pvx+2, ny=pvy+184;
@@ -552,6 +621,140 @@ function drawSVG(r){
  return o;
 }
 
+/* ======================= PLAN VIEW (outriggers & footings, to scale) ======================= */
+function planGeo(r){
+ const c=r.c, g=craneGeo(c), yF=OL_Y0, yR=yF-g.Ls;
+ return {c,g,yF,yR,front:2.6,rear:yR-1.5,hx:g.Sx/2,bw:BODY_W/2,pl:Math.max(0.3,num(P.plateL)||1),pw:Math.max(0.3,num(P.plateW)||1),ol:olWorst(r)};
+}
+function svgKit(W,H,xmin,xmax,ymin,ymax,padL,padT,padR,padB){
+ // vehicle coords: x lateral (+ right/driver), y longitudinal (+ cab). Screen: X = y (cab to the right), Y = x (kerb/left side at the top)
+ const s=Math.min((W-padL-padR)/(ymax-ymin),(H-padT-padB)/(xmax-xmin));
+ const ox=padL+((W-padL-padR)-(ymax-ymin)*s)/2-ymin*s, oy=padT+((H-padT-padB)-(xmax-xmin)*s)/2-xmin*s;
+ const X=(x,y)=>ox+y*s, Y=(x,y)=>oy+x*s, f=v=>(+v).toFixed(1);
+ const rect=(x0,y0,x1,y1,st)=>`<rect x="${f(Math.min(X(x0,y0),X(x1,y1)))}" y="${f(Math.min(Y(x0,y0),Y(x1,y1)))}" width="${f(Math.abs(X(x1,y1)-X(x0,y0)))}" height="${f(Math.abs(Y(x1,y1)-Y(x0,y0)))}" ${st}/>`;
+ return {s,X,Y,f,rect};
+}
+const m2=v=>(Math.round(v*100)/100).toFixed(2);
+function lorrySVG(k,G,detail){
+ const {X,Y,f,rect}=k, {yR,front,rear,bw}=G; let o="";
+ [1.15,yR+1.9,yR+0.6].forEach(y=>{o+=rect(-bw-0.05,y-0.5,-bw+0.3,y+0.5,'fill="#333"')+rect(bw-0.3,y-0.5,bw+0.05,y+0.5,'fill="#333"')});
+ o+=rect(-bw,rear,bw,-0.6,'fill="#e9edf1" stroke="#000" stroke-width="1"');
+ if(detail) o+=rect(-bw+0.15,rear+0.15,bw-0.15,-0.75,'fill="none" stroke="#9aa3ad" stroke-dasharray="4 3"');
+ o+=rect(-bw,0.55,bw,front,'fill="#f7f7f7" stroke="#000" stroke-width="1"')+rect(-bw+0.2,front-0.55,bw-0.2,front-0.15,'fill="#cfe3f5" stroke="#000" stroke-width=".6"');
+ if(detail) o+=`<text x="${f(X(0,(rear-0.6)/2))}" y="${f(Y(0,0)+4)}" font-size="11" text-anchor="middle" fill="#44505c">DECK</text><text x="${f(X(0,(front+0.55)/2))}" y="${f(Y(0,0)+4)}" font-size="10" text-anchor="middle" fill="#44505c">CAB</text>`;
+ return o;
+}
+const ARROWS=`<defs><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#222"/></marker><pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#9aa3ad" stroke-width="2"/></pattern></defs>`;
+/* Detail: outriggers, footings and their distances (to scale) */
+function footSVG(r,W,H){
+ if(!r.c) return "";
+ const G=planGeo(r), {g,yF,yR,front,rear,hx,bw,pl,pw,ol}=G;
+ const xm=hx+pl/2+2.3;
+ const k=svgKit(W,H,-xm,xm,rear-1.7,front+2.6,10,40,10,34), {s,X,Y,f,rect}=k;
+ let o=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial, Helvetica, sans-serif">${ARROWS}`;
+ o+=`<text x="8" y="16" font-size="12.5" font-weight="700">A. OUTRIGGER &amp; FOOTING LAYOUT</text><text x="8" y="30" font-size="9.5">${esc(r.c.veh)} · outriggers ${g.ext}% extended · footings ${pl} × ${pw} m · dimensions in m, to scale</text>`;
+ o+=`<line x1="${f(X(0,rear-0.9))}" y1="${f(Y(0,0))}" x2="${f(X(0,front+0.9))}" y2="${f(Y(0,0))}" stroke="#999" stroke-dasharray="10 3 2 3"/>`;
+ o+=lorrySVG(k,G,true);
+ const per={}; (ol&&ol.per||[]).forEach(p=>per[p.name]=p);
+ const A=pl*pw, allow=ol?ol.allow:0, nm={"front-left":"FL","front-right":"FR","rear-left":"RL","rear-right":"RR"};
+ [["front-left",-hx,yF],["front-right",hx,yF],["rear-left",-hx,yR],["rear-right",hx,yR]].forEach(([n,x,y])=>{
+  const sg=Math.sign(x);
+  o+=`<line x1="${f(X(sg*bw,y))}" y1="${f(Y(sg*bw,y))}" x2="${f(X(x,y))}" y2="${f(Y(x,y))}" stroke="#d97706" stroke-width="${f(Math.max(4,0.24*s))}"/>`;
+  const p=per[n], kN=ol?(ol.useF?ol.fmax:p?p.t*9.81:0):0, kPa=kN/A, bad=allow&&kPa>allow, wb=allow&&kPa>0.8*allow;
+  o+=rect(x-pw/2,y-pl/2,x+pw/2,y+pl/2,`fill="${bad?"#fca5a5":wb?"#fed7aa":"#bfdbfe"}" stroke="#000" stroke-width="1.3"`);
+  o+=`<line x1="${f(X(x,y-pl/2))}" y1="${f(Y(x,y))}" x2="${f(X(x,y+pl/2))}" y2="${f(Y(x,y))}" stroke="#000" stroke-width=".5"/><line x1="${f(X(x,y))}" y1="${f(Y(x-pw/2,y))}" x2="${f(X(x,y))}" y2="${f(Y(x+pw/2,y))}" stroke="#000" stroke-width=".5"/>`;
+  const tx=X(x,y), y1=sg<0?Y(x-pw/2,y)-17:Y(x+pw/2,y)+13;
+  o+=`<text x="${f(tx)}" y="${f(y1)}" font-size="11.5" font-weight="700" text-anchor="middle" fill="${bad?"#b42318":"#000"}">${nm[n]} ${Math.round(kN)} kN</text>`;
+  o+=`<text x="${f(tx)}" y="${f(y1+12)}" font-size="9.5" text-anchor="middle" fill="${bad?"#b42318":"#333"}">${Math.round(kPa)} / ${allow||"?"} kPa</text>`;
+ });
+ const dimH=(x,y1,y2,lab,up)=>`<line x1="${f(X(x,y1))}" y1="${f(Y(x,0))}" x2="${f(X(x,y2))}" y2="${f(Y(x,0))}" stroke="#222" marker-start="url(#pa)" marker-end="url(#pa)"/><line x1="${f(X(x,y1))}" y1="${f(Y(x,0)-5)}" x2="${f(X(x,y1))}" y2="${f(Y(x,0)+5)}" stroke="#222"/><line x1="${f(X(x,y2))}" y1="${f(Y(x,0)-5)}" x2="${f(X(x,y2))}" y2="${f(Y(x,0)+5)}" stroke="#222"/><text x="${f((X(x,y1)+X(x,y2))/2)}" y="${f(Y(x,0)+(up?-4:12))}" font-size="10.5" text-anchor="middle" font-weight="700">${lab}</text>`;
+ const dimV=(y,x1,x2,lab,right)=>{const xx=X(0,y), cy=(Y(x1,0)+Y(x2,0))/2;return `<line x1="${f(xx)}" y1="${f(Y(x1,0))}" x2="${f(xx)}" y2="${f(Y(x2,0))}" stroke="#222" marker-start="url(#pa)" marker-end="url(#pa)"/><text x="${f(xx+(right?5:-5))}" y="${f(cy+4)}" font-size="10.5" font-weight="700" text-anchor="${right?"start":"end"}">${lab}</text>`};
+ // extension lines from pad centres
+ const ext=(x,y,x2)=>`<line x1="${f(X(x,y))}" y1="${f(Y(x,y))}" x2="${f(X(x2,y))}" y2="${f(Y(x2,y))}" stroke="#888" stroke-width=".6" stroke-dasharray="2 2"/>`;
+ const top=-(hx+pl/2+1.55), bot=hx+pl/2+1.55;
+ o+=ext(-hx,yR,top)+ext(-hx,yF,top);
+ o+=dimH(top,yR,yF,`${m2(g.Ls)} m outrigger spacing (centres)`,true);
+ o+=ext(hx,yR,bot)+ext(0,rear,bot)+ext(hx,yF,bot)+ext(0,front,bot);
+ o+=dimH(bot,rear,yR,`${m2(yR-rear)} m`,false)+dimH(bot,yF,front,`${m2(front-yF)} m`,false);
+ const yS=front+0.75;
+ o+=`<line x1="${f(X(-hx,yF))}" y1="${f(Y(-hx,0))}" x2="${f(X(-hx,yS))}" y2="${f(Y(-hx,0))}" stroke="#888" stroke-width=".6" stroke-dasharray="2 2"/><line x1="${f(X(hx,yF))}" y1="${f(Y(hx,0))}" x2="${f(X(hx,yS))}" y2="${f(Y(hx,0))}" stroke="#888" stroke-width=".6" stroke-dasharray="2 2"/>`;
+ o+=dimV(yS,-hx,hx,`${m2(g.Sx)} m`,true)+`<text x="${f(X(0,yS)+5)}" y="${f(Y(0,0)+16)}" font-size="9.5" fill="#333">spread</text>`;
+ if(g.ext<100) o+=`<text x="${f(X(0,yS)+5)}" y="${f(Y(0,0)+28)}" font-size="9" fill="#b54708">full ${m2(g.Sfull)}</text>`;
+ const yB=yR-pl/2-0.45;
+ o+=dimV(yB,-hx,-bw,`${m2(hx-bw)} m`,false)+dimV(yB,bw,hx,`${m2(hx-bw)} m`,false);
+ o+=`<circle cx="${f(X(0,0))}" cy="${f(Y(0,0))}" r="${f(Math.max(5,0.35*s))}" fill="#facc15" stroke="#000" stroke-width="1.2"/><text x="${f(X(0,0)+8)}" y="${f(Y(0,0)-8)}" font-size="9.5">crane</text>`;
+ o+=`<text x="${f(X(0,(rear+G.yR)/2))}" y="${f(Y(-bw+0.45,0))}" font-size="9" text-anchor="middle" fill="#44505c">▲ KERB (LEFT) SIDE</text>`;
+ const need=ol&&ol.allow?Math.max(...["front-left","front-right","rear-left","rear-right"].map(n=>{const p=per[n];return ol.useF?ol.fmax:p?p.t*9.81:0}))/ol.allow:null;
+ o+=`<text x="8" y="${H-20}" font-size="9.5" fill="#333">Beams ${m2(hx-bw)} m beyond the body each side. Footing ${pl} × ${pw} m = ${(pl*pw).toFixed(2)} m²${need?`, min. ${need.toFixed(2)} m² needed`:""}.</text><text x="8" y="${H-8}" font-size="9.5" fill="#333">Footings level, fully on firm ground, clear of drain edges, covers and services.</text>`;
+ return o+`</svg>`;
+}
+/* Lift area: radius, exclusion, ASCS zones, slew path */
+function areaSVG(r,W,H){
+ if(!r.c) return "";
+ const G=planGeo(r), {g,hx,ol}=G, R=num(P.radius)||0, ex=Math.max(exclR(),R);
+ const k=svgKit(W,H,-ex,ex,-ex,ex,10,40,10,22), {s,X,Y,f}=k;
+ const zt=zoneTable(r.c), ray=(a,l)=>[Math.cos(a)*l,Math.sin(a)*l];
+ let o=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Arial, Helvetica, sans-serif">${ARROWS}`;
+ o+=`<text x="8" y="16" font-size="12.5" font-weight="700">B. LIFT AREA &amp; ASCS ZONES</text><text x="8" y="30" font-size="9.5">radius ${R} m · exclusion ${ex} m</text>`;
+ o+=`<circle cx="${f(X(0,0))}" cy="${f(Y(0,0))}" r="${f(ex*s)}" fill="#fdecec" fill-opacity=".6" stroke="#c0392b" stroke-dasharray="6 4"/>`;
+ const ra=Math.atan2(hx,g.Ls), fa=70*Math.PI/180, L=ex;
+ const sector=(a0,a1)=>{const [x0,y0]=ray(a0,L),[x1,y1]=ray(a1,L);return `<path d="M${f(X(0,0))},${f(Y(0,0))} L${f(X(x0,y0))},${f(Y(x0,y0))} A${f(L*s)},${f(L*s)} 0 0 1 ${f(X(x1,y1))},${f(Y(x1,y1))}Z" fill="url(#hz)" fill-opacity=".5"/>`};
+ o+=sector(Math.PI/2-fa,Math.PI/2+fa);
+ [1.5*Math.PI-ra,1.5*Math.PI+ra,Math.PI/2-fa,Math.PI/2+fa].forEach(a=>{const [x,y]=ray(a,L);o+=`<line x1="${f(X(0,0))}" y1="${f(Y(0,0))}" x2="${f(X(x,y))}" y2="${f(Y(x,y))}" stroke="#7a8794" stroke-width=".8" stroke-dasharray="3 3"/>`});
+ o+=`<circle cx="${f(X(0,0))}" cy="${f(Y(0,0))}" r="${f(R*s)}" fill="none" stroke="#1f5fbf" stroke-width="1.6"/>`;
+ o+=lorrySVG(k,G,false);
+ [[-hx,G.yF],[hx,G.yF],[-hx,G.yR],[hx,G.yR]].forEach(([x,y])=>{o+=`<line x1="${f(X(Math.sign(x)*G.bw,y))}" y1="${f(Y(Math.sign(x)*G.bw,y))}" x2="${f(X(x,y))}" y2="${f(Y(x,y))}" stroke="#d97706" stroke-width="2.5"/>`+k.rect(x-G.pw/2,y-G.pl/2,x+G.pw/2,y+G.pl/2,'fill="#bfdbfe" stroke="#000" stroke-width=".8"')});
+ const zf=z=>zt?" "+zoneFactor(r.c,z,P.olExt??100)+"%":"";
+ [["rear",1.5*Math.PI,.84],["left",Math.PI+0.5,.8],["right",-0.5,.8],["front",Math.PI/2,.8]].forEach(([z,a,kk])=>{const [x,y]=ray(a,L*kk);
+  o+=`<text x="${f(X(x,y))}" y="${f(Y(x,y)+4)}" font-size="10.5" font-weight="700" fill="${z==="front"?"#7a1f1f":"#44505c"}" text-anchor="middle" ${z==="rear"||z==="front"?`transform="rotate(-90 ${f(X(x,y))} ${f(Y(x,y))})"`:""}>${ZNAME[z].toUpperCase()}${zf(z)}${z==="front"?" · NO SET-DOWN":""}</text>`});
+ if(ol&&R>0){const sp=ol.sp, Rd=ol.Rd;let d="";for(let i=0;i<=24;i++){const u=i/24,a=sp.a+sp.d*u,rr=R+(Rd-R)*u;const [x,y]=ray(a,rr);d+=(i?"L":"M")+f(X(x,y))+","+f(Y(x,y))}
+  o+=`<path d="${d}" fill="none" stroke="#7c3aed" stroke-width="1.6" stroke-dasharray="7 4" marker-end="url(#pa)"/>`;
+  const [px,py]=ray(sp.a,R), [qx,qy]=ray(sp.a+sp.d,Rd);
+  o+=`<line x1="${f(X(0,0))}" y1="${f(Y(0,0))}" x2="${f(X(px,py))}" y2="${f(Y(px,py))}" stroke="#1f5fbf" stroke-width="3" stroke-linecap="round"/>`;
+  const lL=Math.max(0.6,Math.min(num(P.loadL)||1,9)), lW=Math.max(0.4,Math.min(num(P.loadW)||1,4)), ang=sp.a+Math.PI/2;
+  const cr=(u,v)=>{const x=px+Math.cos(ang)*u+Math.cos(sp.a)*v, y=py+Math.sin(ang)*u+Math.sin(sp.a)*v;return f(X(x,y))+","+f(Y(x,y))};
+  o+=`<polygon points="${cr(-lL/2,-lW/2)} ${cr(lL/2,-lW/2)} ${cr(lL/2,lW/2)} ${cr(-lL/2,lW/2)}" fill="#ed7d31" fill-opacity=".9" stroke="#000"/>`;
+  const ly=Y(px,py)+(px<0?-(lW/2*s+6):px>0?lW/2*s+14:-(lL/2*s+6));
+  o+=`<text x="${f(Math.min(W-60,Math.max(60,X(px,py))))}" y="${f(ly)}" font-size="10.5" text-anchor="middle" font-weight="700">PICK-UP ${ZNAME[P.zonePick||"left"].toUpperCase()}</text>`;
+  o+=`<circle cx="${f(X(qx,qy))}" cy="${f(Y(qx,qy))}" r="6" fill="#fff" stroke="#7c3aed" stroke-width="2"/><text x="${f(X(qx,qy))}" y="${f(Y(qx,qy)+(qx<=0?-10:18))}" font-size="10" text-anchor="middle" fill="#5b21b6" font-weight="700">SET-DOWN</text>`;
+ }
+ o+=`<circle cx="${f(X(0,0))}" cy="${f(Y(0,0))}" r="4" fill="#facc15" stroke="#000"/>`;
+ {const [a1,b1]=ray(-0.95,R),[a2,b2]=ray(Math.PI+0.95,ex);
+ o+=`<text x="${f(X(a1,b1)+6)}" y="${f(Y(a1,b1)+12)}" font-size="10" fill="#1f5fbf" font-weight="700">R ${R} m</text>`;
+ o+=`<text x="${f(Math.max(8,X(a2,b2)-20))}" y="${f(Y(a2,b2)-4)}" font-size="10" fill="#b42318" font-weight="700">barricade ${ex} m</text>`;}
+ const sb=5, sx0=W-14-sb*s, sy0=H-8;
+ o+=`<rect x="${f(sx0)}" y="${sy0-6}" width="${f(sb*s/2)}" height="5" fill="#000"/><rect x="${f(sx0+sb*s/2)}" y="${sy0-6}" width="${f(sb*s/2)}" height="5" fill="#fff" stroke="#000"/><text x="${f(sx0)}" y="${sy0-9}" font-size="9">0</text><text x="${f(sx0+sb*s)}" y="${sy0-9}" font-size="9" text-anchor="end">5 m</text>`;
+ o+=`<text x="8" y="${H-8}" font-size="9" fill="#333">Zone lines schematic (SCS guide).</text>`;
+ return o+`</svg>`;
+}
+function renderPlan(r){const el=$("#olPlan");if(!el)return;el.innerHTML=r.c&&num(P.radius)>0?`<div class="pv2">${footSVG(r,640,430)}${areaSVG(r,420,430)}</div>`:""}
+function sheet2(r,ch){
+ const ol=olWorst(r), A=Math.max(0.01,num(P.plateL)*num(P.plateW)), st=P.site||{};
+ const names={"front-left":"Front-left (FL)","front-right":"Front-right (FR)","rear-left":"Rear-left (RL)","rear-right":"Rear-right (RR)"};
+ let ft=`<table class="ftab"><tr><td><b>Outrigger</b></td><td><b>Max load</b></td><td><b>Footing</b></td><td><b>Bearing</b></td><td><b>Allowable</b></td><td><b>Mat needed</b></td></tr>`;
+ if(ol)["front-left","front-right","rear-left","rear-right"].forEach(n=>{const p=(ol.per||[]).find(x=>x.name===n)||{t:0};const kN=ol.useF?ol.fmax:p.t*9.81,kPa=kN/A,bad=ol.allow&&kPa>ol.allow;
+  ft+=`<tr><td>${names[n]}</td><td>${Math.round(kN)} kN</td><td>${num(P.plateL)} × ${num(P.plateW)} m</td><td class="${bad?"bad":""}">${Math.round(kPa)} kPa</td><td>${ol.allow||"?"} kPa</td><td>${ol.allow?(kN/ol.allow).toFixed(2)+" m²":"—"}</td></tr>`});
+ ft+=`<tr><td colspan="6" style="text-align:left">Ground: ${esc(GROUND[ol?ol.gk:"asphalt"][0])} · ${P.servicesChecked?"Services, drains &amp; slopes checked":"<b style='color:#b42318'>Services, drains &amp; slopes NOT yet checked</b>"} · Plate thickness ${num(P.plate)} mm</td></tr></table>`;
+ const ph=(P.photos||[]).slice(0,2);
+ const photos=ph.length?`<div class="sh2-ph">${ph.map((d,i)=>`<div><img src="${d}">PHOTO ${i+1}</div>`).join("")}</div>`:`<div class="sh2-ph"><div style="padding:30px 0;font-weight:400">No site photo attached</div></div>`;
+ let sc=`<table class="sct"><tr><th colspan="2">SITE CONDITIONS &amp; CONTROLS</th></tr>`;
+ SITE.forEach(([k,l,ctl])=>{const v=st[k];sc+=`<tr><td>${l}${v==="yes"?`<br><i>Control: ${ctl}</i>`:""}</td><td class="st ${v==="yes"?"y":""}">${v==="yes"?"YES":v==="no"?"NO":"—"}</td></tr>`});
+ sc+=`</table>`;
+ const ai=P.siteAi?`<div class="sh2-ai"><b>Photo assessment (Claude, ${dmy(P.siteAi.at)}):</b> ${esc(P.siteAi.summary||"")} <b>${P.siteConfirmed?"Confirmed on site by the lifting supervisor.":"NOT YET CONFIRMED ON SITE."}</b></div>`:(P.siteConfirmed?`<div class="sh2-ai"><b>Site conditions confirmed on site by the lifting supervisor.</b></div>`:"");
+ const notes=P.siteNotes?`<div class="sh2-ai"><b>Hazards / structures / POB:</b> ${esc(P.siteNotes)}</div>`:"";
+ const lbl=(!P.sheet||P.sheet==="1 OF 1"||P.sheet==="1 OF 2")?"2 OF 2":esc(P.sheet).replace(/^\s*\d+/,"2");
+ return `<table class="sh-head">
+  <tr><td rowspan="3" class="sh-co">${esc(P.company)}</td><td style="width:220px">DOC NO. &nbsp;: ${esc(P.docNo)}</td></tr>
+  <tr><td>REV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${esc(P.rev)}</td></tr>
+  <tr><td>SHEET &nbsp;&nbsp;&nbsp;&nbsp;: ${lbl}</td></tr>
+  <tr><td class="sh-title" colspan="2">LIFTING PLAN: OUTRIGGER SET-UP &amp; SITE CONDITIONS</td></tr>
+  <tr><td colspan="2" style="font-size:10px">PLAN NO: <b>${esc(P.planNo||autoPlanNo())}</b> &nbsp;|&nbsp; DATE OF LIFT: <b>${dmy(P.liftDate)}</b> &nbsp;|&nbsp; LOCATION: <b>${esc(P.location||"—")}</b> &nbsp;|&nbsp; CRANE: <b>${esc((r.c||{}).veh||"")} ${esc((r.c||{}).id||"")}</b></td></tr>
+ </table>
+ <div class="sh2-body">
+  <div class="sh2-left"><div class="pv pv2">${footSVG(r,470,470)}${areaSVG(r,310,470)}</div>${ft}</div>
+  <div class="sh2-right">${photos}${sc}${ai}${notes}</div>
+ </div>${ch.some(x=>x.lvl==="fail")?`<div class="wm">DRAFT · CHECKS FAILED</div>`:""}`;
+}
 /* ======================= SHEET ======================= */
 function renderSheet(r,ch){
  const c=r.c||{}, fail=ch.some(x=>x.lvl==="fail");
@@ -581,7 +784,7 @@ function renderSheet(r,ch){
  <table class="sh-head">
   <tr><td rowspan="4" class="sh-co">${esc(P.company)}</td><td style="width:220px">DOC NO. &nbsp;: ${esc(P.docNo)}</td></tr>
   <tr><td>REV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${esc(P.rev)}</td></tr>
-  <tr><td>SHEET &nbsp;&nbsp;&nbsp;&nbsp;: ${esc(P.sheet)}</td></tr>
+  <tr><td>SHEET &nbsp;&nbsp;&nbsp;&nbsp;: ${(!P.sheet||P.sheet==="1 OF 1")?"1 OF 2":esc(P.sheet)}</td></tr>
   <tr><td>EFFECTIVE DATE : ${dmy(P.effDate)}</td></tr>
   <tr><td class="sh-title" colspan="2">TITLE: LIFTING PLAN</td></tr>
   <tr><td colspan="2" style="font-size:10px">PLAN NO: <b>${esc(P.planNo||autoPlanNo())}</b> &nbsp;&nbsp;|&nbsp;&nbsp; DATE OF LIFT: <b>${dmy(P.liftDate)}</b> &nbsp;&nbsp;|&nbsp;&nbsp; LOCATION: <b>${esc(P.location||"—")}</b></td></tr>
@@ -599,6 +802,7 @@ function renderSheet(r,ch){
  </div>
  ${fail?`<div class="wm">DRAFT · CHECKS FAILED</div>`:""}`;
  $("#sheet").innerHTML=html;
+ const s2=$("#sheet2"); if(s2) s2.innerHTML=sheet2(r,ch);
 }
 
 /* ======================= UI ======================= */
@@ -618,7 +822,7 @@ function renderOl(r){
  if(!ol){el.textContent="";return}
  const all=olReactions(r.c,ol.worst.rr,ol.worst.phi,r.total/1000);
  const cls=ol.allow&&ol.kPa>ol.allow?"var(--bad)":ol.allow&&ol.kPa>0.8*ol.allow?"#b54708":"var(--ok)";
- el.innerHTML=`<b>Worst position:</b> radius ${ol.worst.rr.toFixed(1)} m, ${Math.round(((ol.worst.phi/Math.PI)-1)*180)}° into the slew<br>`+
+ el.innerHTML=`<b>Worst position:</b> radius ${ol.worst.rr.toFixed(1)} m, ${ZNAME[P.zonePick||"left"]} → ${ZNAME[P.zoneSet||"rear"]} slew<br>`+
   all.map(o=>`${o.name}: <b>${(o.t*9.81).toFixed(0)} kN</b> (${o.t.toFixed(2)} t)`).join(" · ")+
   `<br>Bearing: <b style="color:${cls}">${Math.round(ol.kPa)} kPa</b> on ${ol.A.toFixed(2)} m² vs ${ol.allow||"?"} kPa allowable${ol.needA?` · min. mat area ${ol.needA.toFixed(2)} m²`:""}`+
   (ol.fmax?`<br>Manufacturer F max ${ol.fmax} kN${ol.useF?" (used for bearing)":""}`:"")+
@@ -643,15 +847,17 @@ function fillCraneSelect(){
 }
 function bindForm(){
  document.querySelectorAll("[data-k]").forEach(el=>{if(el.type==="checkbox")el.checked=!!P[el.dataset.k];else el.value=P[el.dataset.k]??""});
+ if(typeof renderSiteList==="function"){siteMigrate();renderSiteList();renderSiteAi()}
 }
 let scaleT;
 function fitPreview(){
  const wrap=$("#previewWrap"), sc=$("#scaler"); const w=wrap.clientWidth-24; const k=Math.min(1,w/1123);
- sc.style.transform=`scale(${k})`; sc.style.width="1123px"; sc.style.height=(794*k)+"px";
+ sc.style.transform=`scale(${k})`; sc.style.width="1123px"; sc.style.height=((794*2+16)*k)+"px";
 }
 function update(){
+ siteMigrate();
  const r=calc(), ch=checks(r);
- renderSummary(r,ch); renderCraneInfo(r); renderOl(r); renderSheet(r,ch);
+ renderSummary(r,ch); renderCraneInfo(r); renderOl(r); renderPlan(r); renderSheet(r,ch); renderPhotos();
  LS.set("lp_draft",P); fitPreview();
  if(typeof syncAnim==="function")syncAnim(ch.filter(x=>x.lvl==="fail").map(x=>x.msg));
 }
@@ -682,8 +888,58 @@ function renderPlans(){
  $("#planList").querySelectorAll("[data-pdel]").forEach(b=>b.onclick=()=>{const i=+b.dataset.pdel;if(b.dataset.sure){PLANS.splice(i,1);LS.set("lp_plans",PLANS);renderPlans()}else{b.dataset.sure=1;b.textContent="Confirm delete"}});
 }
 // image
-$("#fImg").onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height));const cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);P.siteImg=cv.toDataURL("image/jpeg",0.82);update()};im.src=rd.result};rd.readAsDataURL(f)};
-$("#bClrImg").onclick=()=>{P.siteImg="";$("#fImg").value="";update()};
+function shrink(file){return new Promise((res,rej)=>{const rd=new FileReader();rd.onerror=rej;rd.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,1000/Math.max(im.width,im.height));const cv=document.createElement("canvas");cv.width=Math.round(im.width*k);cv.height=Math.round(im.height*k);cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL("image/jpeg",0.78))};im.src=rd.result};rd.readAsDataURL(file)})}
+$("#fImg").onchange=async e=>{siteMigrate();const fs=[...e.target.files];if(!fs.length)return;
+ for(const f of fs){if(P.photos.length>=2){toast("Up to 2 photos. Remove one first");break}try{P.photos.push(await shrink(f))}catch(err){toast("Could not read that image")}}
+ e.target.value="";update();renderSiteAi()};
+let _phSig="";
+function renderPhotos(){const el=$("#photoList");if(!el)return;const sig=(P.photos||[]).map(d=>d.length+d.slice(-20)).join("|");if(sig===_phSig)return;_phSig=sig;
+ el.innerHTML=(P.photos||[]).map((d,i)=>`<figure><img src="${d}" alt="Site photo ${i+1}"><button class="sm del" data-phdel="${i}" title="Remove photo">✕</button></figure>`).join("");
+ el.querySelectorAll("[data-phdel]").forEach(b=>b.onclick=()=>{P.photos.splice(+b.dataset.phdel,1);update();renderSiteAi()})}
+function renderSiteList(){const el=$("#siteList");if(!el)return;const st=P.site||{}, ai=(P.siteAi&&P.siteAi.notes)||{};
+ el.innerHTML=SITE.map(([k,l])=>`<div>${l}${ai[k]?`<span class="ai">Claude: ${esc(ai[k])}</span>`:""}</div><select data-site="${k}" class="${st[k]||""}"><option value="">Not checked</option><option value="no">No</option><option value="yes">Yes, present</option></select>`).join("");
+ el.querySelectorAll("[data-site]").forEach(s=>s.value=st[s.dataset.site]||"")}
+document.addEventListener("change",e=>{const k=e.target.dataset&&e.target.dataset.site;if(!k)return;siteMigrate();P.site[k]=e.target.value;e.target.className=e.target.value;update()});
+let SAMPLE=null, SAMPLE_IMG=false;
+(async()=>{for(let i=0;i<50&&!(window.claude&&window.claude.use);i++)await new Promise(r=>setTimeout(r,100));
+ try{if(window.claude&&window.claude.use){SAMPLE=await window.claude.use("sample");if(SAMPLE){try{const lim=await SAMPLE.limits();SAMPLE_IMG=!!(lim&&lim.images)}catch(e){SAMPLE_IMG=false}}}}catch(e){SAMPLE=null}
+ renderSiteAi()})();
+function renderSiteAi(){const el=$("#siteAiBox");if(!el)return;const n=(P.photos||[]).length, a=P.siteAi;
+ let h="";
+ if(SAMPLE&&SAMPLE_IMG) h+=`<button id="bAssess" class="pri sm" ${n?"":"disabled"}>Assess site photo${n>1?"s":""} with Claude</button> <span class="hint" style="font-size:11.5px">${n?"Suggests ground type, hazards and controls. The supervisor confirms on site.":"Add a photo first."}</span>`;
+ else h+=`<span class="hint" style="font-size:11.5px">Automatic photo assessment works when this app is opened inside Claude. Here, fill in the checklist below from the photos and a site walk.</span>`;
+ if(a){const gk=GROUND[a.ground]?a.ground:null;
+  h+=`<div class="aibox"><b>Claude's photo assessment</b> <span style="color:var(--mut)">(${dmy(a.at)})</span><p>${esc(a.summary||"")}</p>`+
+  (gk?`<p>Ground: <b>${esc(GROUND[gk][0])}</b>${a.groundWhy?` — ${esc(a.groundWhy)}`:""} ${P.ground!==gk?`<button class="sm" id="bUseGround">Use this ground type</button>`:"(in use)"}</p>`:"")+
+  ((a.other||[]).length?`<p>Also noted: ${a.other.map(esc).join("; ")}</p>`:"")+
+  `<p style="color:#6941c6">Suggestions only. Walk the site and confirm each item before the lift.</p></div>`}
+ el.innerHTML=h;
+ const b=$("#bAssess"); if(b) b.onclick=assessSite;
+ const g=$("#bUseGround"); if(g) g.onclick=()=>{P.ground=a.ground;bindForm();update()};
+}
+async function assessSite(){
+ const b=$("#bAssess"); if(!SAMPLE||!(P.photos||[]).length) return;
+ b.disabled=true; b.textContent="Assessing…";
+ try{
+  const r=calc(), c=r.c||{}, g=c.veh?craneGeo(c):{Sx:5.8,Ls:6};
+  const blobs=await Promise.all(P.photos.map(d=>fetch(d).then(x=>x.blob())));
+  const prompt=`You are a lifting engineer in Singapore reviewing site photos before a lorry crane lift (tree / wood debris work).
+Lift: crane ${c.veh||""} ${c.model||""}, working radius ${num(P.radius)} m, load ${num(P.loadWt)} kg (${esc(P.loadName)} ${num(P.loadL)}×${num(P.loadW)}×${num(P.loadH)} m), outrigger spread about ${g.Sx} m, outrigger spacing ${g.Ls} m, footing plates ${num(P.plateL)}×${num(P.plateW)} m, exclusion radius ${exclR()} m.
+Look only at what the photos show. For each item answer "yes" (present), "no" (clearly absent) or "unknown" (cannot tell from the photos), with a short note of what you see (under 20 words).
+Items:
+${SITE.map(([k,l])=>`- ${k}: ${l}`).join("\n")}
+Also pick the ground type under where the outriggers would go: one of verge (grass/soft soil), firm (firm compacted soil), gravel, asphalt, concrete (RC slab/pavement), or unknown, with a short reason.
+Reply with JSON only, in this shape:
+{"items":{"ohl":{"state":"yes|no|unknown","note":"..."}, ...one entry per item key...},"ground":"verge|firm|gravel|asphalt|concrete|unknown","groundWhy":"...","other":["any other hazard worth noting, max 3"],"summary":"2-3 sentences for the supervisor"}`;
+  const out=await SAMPLE.json(prompt,{images:blobs,modelTier:"default"});
+  siteMigrate(); const notes={};
+  Object.entries((out&&out.items)||{}).forEach(([k,v])=>{if(!SITE.find(x=>x[0]===k)||!v)return;notes[k]=String(v.note||"").slice(0,160);
+   if(v.state==="yes"||v.state==="no")P.site[k]=v.state});
+  P.siteAi={summary:String(out.summary||"").slice(0,600),ground:out.ground,groundWhy:String(out.groundWhy||"").slice(0,200),other:(out.other||[]).slice(0,3).map(x=>String(x).slice(0,140)),notes,at:today()};
+  P.siteConfirmed=false; bindForm(); update(); toast("Photo assessment done. Confirm each item on site");
+ }catch(e){toast(e&&e.code==="not_granted"?"Photo assessment was not allowed":e&&e.code==="rate_limited"?"Too many requests, try again in a minute":"Assessment failed: "+((e&&e.message)||e))}
+ renderSiteAi();
+}
 
 /* ---------- register editor ---------- */
 const CF=[["id","LM No"],["veh","Vehicle no."],["model","Brand / model"],["type","Type"],["year","Year of mfg"],["maxSwl","Max SWL (kg)"],["boom","Max boom (m)"],["ext","Manual ext. (m)"],["lorryWt","Weight of crane (t)"],["capacity","Capacity of crane (t)"],["hookWt","Hook block wt (kg)"],["hookSwl","Hook block SWL (kg)"],["ae","AE inspection",1],["exp","Cert expiry",1],["six","6-month (LTA) expiry",1],["spread","Outrigger spread, L–R (m)"],["olSpacing","Outrigger spacing, front–rear (m)"],["boomWt","Boom self-weight (t)"],["fmax","Outrigger F max (kN)"],["gvw","GVW (kg)"],["chassis","Chassis no."],["serial","Crane serial no."],["sirlock","SCS / Sirlock no."],["peDoc","PE stability doc no."]];
@@ -739,12 +995,16 @@ $("#bPdf").onclick=async()=>{
  try{
   await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
   await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
-  const src=$("#sheet"), clone=src.cloneNode(true);
-  const host=document.createElement("div");host.style.cssText="position:fixed;left:-20000px;top:0;";host.appendChild(clone);document.body.appendChild(host);
-  const cv=await html2canvas(clone,{scale:2.2,backgroundColor:"#fff",useCORS:true,logging:false});
-  host.remove();
   const pdf=new window.jspdf.jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
-  pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,297,210);
+  const pages=[...document.querySelectorAll("#scaler .sheet")];
+  for(let i=0;i<pages.length;i++){
+   const clone=pages[i].cloneNode(true);
+   const host=document.createElement("div");host.style.cssText="position:fixed;left:-20000px;top:0;";host.appendChild(clone);document.body.appendChild(host);
+   const cv=await html2canvas(clone,{scale:2.2,backgroundColor:"#fff",useCORS:true,logging:false});
+   host.remove();
+   if(i)pdf.addPage("a4","landscape");
+   pdf.addImage(cv.toDataURL("image/jpeg",0.92),"JPEG",0,0,297,210);
+  }
   const name=(P.planNo||autoPlanNo()).replace(/[^\w.-]+/g,"_")+"_Lifting_Plan.pdf";
   await saveFile(name,pdf.output("blob"));
  }catch(e){toast("Could not build the PDF: "+e.message)}
@@ -821,22 +1081,22 @@ function sceneConst(){
  const R=Math.max(num(P.radius),2);
  const lH=Math.min(Math.max(num(P.loadH)||1,0.25),3), lW=Math.min(Math.max(num(P.loadL)||1,0.6),8), lWd=Math.min(Math.max(num(P.loadW)||1,0.25),3);
  const sh=rg?rg.dy:1.5;
- const Rd=Math.max(3.2, Math.min(5.5, lW/2+0.9));
+ const sp=slewPath(), onDeck=(P.zoneSet||"rear")==="rear", Rd=onDeck?Math.max(3.2, Math.min(5.5, lW/2+0.9)):R;
  const liftH=KB.deck+0.9;
  const H=Math.max(6.4, liftH+lH+sh+KB.hb+1.2);
  const isLog=/tree|trunk|log|timber|wood|debris/i.test(P.loadName||"");
  let LH=lH, LWd=lWd;
  if(isLog){const dW=Math.sqrt(4*Math.max(r.loadKg,10)/(Math.PI*1000*lW));const d=Math.max(0.15,Math.min(lH,lWd,dW));LH=d;LWd=d;}
- return {r,rg,R,lH:LH,lW,lWd:LWd,sh,Rd,liftH,H,isLog};
+ return {r,rg,R,lH:LH,lW,lWd:LWd,sh,Rd,liftH,H,isLog,sp,onDeck};
 }
 function boomAt(t,K){ // returns phi,a1,a2,e,tip
  const halted=A.fails.length>0;
- let phi=Math.PI, a1, a2, e;
+ let phi=K.sp.a, a1, a2, e;
  const pick=kbSolve(K.R,K.H,KB.a1Work);
  if(t<9){const u=sg(t,4.5,9);a1=lerp(KB.a1Stow,KB.a1Work,u);a2=lerp(KB.a2Stow,pick.a2,u);e=lerp(0,pick.e,sg(t,6,9));}
  else{
   const u=halted?0:sg(t,16.5,21.5);
-  phi=lerp(Math.PI,1.5*Math.PI,u);
+  phi=K.sp.a+K.sp.d*u;
   const rr=lerp(K.R,K.Rd,u);
   a1=KB.a1Work; const s=kbSolve(rr,K.H,a1); a2=s.a2; e=s.e;
  }
@@ -849,7 +1109,7 @@ function loadBottom(t,K){
  if(t<15) return 0.3*sg(t,13.5,14.0);
  if(t<16.5) return lerp(0.3,K.liftH,sg(t,15,16.5));
  if(t<21.5) return K.liftH;
- return lerp(K.liftH,KB.deck,sg(t,21.5,23.5));
+ return lerp(K.liftH,K.onDeck?KB.deck:0,sg(t,21.5,23.5));
 }
 function ropeLen(t,K,tipZ){
  const yb=loadBottom(t,K);
@@ -881,7 +1141,7 @@ function animState(t){
  const yb=loadBottom(t,K);
  const lifted=!halted&&t>=13.5;
  const sw=swayAt(t,K);
- let lx=-K.R, ly=0, lyaw=Math.PI;
+ let lx=K.R*Math.cos(K.sp.a), ly=K.R*Math.sin(K.sp.a), lyaw=K.sp.a;
  if(lifted){lx=B.tip[0]+sw[0]; ly=B.tip[1]+sw[1]; lyaw=B.phi;}
  const att=t>=12.2;
  const slingA=t<11.2?0:t<12.4?sg(t,11.2,12.4):(!halted&&t>=23.5?1-sg(t,23.5,24.3):1);
